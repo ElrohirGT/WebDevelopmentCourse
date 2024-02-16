@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab4</title>
+    <style>
+        * {
+            margin: 0;
+            box-sizing: border-box;
+        }
+        body {
+            padding: 2rem;
+            width: 100vw;
+            height: 100vh;
+        }
+        .art-container {
+            width: 867px;
+            height: 896px;
+
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+            background-color: aqua;
+
+            padding-bottom: 5%;
+            aspect-ratio: 867 / 896;
+        }
+
+        .usb {
+            width: 15%;
+            height: 50%;
+            /* background-color: blue; */
+            
+            justify-self: center;
+            align-self: end;
+
+            display: inline-flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+        .usb-body {
+            width: 100%;
+            height: 65%;
+            background-color: silver;
+            
+            border-color: aqua;
+            border-width: 1rem 1rem 0 1rem;
+            border-style: solid;
+
+            display: grid;
+            padding: .5rem 0;
+        }
+        .usb-body>p {
+            color: gray;
+            font-family: monospace;
+            text-align: center;
+        }
+        .usb-body p:first-child {
+            font-size: 3rem;
+        }
+        .usb-body p:last-child {
+            font-size: 1rem;
+            align-self: end;
+        }
+        .usb-foot {
+            width: 100%;
+            height: 35%;
+            background-color: black;
+            
+            display: grid;
+            padding: 0 0 10% 0;
+            border-radius: 0 0 10% 10%;
+        }
+        .usb-foot .usb-hole {
+            justify-self: center;
+            align-self: end;
+            width: 50%;
+            height: 30%;
+            background-color: aqua;
+
+            border-radius: 50% 50% 0 0;
+        }
+
+        .laptop {
+            background-color: black;
+            width: 100%;
+            height: 40%;
+            justify-self: start;
+            z-index: 1;
+            
+            display: grid;
+            padding: 2rem;
+        }
+        .art-container .laptop .on-indicator {
+            background-color: lightgreen;
+            width: 4%;
+            height: 30%;
+            border-radius: 50%;
+            align-self: center;
+            justify-self: end;
+            transform: scale(0);
+            box-shadow: 0 0 1rem lightgreen;
+        }
+
+        .art-container:hover .usb {
+            animation: 1s ease-in 0s forwards usb_connect;
+        }
+
+        .art-container:hover .on-indicator {
+            animation-name: computer_on;
+            animation-duration: .2s;
+            animation-delay: 1.1s;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes usb_connect {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: rotate(180deg) translateY(142.5%);
+            }
+            100% {
+                transform: translateY(-285%);
+            }
+        }
+
+        @keyframes computer_on {
+            from {
+                transform: scale(0);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="./reference.jpg" target="_blank">Imagen de referencia</a>
+    <div class="art-container">
+        <div class="laptop">
+            <div class="on-indicator"></div>
+        </div>
+        <div class="usb">
+            <div class="usb-body">
+                <p>256</p>
+                <p>USB 3.1</p>
+            </div>
+            <div class="usb-foot">
+                <div class="usb-hole"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
