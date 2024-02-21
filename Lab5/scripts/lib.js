@@ -56,10 +56,11 @@ export const createElement = (tagName, styles = '', parent = document.body) => {
  *
  * @param {Room} room Room object to display.
  * @param {Boolean} isCurrentRoom the room is currently selected.
+ * @param {Function} onClick Action to call when the user clicks the room.
  * @param {HTMLElement} parent parent HTML element.
  * @returns {HTMLElement} The Room HTML element appended to parent.
  */
-export const createRoom = (room, isCurrentRoom, parent) => {
+export const createRoom = (room, isCurrentRoom, onClick, parent) => {
     let roomContainer = createElement('div', `
 		display: flex;
 		justify-content: space-around;
@@ -71,6 +72,7 @@ export const createRoom = (room, isCurrentRoom, parent) => {
         transition: .2s;
 	`, parent);
     roomContainer.classList.add("roomProfile")
+    roomContainer.addEventListener('click', onClick);
 
     let image = createElement('img', `
 		width: 20%;
@@ -176,6 +178,16 @@ export const createChatMessage = (chatMessage, parent) => {
     });
 
     return messageContainer;
+}
+
+/**
+ * Removes all the children in the given container.
+ * @param {HTMLElement} container The container to remove all children
+ */
+export const removeAllChildren = (container) => {
+    while (container.firstChild) {     
+        container.removeChild(container.firstChild);
+    }
 }
 
 /**

@@ -1,4 +1,4 @@
-import { Chat, Room, User, createElement, createRoom, createProfile, between, createChatMessage, setYTAPIHasLoaded } from "./lib.js";
+import { Chat, Room, User, createElement, createRoom, createProfile, between, createChatMessage, setYTAPIHasLoaded, removeAllChildren } from "./lib.js";
 import { Theme } from "./theme.js";
 
 /**
@@ -26,7 +26,7 @@ let rooms = [
 
 let user = new User("https://gcdn.thunderstore.io/live/repository/icons/Casper-RavenPlayermodel-2.0.0.png.256x256_q95.png", "Raven");
 
-let currentRoomIndex = 0;
+let currentRoomIndex = -1;
 
 /**
  * Load YT API
@@ -92,8 +92,6 @@ let panelElement = createElement('div', `
     gap: 1rem;
 `);
 
-rooms.forEach((r, i) => createRoom(r, i === currentRoomIndex, panelElement));
-
 let chatRoomDisplay = createElement('div', `
 	border: .2rem solid ${Theme.accent};
 	grid-area: chats;
@@ -108,9 +106,6 @@ let chatRoomMessagesDisplay = createElement('div', `
     flex-direction: column;
     gap: 1rem;
 `, chatRoomDisplay);
-if (between(0, rooms.length, currentRoomIndex)) {
-    rooms[currentRoomIndex].chats.forEach(c => createChatMessage(c, chatRoomMessagesDisplay));
-}
 
 let chatRoomInputDisplay = createElement('div', `
     background-color: white;
@@ -126,4 +121,26 @@ let profileContainer = createElement('div', `
 	align-items: center;
 	padding: .4rem;
 `);
+// Profile render logic
 createProfile(user, profileContainer);
+
+// Chat rooms render logic
+const populateChatRoomPanel = () => {
+    rooms.forEach((r, i) => createRoom(r, i === currentRoomIndex, () => {
+        console.log("Clicked!");
+        currentRoomIndex = i;
+        removeAllChildren(chatRoomMessagesDisplay);
+        removeAllChildren(panelElement);
+        populateChatRoomPanel();
+        populateChat(currentRoomIndex, rooms);
+    }, panelElement));
+};
+
+const populateChat = (currentRoomIndex, rooms) => {
+    if (between(0, rooms.length, currentRoomIndex)) {
+        rooms[currentRoomIndex].chats.forEach(c => createChatMessage(c, chatRoomMessagesDisplay));
+    }
+}
+
+populateChatRoomPanel();
+populateChat(currentRoomIndex, rooms);
