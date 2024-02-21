@@ -5,7 +5,7 @@ import { Theme } from "./theme.js";
  * App State
  */
 let rooms = [
-    new Room("https://upload.wikimedia.org/wikipedia/commons/c/cb/Teen_Titans_-_logo_%28English%29.png", "Teen Titans", [new Chat("Test Message", "Local Pervert"), new Chat("Hi! Whatch this: https://www.youtube.com/watch?v=dQw4w9WgXcQ and this: https://w0.peakpx.com/wallpaper/328/44/HD-wallpaper-teen-titans-dc-dccomics-raven-robin-starfire.jpg", "Local Pervert"), new Chat("", "Local Pervert")]),
+    new Room("https://upload.wikimedia.org/wikipedia/commons/c/cb/Teen_Titans_-_logo_%28English%29.png", "Teen Titans", [new Chat("Test Message", "Local Pervert"), new Chat("Hi! Whatch this: https://www.youtube.com/watch?v=dQw4w9WgXcQ and this: https://w0.peakpx.com/wallpaper/328/44/HD-wallpaper-teen-titans-dc-dccomics-raven-robin-starfire.jpg", "Local Pervert"), new Chat("Also this other video! https://www.youtube.com/watch?v=hPQqEwgp8mE", "Local Pervert")]),
     new Room("https://upload.wikimedia.org/wikipedia/commons/c/cb/Teen_Titans_-_logo_%28English%29.png", "Teen Titans", [new Chat("Test Message", "Local Pervert")]),
     new Room("https://upload.wikimedia.org/wikipedia/commons/c/cb/Teen_Titans_-_logo_%28English%29.png", "Teen Titans", [new Chat("Test Message", "Local Pervert")]),
     new Room("https://upload.wikimedia.org/wikipedia/commons/c/cb/Teen_Titans_-_logo_%28English%29.png", "Teen Titans", [new Chat("Test Message", "Local Pervert")]),
@@ -108,15 +108,14 @@ let chatRoomMessagesDisplay = createElement('div', `
     flex-direction: column;
     gap: 1rem;
 `, chatRoomDisplay);
+if (between(0, rooms.length, currentRoomIndex)) {
+    rooms[currentRoomIndex].chats.forEach(c => createChatMessage(c, chatRoomMessagesDisplay));
+}
+
 let chatRoomInputDisplay = createElement('div', `
     background-color: white;
 `, chatRoomDisplay);
 
-
-
-if (between(0, rooms.length, currentRoomIndex)) {
-    rooms[currentRoomIndex].chats.forEach(c => createChatMessage(c, chatRoomMessagesDisplay));
-}
 
 let profileContainer = createElement('div', `
 	border: .2rem solid ${Theme.accent};

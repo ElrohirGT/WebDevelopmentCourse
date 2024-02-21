@@ -120,7 +120,9 @@ export function loadYTIframes() {
     YTIframes.forEach(([url, iframe]) => {
         let videoId = url.substring(url.indexOf('?v=') + 3)
         iframe.src = `http://www.youtube.com/embed/${videoId}?enablejsapi=1`;
-        YT.Player(iframe)
+        // Run the YT API logic in the background
+        // If this is not run in the background only the first link is embedded correctly.
+        setTimeout(() => YT.Player(iframe));
     });
 }
 
@@ -162,6 +164,8 @@ export const createChatMessage = (chatMessage, parent) => {
 
     urlsFoundInMessage.forEach(url => {
         let iframeElement = createElement('iframe', `
+            border: 0;
+            min-height: 10%;
         `, iframesContainer);
         if (url.includes("www.youtube.com")) {
             YTIframes.push([url, iframeElement])
