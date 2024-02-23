@@ -26,7 +26,8 @@ export class Queue {
      * @param {any[]} initialElements The inital elements of the queue
      */
     constructor(initialElements = []) {
-        this.elements = initialElements;
+        this.elements = [];
+        initialElements.forEach(a => this.queue(a))
     }
 
     isEmpty() {
