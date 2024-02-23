@@ -118,6 +118,7 @@ sendButtonElement.addEventListener('click', async () => {
         return;
     }
     try {
+        loadingDisplay.style.display = "block";
         await fetch('http://uwu-guate.site:3000/messages', {
             method: 'POST',
             headers: {
@@ -133,6 +134,8 @@ sendButtonElement.addEventListener('click', async () => {
         updateMessagesDisplay()
     } catch (error) {
         console.log(error);
+    } finally {
+        loadingDisplay.style.display  = "none";
     }
 });
 
@@ -149,6 +152,23 @@ let profileContainer = createElement('div', `
 `);
 // Profile render logic
 createProfile(user, profileContainer);
+
+let loadingDisplay = createElement('div', `
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    display: none;
+`);
+let loadingGif = createElement('img', `
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+`, loadingDisplay);
+loadingGif.src = "https://upload.wikimedia.org/wikipedia/commons/a/ad/YouTube_loading_symbol_3_%28transparent%29.gif";
 
 // Chat rooms render logic
 const populateChatRoomPanel = () => {
@@ -171,6 +191,7 @@ const updateMessagesDisplay = () => {
 const fetchMessagesFromAPI = async () => {
     console.log("Fetching messages from API!");
     try {
+        loadingDisplay.style.display = "block";
         const response = await fetch("http://uwu-guate.site:3000/messages");
         const body = await response.json();
         // console.log(JSON.stringify(body));
@@ -180,6 +201,7 @@ const fetchMessagesFromAPI = async () => {
     } catch (error) {
         console.error(error);
     } finally {
+        loadingDisplay.style.display = "none";
         messagesQueue.queue(new Chat("También tiene soporte para videos de YT! https://www.youtube.com/watch?v=tIJG7Lq3KRg", "El Admin"));
         updateMessagesDisplay()
     }

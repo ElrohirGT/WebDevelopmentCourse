@@ -181,7 +181,7 @@ export const createChatMessage = (chatMessage, parent, i) => {
         text-decoration: none;
         color: ${Theme.accent};
     `;
-    const isImage = (url) => /\.(jpg|jpeg|png|webp|avif|gif|svg)[\?\w=\w]*$/.test(url);
+    const isImage = (url) => /\.(jpg|jpeg|png|webp|avif|gif|svg)[\?\w=\w\.]*$/.test(url);
 
     // The reverse is because of a CSS gotcha
     // You can't just use justify-content: flex-end and make the scroll still work
@@ -219,15 +219,15 @@ export const createChatMessage = (chatMessage, parent, i) => {
     urlsFoundInMessage.forEach(url => {
         if (url.includes("www.youtube.com")) {
             let iframeElement = createElement('iframe', `
-            border: 0;
-            min-height: 30%;
+            max-height: 30vh;
+            max-width: 40%;
         `, linksDisplayContainer);
             YTIframes.push([url, iframeElement])
             loadYTIframes()
         } else if (isImage(url)) {
             let imageElement = createElement('img', `
-                max-height: 30%;
-                width: 40%;
+                max-height: 30vh;
+                max-width: 40%;
             `, linksDisplayContainer)
             imageElement.src = url;
         }
