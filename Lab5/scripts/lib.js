@@ -220,7 +220,7 @@ export const createChatMessage = (chatMessage, parent, i) => {
     let messageContainer = createElementAtStart('div', `
             display: block;
             animation-name: entermessage;
-            animation-duration: 1s;
+            animation-duration: 0.5s;
             animation-delay: ${250 * i}ms;
             animation-fill-mode: backwards;
         `, parent);
