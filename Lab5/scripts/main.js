@@ -1,36 +1,13 @@
-import { Chat, Room, User, createElement, createRoom, createProfile, between, createChatMessage, setYTAPIHasLoaded, removeAllChildren, Stack, Queue } from "./lib.js";
+import { Chat, User, createElement, createChatUser, createProfile, createChatMessage, setYTAPIHasLoaded, removeAllChildren, Queue } from "./lib.js";
 import { Theme } from "./theme.js";
 
 /**
  * App State
  */
-let rooms = [
-    new Room("https://upload.wikimedia.org/wikipedia/commons/c/cb/Teen_Titans_-_logo_%28English%29.png", "Teen Titans", [new Chat("Test Message", "Local Pervert"), new Chat("Hi! Whatch this: https://www.youtube.com/watch?v=dQw4w9WgXcQ and this: https://w0.peakpx.com/wallpaper/328/44/HD-wallpaper-teen-titans-dc-dccomics-raven-robin-starfire.jpg", "Local Pervert"), new Chat("Also this other video! https://www.youtube.com/watch?v=hPQqEwgp8mE", "Local Pervert"), new Chat("Also this other video! https://www.youtube.com/watch?v=hPQqEwgp8mE", "Local Pervert"), new Chat("Also this other video! https://www.youtube.com/watch?v=hPQqEwgp8mE", "Local Pervert"), new Chat("Also this other video! https://www.youtube.com/watch?v=hPQqEwgp8mE", "Local Pervert")]),
-    new Room("https://upload.wikimedia.org/wikipedia/commons/c/cb/Teen_Titans_-_logo_%28English%29.png", "Teen Titans", [new Chat("Test Message", "Local Pervert")]),
-    new Room("https://upload.wikimedia.org/wikipedia/commons/c/cb/Teen_Titans_-_logo_%28English%29.png", "Teen Titans", [new Chat("Test Message", "Local Pervert")]),
-    new Room("https://upload.wikimedia.org/wikipedia/commons/c/cb/Teen_Titans_-_logo_%28English%29.png", "Teen Titans", [new Chat("Test Message", "Local Pervert")]),
-    new Room("https://upload.wikimedia.org/wikipedia/commons/c/cb/Teen_Titans_-_logo_%28English%29.png", "Teen Titans", [new Chat("Test Message", "Local Pervert")]),
-    new Room("https://upload.wikimedia.org/wikipedia/commons/c/cb/Teen_Titans_-_logo_%28English%29.png", "Teen Titans", [new Chat("Test Message", "Local Pervert")]),
-    new Room("https://upload.wikimedia.org/wikipedia/commons/c/cb/Teen_Titans_-_logo_%28English%29.png", "Teen Titans", [new Chat("Test Message", "Local Pervert")]),
-    new Room("https://upload.wikimedia.org/wikipedia/commons/c/cb/Teen_Titans_-_logo_%28English%29.png", "Teen Titans", [new Chat("Test Message", "Local Pervert")]),
-    new Room("https://upload.wikimedia.org/wikipedia/commons/c/cb/Teen_Titans_-_logo_%28English%29.png", "Teen Titans", [new Chat("Test Message", "Local Pervert")]),
-    new Room("https://upload.wikimedia.org/wikipedia/commons/c/cb/Teen_Titans_-_logo_%28English%29.png", "Teen Titans", [new Chat("Test Message", "Local Pervert")]),
-    new Room("https://upload.wikimedia.org/wikipedia/commons/c/cb/Teen_Titans_-_logo_%28English%29.png", "Teen Titans", [new Chat("Test Message", "Local Pervert")]),
-    new Room("https://upload.wikimedia.org/wikipedia/commons/c/cb/Teen_Titans_-_logo_%28English%29.png", "Teen Titans", [new Chat("Test Message", "Local Pervert")]),
-    new Room("https://upload.wikimedia.org/wikipedia/commons/c/cb/Teen_Titans_-_logo_%28English%29.png", "Teen Titans", [new Chat("Test Message", "Local Pervert")]),
-    new Room("https://upload.wikimedia.org/wikipedia/commons/c/cb/Teen_Titans_-_logo_%28English%29.png", "Teen Titans", [new Chat("Test Message", "Local Pervert")]),
-    new Room("https://upload.wikimedia.org/wikipedia/commons/c/cb/Teen_Titans_-_logo_%28English%29.png", "Teen Titans", [new Chat("Test Message", "Local Pervert")]),
-    new Room("https://upload.wikimedia.org/wikipedia/commons/c/cb/Teen_Titans_-_logo_%28English%29.png", "Teen Titans", [new Chat("Test Message", "Local Pervert")]),
-    new Room("https://upload.wikimedia.org/wikipedia/commons/c/cb/Teen_Titans_-_logo_%28English%29.png", "Teen Titans", [new Chat("Test Message", "Local Pervert")]),
-];
-
 let user = new User("https://gcdn.thunderstore.io/live/repository/icons/Casper-RavenPlayermodel-2.0.0.png.256x256_q95.png", "Raven");
-// The reverse is because of a CSS gotcha
-// You can't just use justify-content: flex-end and make the scroll still work
-// That's why the weird logic for styles is applied and the reverse is executed too.
-let messagesQueue = new Queue();
-
-let currentRoomIndex = -1;
+let messages = [new Chat("Test Message", "Local Pervert"), new Chat("Hi! Whatch this: https://www.youtube.com/watch?v=dQw4w9WgXcQ and this: https://w0.peakpx.com/wallpaper/328/44/HD-wallpaper-teen-titans-dc-dccomics-raven-robin-starfire.jpg", "Local Pervert"), new Chat("Also this other video! https://www.youtube.com/watch?v=hPQqEwgp8mE", "Local Pervert"), new Chat("Also this other video! https://www.youtube.com/watch?v=hPQqEwgp8mE", "Local Pervert"), new Chat("Also this other video! https://www.youtube.com/watch?v=hPQqEwgp8mE", "Local Pervert"), new Chat("Also this other video! https://www.youtube.com/watch?v=hPQqEwgp8mE", "Local Pervert")];
+let messagesQueue = new Queue(messages.slice());
+let authors = new Set();
 
 /**
  * Load YT API
@@ -135,11 +112,6 @@ sendButtonElement.innerHTML = `
     <img src="imgs/send.png">
 `;
 sendButtonElement.addEventListener('click', () => {
-    if (!between(0, rooms.length, currentRoomIndex)) {
-        console.error("No room selected!");
-        return;
-    }
-
     messagesQueue.queue(new Chat(messageInputElement.value ?? '', user.name ?? 'LocalPervert'));
     messageInputElement.value = '';
     updateMessages()
@@ -148,6 +120,7 @@ sendButtonElement.addEventListener('click', () => {
 
 let profileContainer = createElement('div', `
 	border: .2rem solid ${Theme.accent};
+    background-color: ${Theme.accent_dark};
 	grid-area: profile;
 
 	display: flex;
@@ -160,23 +133,20 @@ createProfile(user, profileContainer);
 
 // Chat rooms render logic
 const populateChatRoomPanel = () => {
-    rooms.forEach((r, i) => createRoom(r, i === currentRoomIndex, () => {
-        currentRoomIndex = i;
-        removeAllChildren(chatRoomMessagesDisplay);
-        removeAllChildren(panelElement);
-        populateChatRoomPanel();
-        rooms[currentRoomIndex].chats.forEach((c) => messagesQueue.queue(c));
-        updateMessages();
-    }, panelElement));
+    let authors = new Set(messages.map(m => new User('https://thispersondoesnotexist.com/', m.author)));
+    authors.forEach(r => createChatUser(r, panelElement));
 };
 
 const updateMessages = () => {
     let i = 0;
     while (!messagesQueue.isEmpty()) {
         let message = messagesQueue.dequeue();
+        authors.add(message.author);
+        removeAllChildren(panelElement);
+        populateChatRoomPanel();
         createChatMessage(message, chatRoomMessagesDisplay, i);
         i++;
     }
 }
 
-populateChatRoomPanel();
+updateMessages();

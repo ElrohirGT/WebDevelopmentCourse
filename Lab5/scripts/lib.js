@@ -13,21 +13,6 @@ export class Chat {
     }
 }
 
-export class Room {
-    /**
-     * Constructs a chat room.
-     *
-     * @param {String} profilePicture URL to the room profile picture.
-     * @param {String} name name of the room.
-     * @param {Chat[]} chats history of chats of the given room.
-     */
-    constructor(profilePicture, name, chats) {
-        this.profilePicture = profilePicture;
-        this.name = name;
-        this.chats = chats;
-    }
-}
-
 export class User {
     constructor(profilePicture, name) {
         this.profilePicture = profilePicture;
@@ -61,35 +46,6 @@ export class Queue {
             return null;
         }
         return this.elements[this.elements.length - 1];
-    }
-}
-
-export class Stack {
-    /**
-     * Constructs a stack of the given elements.
-     * @param {any[]} initialElements The inital elements of the queue
-     */
-    constructor(initialElements = []) {
-        this.elements = initialElements;
-    }
-    
-    isEmpty() {
-        return this.elements.length == 0;
-    }
-
-    peek() {
-        if (this.isEmpty()) {
-            return null;
-        }
-        return this.elements[0];
-    }
-
-    push(element) {
-        this.elements.push(element);
-    }
-
-    pop() {
-        return this.elements.pop();
     }
 }
 
@@ -128,36 +84,30 @@ export const createElementAtStart = (tagName, styles = '', parent = document.bod
 /**
  * Creates a Room preview and appends it to the parent HTMLElement.
  *
- * @param {Room} room Room object to display.
- * @param {Boolean} isCurrentRoom the room is currently selected.
- * @param {Function} onClick Action to call when the user clicks the room.
+ * @param {User} user User object to display.
  * @param {HTMLElement} parent parent HTML element.
  * @returns {HTMLElement} The Room HTML element appended to parent.
  */
-export const createRoom = (room, isCurrentRoom, onClick, parent) => {
+export const createChatUser = (user, parent) => {
     let roomContainer = createElement('div', `
 		display: flex;
 		justify-content: space-around;
 		align-items: center;
 		padding-top: .4rem;
-
-		background-color: ${isCurrentRoom ? Theme.accent_dark : ''};
-        font-weight: ${isCurrentRoom ? "bold" : "normal"};
         transition: .2s;
 	`, parent);
-    roomContainer.classList.add("roomProfile")
-    roomContainer.addEventListener('click', onClick);
+    roomContainer.classList.add("roomProfile");
 
     let image = createElement('img', `
 		width: 20%;
 		border-radius: 50%;
 	`, roomContainer);
-    image.src = room.profilePicture;
+    image.src = user.profilePicture;
 
     let roomName = createElement('p', `
 		color: ${Theme.text_on_background}
 	`, roomContainer);
-    roomName.innerText = room.name;
+    roomName.innerText = user.name;
 
     return roomContainer;
 }
@@ -217,6 +167,9 @@ export const createChatMessage = (chatMessage, parent, i) => {
         color: ${Theme.accent};
     `;
 
+    // The reverse is because of a CSS gotcha
+    // You can't just use justify-content: flex-end and make the scroll still work
+    // That's why the weird logic for styles is applied and the reverse is executed too.
     let messageContainer = createElementAtStart('div', `
             display: block;
             animation-name: entermessage;
