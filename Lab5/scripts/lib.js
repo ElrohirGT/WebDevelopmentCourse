@@ -219,8 +219,9 @@ export const createChatMessage = (chatMessage, parent, i) => {
     urlsFoundInMessage.forEach(url => {
         if (url.includes("www.youtube.com")) {
             let iframeElement = createElement('iframe', `
-            max-height: 30vh;
-            max-width: 40%;
+            border: 0;
+            min-width: 40%;
+            min-height: 30vh;
         `, linksDisplayContainer);
             YTIframes.push([url, iframeElement])
             loadYTIframes()
