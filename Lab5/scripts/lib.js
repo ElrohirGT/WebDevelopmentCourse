@@ -35,6 +35,64 @@ export class User {
     }
 }
 
+export class Queue {
+    /**
+     * Constructs a queue of the given elements.
+     * @param {any[]} initialElements The inital elements of the queue
+     */
+    constructor(initialElements = []) {
+        this.elements = initialElements;
+    }
+
+    isEmpty() {
+        return this.elements.length == 0;
+    }
+
+    queue(element) {
+        this.elements.unshift(element);
+    }
+
+    dequeue() {
+        return this.elements.pop();
+    }
+
+    peek() {
+        if (this.isEmpty()) {
+            return null;
+        }
+        return this.elements[this.elements.length - 1];
+    }
+}
+
+export class Stack {
+    /**
+     * Constructs a stack of the given elements.
+     * @param {any[]} initialElements The inital elements of the queue
+     */
+    constructor(initialElements = []) {
+        this.elements = initialElements;
+    }
+    
+    isEmpty() {
+        return this.elements.length == 0;
+    }
+
+    peek() {
+        if (this.isEmpty()) {
+            return null;
+        }
+        return this.elements[0];
+    }
+
+    push(element) {
+        this.elements.push(element);
+    }
+
+    pop() {
+        return this.elements.pop();
+    }
+}
+
 /**
  * Creates an  HTML element inside a parent element.
  * @param {String} tagName The tag of the element to create.
@@ -47,6 +105,22 @@ export const createElement = (tagName, styles = '', parent = document.body) => {
 
     element.setAttribute('style', styles);
     parent.appendChild(element);
+
+    return element;
+};
+
+/**
+ * Creates an  HTML element inside a parent element.
+ * @param {String} tagName The tag of the element to create.
+ * @param {String} styles The list of styles to apply.
+ * @param {HTMLElement} parent The parent of the element to create.
+ * @returns {HTMLElement} The element attached to the parent element.
+ */
+export const createElementAtStart = (tagName, styles = '', parent = document.body) => {
+    let element = document.createElement(tagName);
+
+    element.setAttribute('style', styles);
+    parent.prepend(element);
 
     return element;
 };
@@ -142,7 +216,7 @@ export const createChatMessage = (chatMessage, parent) => {
         color: ${Theme.accent};
     `;
 
-    let messageContainer = createElement('div', `
+    let messageContainer = createElementAtStart('div', `
             display: block;
         `, parent);
 
@@ -153,7 +227,12 @@ export const createChatMessage = (chatMessage, parent) => {
     authorElement.textContent = chatMessage.author + ":";
 
     let messageElement = createElement('p', `
+            display: inline-block;
+            width: 100%;
             color: white;
+            animation-name: entermessage;
+            animation-duration: 2s;
+            animation-fill-mode: backwards;
         `, messageContainer);
     let urlsFoundInMessage = [...chatMessage.message.matchAll(urlRegex)].map(m => m[0]);
     messageElement.innerHTML = chatMessage.message.replaceAll(urlRegex, match => {
