@@ -29,6 +29,9 @@ export class Queue {
         this.elements = [];
         initialElements.forEach(a => this.queue(a))
     }
+    length() {
+        return this.elements.length;
+    }
 
     isEmpty() {
         return this.elements.length == 0;
@@ -105,7 +108,7 @@ export const createChatUser = (user, parent) => {
     `;
     let defaultImage = createElement('img', imageStyles, userContainer);
     defaultImage.src = "imgs/defaultProfile.png";
-    
+
     const profileImage = new Image();
     profileImage.addEventListener('load', () => {
         defaultImage.src = profileImage.src;
@@ -172,11 +175,12 @@ export function loadYTIframes() {
  * @returns {HTMLElement} The chat element created.
  */
 export const createChatMessage = (chatMessage, parent, i) => {
-    const urlRegex = new RegExp(/(http|https|ftp):[\w?\/\.=\%_\-]+/, 'g');
+    const urlRegex = new RegExp(/(http|https|ftp):[\w?\/\.=\%_\-\?\&]+/, 'g');
     const linkStyles = `
         text-decoration: none;
         color: ${Theme.accent};
     `;
+    const isImage = (url) => /\.(jpg|jpeg|png|webp|avif|gif|svg)[\?\w=\w]*$/.test(url);
 
     // The reverse is because of a CSS gotcha
     // You can't just use justify-content: flex-end and make the scroll still work
@@ -199,26 +203,31 @@ export const createChatMessage = (chatMessage, parent, i) => {
             display: inline-block;
             width: 100%;
             color: white;
+            word-break: break-all;
         `, messageContainer);
     let urlsFoundInMessage = [...chatMessage.message.matchAll(urlRegex)].map(m => m[0]);
     messageElement.innerHTML = chatMessage.message.replaceAll(urlRegex, match => {
         return `<a href="${match}" target="_blank" style="${linkStyles}">${match}</a>`;
     });
 
-    let iframesContainer = createElement('div', `
+    let linksDisplayContainer = createElement('div', `
         display: flex;
+        flex-wrap: wrap;
     `, messageContainer)
 
     urlsFoundInMessage.forEach(url => {
-        let iframeElement = createElement('iframe', `
-            border: 0;
-            min-height: 10%;
-        `, iframesContainer);
         if (url.includes("www.youtube.com")) {
+            let iframeElement = createElement('iframe', `
+            border: 0;
+            min-height: 30%;
+        `, linksDisplayContainer);
             YTIframes.push([url, iframeElement])
             loadYTIframes()
-        } else {
-            iframeElement.src = url;
+        } else if (isImage(url)) {
+            let imageElement = createElement('img', `
+                min-height: 30%;
+            `, linksDisplayContainer)
+            imageElement.src = url;
         }
     });
 
@@ -230,7 +239,7 @@ export const createChatMessage = (chatMessage, parent, i) => {
  * @param {HTMLElement} container The container to remove all children
  */
 export const removeAllChildren = (container) => {
-    while (container.firstChild) {     
+    while (container.firstChild) {
         container.removeChild(container.firstChild);
     }
 }
