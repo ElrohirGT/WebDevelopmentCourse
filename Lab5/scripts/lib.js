@@ -95,8 +95,8 @@ export const createElementAtStart = (tagName, styles = '', parent = document.bod
 export const createChatUser = (user, parent) => {
     let userContainer = createElement('div', `
 		display: flex;
-		justify-content: space-around;
-		align-items: center;
+		align-items: flex-start;
+        gap: 1rem;
 		padding-top: .4rem;
         transition: .2s;
 	`, parent);
@@ -119,7 +119,8 @@ export const createChatUser = (user, parent) => {
 
 
     let roomName = createElement('p', `
-		color: ${Theme.text_on_background}
+		color: ${Theme.text_on_background};
+        width: 80%;
 	`, userContainer);
     roomName.innerText = user.name;
 
@@ -225,7 +226,8 @@ export const createChatMessage = (chatMessage, parent, i) => {
             loadYTIframes()
         } else if (isImage(url)) {
             let imageElement = createElement('img', `
-                min-height: 30%;
+                max-height: 30%;
+                width: 40%;
             `, linksDisplayContainer)
             imageElement.src = url;
         }
