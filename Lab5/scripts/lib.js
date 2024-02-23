@@ -207,9 +207,10 @@ export function loadYTIframes() {
  * 
  * @param {Chat} chatMessage The message to display.
  * @param {HTMLElement} parent The parent element of this chat
+ * @param {Number} i The index of the current chat.
  * @returns {HTMLElement} The chat element created.
  */
-export const createChatMessage = (chatMessage, parent) => {
+export const createChatMessage = (chatMessage, parent, i) => {
     const urlRegex = new RegExp(/(http|https|ftp):[\w?\/\.=\%_\-]+/, 'g');
     const linkStyles = `
         text-decoration: none;
@@ -218,6 +219,10 @@ export const createChatMessage = (chatMessage, parent) => {
 
     let messageContainer = createElementAtStart('div', `
             display: block;
+            animation-name: entermessage;
+            animation-duration: 1s;
+            animation-delay: ${250 * i}ms;
+            animation-fill-mode: backwards;
         `, parent);
 
     let authorElement = createElement('p', `
@@ -230,9 +235,6 @@ export const createChatMessage = (chatMessage, parent) => {
             display: inline-block;
             width: 100%;
             color: white;
-            animation-name: entermessage;
-            animation-duration: 2s;
-            animation-fill-mode: backwards;
         `, messageContainer);
     let urlsFoundInMessage = [...chatMessage.message.matchAll(urlRegex)].map(m => m[0]);
     messageElement.innerHTML = chatMessage.message.replaceAll(urlRegex, match => {

@@ -78,8 +78,8 @@ const styles = `
     background-color: ${Theme.primary_dark};
 }
 @keyframes entermessage {
-    from: { transform: translateX(-100%); }
-    to: { transform: translateX(0%); }
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0%); }
 }
 `;
 let stylesElement = document.createElement('style');
@@ -171,13 +171,12 @@ const populateChatRoomPanel = () => {
 };
 
 const updateMessages = () => {
+    let i = 0;
     while (!messagesQueue.isEmpty()) {
         let message = messagesQueue.dequeue();
-        createChatMessage(message, chatRoomMessagesDisplay);
+        createChatMessage(message, chatRoomMessagesDisplay, i);
+        i++;
     }
-    // if (between(0, rooms.length, currentRoomIndex)) {
-    //     rooms[currentRoomIndex].chats.slice().reverse().forEach(c => createChatMessage(c, chatRoomMessagesDisplay));
-    // }
 }
 
 populateChatRoomPanel();
