@@ -89,27 +89,37 @@ export const createElementAtStart = (tagName, styles = '', parent = document.bod
  * @returns {HTMLElement} The Room HTML element appended to parent.
  */
 export const createChatUser = (user, parent) => {
-    let roomContainer = createElement('div', `
+    let userContainer = createElement('div', `
 		display: flex;
 		justify-content: space-around;
 		align-items: center;
 		padding-top: .4rem;
         transition: .2s;
 	`, parent);
-    roomContainer.classList.add("roomProfile");
+    userContainer.classList.add("roomProfile");
 
-    let image = createElement('img', `
-		width: 20%;
-		border-radius: 50%;
-	`, roomContainer);
-    image.src = user.profilePicture;
+    const imageStyles = `
+        width: 20%;
+        border-radius: 50%;
+    `;
+    let defaultImage = createElement('img', imageStyles, userContainer);
+    defaultImage.src = "imgs/defaultProfile.png";
+    
+    const profileImage = new Image();
+    profileImage.addEventListener('load', () => {
+        defaultImage.src = profileImage.src;
+    });
+    setTimeout(() => {
+        profileImage.src = user.profilePicture;
+    }, Math.random() * 3000);
+
 
     let roomName = createElement('p', `
 		color: ${Theme.text_on_background}
-	`, roomContainer);
+	`, userContainer);
     roomName.innerText = user.name;
 
-    return roomContainer;
+    return userContainer;
 }
 
 /**
