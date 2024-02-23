@@ -202,7 +202,7 @@ const fetchMessagesFromAPI = async () => {
         console.error(error);
     } finally {
         loadingDisplay.style.display = "none";
-        messagesQueue.queue(new Chat("También tiene soporte para videos de YT! https://www.youtube.com/watch?v=tIJG7Lq3KRg", "El Admin"));
+        messagesQueue.queue(new Chat("También tiene soporte para videos de YT! https://www.youtube.com/watch?v=tIJG7Lq3KRg. (Este mensaje no está subido dentro de la DB, es autogenerado por el cliente).", "El Admin"));
         updateMessagesDisplay()
     }
 };
