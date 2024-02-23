@@ -5,7 +5,7 @@ import { Theme } from "./theme.js";
  * App State
  */
 let user = new User("https://gcdn.thunderstore.io/live/repository/icons/Casper-RavenPlayermodel-2.0.0.png.256x256_q95.png", "Raven");
-let messages = [new Chat("Test Message", "Local Pervert"), new Chat("Hi! Whatch this: https://www.youtube.com/watch?v=dQw4w9WgXcQ and this: https://w0.peakpx.com/wallpaper/328/44/HD-wallpaper-teen-titans-dc-dccomics-raven-robin-starfire.jpg", "Local Pervert"), new Chat("Also this other video! https://www.youtube.com/watch?v=hPQqEwgp8mE", "Local Pervert"), new Chat("Also this other video! https://www.youtube.com/watch?v=hPQqEwgp8mE", "Local Pervert"), new Chat("Also this other video! https://www.youtube.com/watch?v=hPQqEwgp8mE", "Local Pervert"), new Chat("Also this other video! https://www.youtube.com/watch?v=hPQqEwgp8mE", "Local Pervert")];
+let messages = [];
 let messagesQueue = new Queue(messages.slice());
 let authors = new Set();
 
@@ -111,10 +111,29 @@ let sendButtonElement = createElement('button', `
 sendButtonElement.innerHTML = `
     <img src="imgs/send.png">
 `;
-sendButtonElement.addEventListener('click', () => {
-    messagesQueue.queue(new Chat(messageInputElement.value ?? '', user.name ?? 'LocalPervert'));
-    messageInputElement.value = '';
-    updateMessages()
+sendButtonElement.addEventListener('click', async () => {
+    const message = messageInputElement.value?.trim();
+    const username = user.name ?? 'LocalPervert';
+    if (!message) {
+        return;
+    }
+    try {
+        await fetch('http://uwu-guate.site:3000/messages', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username,
+                message
+            })
+        });
+        messagesQueue.queue(new Chat(message, username));
+        messageInputElement.value = '';
+        updateMessagesDisplay()
+    } catch (error) {
+        console.log(error);
+    }
 });
 
 
@@ -133,11 +152,10 @@ createProfile(user, profileContainer);
 
 // Chat rooms render logic
 const populateChatRoomPanel = () => {
-    let authors = new Set(messages.map(m => new User('https://thispersondoesnotexist.com/', m.author)));
-    authors.forEach(r => createChatUser(r, panelElement));
+    authors.forEach(name => createChatUser(new User('https://thispersondoesnotexist.com/', name), panelElement));
 };
 
-const updateMessages = () => {
+const updateMessagesDisplay = () => {
     let i = 0;
     while (!messagesQueue.isEmpty()) {
         let message = messagesQueue.dequeue();
@@ -149,4 +167,19 @@ const updateMessages = () => {
     }
 }
 
-updateMessages();
+const fetchMessagesFromAPI = async () => {
+    console.log("Fetching messages from API!");
+    try {
+        const response = await fetch("http://uwu-guate.site:3000/messages");
+        const body = await response.json();
+        body.reverse().map(messageInfo => new Chat(messageInfo[2], messageInfo[1])).forEach(c => messagesQueue.queue(c));
+    } catch (error) {
+        console.error(error);
+    } finally {
+        messagesQueue.queue(new Chat("También tiene soporte para videos de YT! https://www.youtube.com/watch?v=tIJG7Lq3KRg", "El Admin"));
+        updateMessagesDisplay()
+    }
+};
+
+fetchMessagesFromAPI();
+updateMessagesDisplay();
