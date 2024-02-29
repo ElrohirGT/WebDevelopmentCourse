@@ -19,7 +19,7 @@ var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 window.onYouTubeIframeAPIReady = () => {
-    console.log("The API is now ready!")
+    console.log("The YT API is now ready!")
     setYTAPIHasLoaded()
 }
 
