@@ -224,13 +224,13 @@ const debugPushMessage = (author, message) => {
 const delay = (ms) => new Promise(res => setTimeout(res, ms));
 
 setTimeout(async () => {
-    fetchMessagesFromAPI();
+    await fetchMessagesFromAPI();
     updateMessagesDisplay();
 
     messagesQueue.queue(new Chat("También tiene soporte para videos de YT! https://www.youtube.com/watch?v=tIJG7Lq3KRg. (Este mensaje no está subido dentro de la DB, es autogenerado por el cliente).", "El Admin"));
     while (true) {
         await delay(5000);
-        fetchMessagesFromAPI(false);
+        await fetchMessagesFromAPI(false);
         updateMessagesDisplay();
     }
 });
