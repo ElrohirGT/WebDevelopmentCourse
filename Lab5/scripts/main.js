@@ -225,13 +225,13 @@ setTimeout(async () => {
     fetchMessagesFromAPI();
     updateMessagesDisplay();
 
+    messagesQueue.queue(new Chat("También tiene soporte para videos de YT! https://www.youtube.com/watch?v=tIJG7Lq3KRg. (Este mensaje no está subido dentro de la DB, es autogenerado por el cliente).", "El Admin"));
     while (true) {
         await delay(5000);
         fetchMessagesFromAPI(false);
         updateMessagesDisplay();
     }
 });
-messagesQueue.queue(new Chat("También tiene soporte para videos de YT! https://www.youtube.com/watch?v=tIJG7Lq3KRg. (Este mensaje no está subido dentro de la DB, es autogenerado por el cliente).", "El Admin"));
 
 /* setTimeout(async () => {
     await delay(6000);
