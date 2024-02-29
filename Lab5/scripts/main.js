@@ -135,7 +135,7 @@ sendButtonElement.addEventListener('click', async () => {
     } catch (error) {
         console.log(error);
     } finally {
-        loadingDisplay.style.display  = "none";
+        loadingDisplay.style.display = "none";
     }
 });
 
@@ -171,27 +171,25 @@ let loadingGif = createElement('img', `
 loadingGif.src = "https://upload.wikimedia.org/wikipedia/commons/a/ad/YouTube_loading_symbol_3_%28transparent%29.gif";
 
 // Chat rooms render logic
-const populateChatRoomPanel = () => {
-    authors.forEach(name => createChatUser(new User('https://thispersondoesnotexist.com/', name), panelElement));
-};
-
 const updateMessagesDisplay = () => {
     let i = 0;
     const length = messagesQueue.length();
     while (!messagesQueue.isEmpty()) {
         let message = messagesQueue.dequeue();
+        if (!authors.has(message.author)) {
+            createChatUser(new User('https://thispersondoesnotexist.com/', message.author), panelElement);
+        }
         authors.add(message.author);
-        removeAllChildren(panelElement);
-        populateChatRoomPanel();
         createChatMessage(message, chatRoomMessagesDisplay, length - i);
         i++;
     }
 }
 
-const fetchMessagesFromAPI = async () => {
+const fetchMessagesFromAPI = async (showLoading = true) => {
     console.log("Fetching messages from API!");
+    console.log(showLoading ? "Will show loading component!" : "Won't show loading component");
     try {
-        loadingDisplay.style.display = "block";
+        loadingDisplay.style.display = showLoading ? "block" : "none";
         const response = await fetch("http://uwu-guate.site:3000/messages");
         const body = await response.json();
         // console.log(JSON.stringify(body));
@@ -202,10 +200,35 @@ const fetchMessagesFromAPI = async () => {
         console.error(error);
     } finally {
         loadingDisplay.style.display = "none";
-        messagesQueue.queue(new Chat("También tiene soporte para videos de YT! https://www.youtube.com/watch?v=tIJG7Lq3KRg. (Este mensaje no está subido dentro de la DB, es autogenerado por el cliente).", "El Admin"));
         updateMessagesDisplay()
     }
 };
 
-fetchMessagesFromAPI();
-updateMessagesDisplay();
+const debugPushMessage = (author, message) => {
+    const chat = new Chat(message, author);
+    messagesQueue.queue(chat);
+    updateMessagesDisplay();
+};
+
+const delay = (ms) => new Promise(res => setTimeout(res, ms));
+
+setTimeout(async () => {
+    fetchMessagesFromAPI();
+    updateMessagesDisplay();
+
+    while (true) {
+        await delay(5000);
+        fetchMessagesFromAPI(false);
+        updateMessagesDisplay();
+    }
+});
+messagesQueue.queue(new Chat("También tiene soporte para videos de YT! https://www.youtube.com/watch?v=tIJG7Lq3KRg. (Este mensaje no está subido dentro de la DB, es autogenerado por el cliente).", "El Admin"));
+
+/* setTimeout(async () => {
+    await delay(6000);
+    debugPushMessage("Robin", "Hola!");
+
+    await delay(2000);
+    debugPushMessage("Robin", "Nos vemos en la reunión!");
+    debugPushMessage("BB", "Sick!");
+}); */
