@@ -233,11 +233,32 @@ setTimeout(async () => {
     }
 });
 
-/* setTimeout(async () => {
-    await delay(6000);
-    debugPushMessage("Robin", "Hola!");
-
-    await delay(2000);
-    debugPushMessage("Robin", "Nos vemos en la reunión!");
-    debugPushMessage("BB", "Sick!");
-}); */
+// setTimeout(async () => {
+//     await delay(6000);
+//     debugPushMessage("Robin", "Hola!");
+//
+//     await delay(2000);
+//     debugPushMessage("Robin", "Nos vemos en la reunión!");
+//     debugPushMessage("Robin", "Nos vemos en la reunión!");
+//     debugPushMessage("Robin", "Nos vemos en la reunión!");
+//     debugPushMessage("Robin", "Nos vemos en la reunión!");
+//     debugPushMessage("Robin", "Nos vemos en la reunión!");
+//     debugPushMessage("Robin", "Nos vemos en la reunión!");
+//     debugPushMessage("Robin", "Nos vemos en la reunión!");
+//     debugPushMessage("Robin", "Nos vemos en la reunión!");
+//     debugPushMessage("Robin", "Nos vemos en la reunión!");
+//     debugPushMessage("Robin", "Nos vemos en la reunión!");
+//     debugPushMessage("Robin", "Nos vemos en la reunión!");
+//     debugPushMessage("Robin", "Nos vemos en la reunión!");
+//     debugPushMessage("Robin", "Nos vemos en la reunión!");
+//     debugPushMessage("Robin", "Nos vemos en la reunión!");
+//     debugPushMessage("Robin", "Nos vemos en la reunión!");
+//     debugPushMessage("Robin", "Nos vemos en la reunión!");
+//     debugPushMessage("Robin", "Nos vemos en la reunión!");
+//     debugPushMessage("Robin", "Nos vemos en la reunión!");
+//     debugPushMessage("Robin", "Nos vemos en la reunión!");
+//     debugPushMessage("BB", "Sick!");
+// 		
+// 		await delay(4000);
+//     debugPushMessage("BBC", "Sick!");
+// });
