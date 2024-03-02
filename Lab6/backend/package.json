@@ -1,0 +1,13 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend for the Blog project",
+  "main": "index.js",
+  "repository": "https://github.com/ElrohirGT/WebDevelopmentCourse",
+  "author": "ElrohirGT",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "express": "^4.18.3"
+  }
+}
