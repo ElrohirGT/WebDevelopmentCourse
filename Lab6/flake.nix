@@ -28,6 +28,7 @@
 				name = "Lab6_DB";
 				fromImage = pkgs.dockerTools.pullImage {
 					imageName = "postgres";
+					# Obtained using `nix run nixpkgs#nix-prefetch-docker -- --image-name postgres --image-tag 16`
 					imageDigest = "sha256:f58300ac8d393b2e3b09d36ea12d7d24ee9440440e421472a300e929ddb63460";
 					sha256 = "1dpmibx8llrnsa9slq8cvx2r7ppsicxxf6kwaz00lnyvp9hwhs0k";
 					finalImageTag = "16";
