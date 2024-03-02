@@ -38,6 +38,8 @@
 					paths = [./db];
 					pathsToLink = [ "/docker-entrypoint-initdb.d" ];
 				};
+
+				config.Cmd = ["tail" "-f" "/dev/null"];
 			};
 		});
   };
