@@ -1,0 +1,12 @@
+CREATE TABLE IF NOT EXISTS blog_posts (
+    blog_id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+		banner TEXT,
+    content TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS external_links (
+	url TEXT PRIMARY KEY NOT NULL,
+	blog_id INT NOT NULL REFERENCES blog_posts(blog_id)
+);
