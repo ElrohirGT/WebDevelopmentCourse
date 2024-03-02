@@ -1,5 +1,8 @@
+CREATE DATABASE blogs;
+\c blogs;
+
 CREATE TABLE IF NOT EXISTS blog_posts (
-    blog_id INT AUTO_INCREMENT PRIMARY KEY,
+    blog_id SERIAL NOT NULL PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
 		banner TEXT,
     content TEXT NOT NULL,
