@@ -21,4 +21,8 @@ CREATE USER backend WITH PASSWORD 'backend';
 REVOKE ALL ON DATABASE blogs FROM backend;
 GRANT CONNECT ON DATABASE blogs TO backend;
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO backend;
+GRANT USAGE ON ALL SEQUENCES IN SCHEMA public TO backend;
 
+-- Modify default privileges on new sequences added to schema `public`
+-- Useful because postgres creates sequence "tables" when using the serial datatype
+-- ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, INSERT, UPDATE, DELETE ON SEQUENCES TO backend;
