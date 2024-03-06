@@ -37,11 +37,14 @@
         };
 
         copyToRoot = let
-          dbInitScriptsPath = pkgs.writeTextDir "docker-entrypoint-initdb.d/init.sql" (builtins.readFile ./db/init.sql);
+          makeDerFromFile = file: pkgs.writeTextDir "docker-entrypoint-initdb.d/${file}" (builtins.readFile ./db/${file});
+          dbInitscript = makeDerFromFile "init.sql";
+          dbBlogsInsertScript = makeDerFromFile "insert_blog_posts.sql";
+          dbLinksInsertScript = makeDerFromFile "insert_external_links.sql";
         in
           pkgs.buildEnv {
             name = "image-root";
-            paths = [dbInitScriptsPath];
+            paths = [dbInitscript dbBlogsInsertScript dbLinksInsertScript];
             pathsToLink = ["/docker-entrypoint-initdb.d"];
           };
 
