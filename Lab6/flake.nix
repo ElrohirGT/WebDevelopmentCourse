@@ -27,7 +27,7 @@
     packages = forAllSystems (pkgs: {
       dbDocker = pkgs.dockerTools.buildImage {
         name = "Lab6_DB";
-				created = "now";
+        created = "now";
         fromImage = pkgs.dockerTools.pullImage {
           imageName = "postgres";
           # Obtained using `nix run nixpkgs#nix-prefetch-docker -- --image-name postgres --image-tag 16`
@@ -45,17 +45,20 @@
             pathsToLink = ["/docker-entrypoint-initdb.d"];
           };
 
-				config.Entrypoint = "/usr/local/bin/docker-entrypoint.sh";
+        config.Entrypoint = "/usr/local/bin/docker-entrypoint.sh";
         config.Cmd = ["postgres"];
+        config.Env = [
+          "POSTGRES_PASSWORD=myPassword"
+        ];
       };
     });
-		devShells = forAllSystems(pkgs: {
-			default = pkgs.mkShell {
-				packages = with pkgs; [
-					nodejs_20
-					yarn
-				];
-			};
-		});
+    devShells = forAllSystems (pkgs: {
+      default = pkgs.mkShell {
+        packages = with pkgs; [
+          nodejs_20
+          yarn
+        ];
+      };
+    });
   };
 }

@@ -10,12 +10,12 @@ const port = 3000
 app.use(pino())
 
 app.get('/', (req, res) => {
-	res.send('Hello World!')
+  res.send('Hello World!')
 })
 
 app.use(postsRouter)
 app.use(postIdRouter)
 
 app.listen(port, host, () => {
-	console.log(`Example app listening on ${host}:${port}`)
+  console.log(`Example app listening on ${host}:${port}`)
 })

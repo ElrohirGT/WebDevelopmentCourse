@@ -23,6 +23,7 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
+    'import/extensions': ['error', 'ignorePackages'],
     semi: ['error', 'never'], // airbnb wants semicollons, disabling it for extra points...
     '@stylistic/js/indent': ['error', 2],
     '@stylistic/js/semi': ['error', 'never'],
