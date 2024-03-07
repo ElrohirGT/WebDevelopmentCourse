@@ -22,6 +22,7 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
+  ignorePatterns: ['static/docs'],
   rules: {
     'import/extensions': ['error', 'ignorePackages'],
     semi: ['error', 'never'], // airbnb wants semicollons, disabling it for extra points...
