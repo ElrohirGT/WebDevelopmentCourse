@@ -2,7 +2,8 @@
   "typescript": {
     "semiColons": "asi",
     "useTabs": false,
-    "quoteStyle": "preferSingle"
+    "quoteStyle": "preferSingle",
+    "lineWidth": 100
   },
   "json": {
   },

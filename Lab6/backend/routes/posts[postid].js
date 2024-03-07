@@ -1,6 +1,6 @@
 import express from 'express'
 import DB_POOL from './db.js'
-import { logger } from './lib.js'
+import { isNullOrUndefined, isTruthyAndNotEmpty, logger } from './lib.js'
 
 const router = express.Router()
 
@@ -30,9 +30,9 @@ router.get('/posts/:postId', async (req, res) => {
   }
 })
 
-const isNullOrUndefined = (str) => (typeof str === 'undefined' || str === null)
-const isValidUpdatePostBody = (body) => (isNullOrUndefined(body.title) && body.title.isEmpty()) && (typeof body.banner !== 'undefined')
-  && (isNullOrUndefined(body.content && body.content.isEmpty())) && Array.isArray(body.links)
+export const isValidUpdatePostBody = (body) => isTruthyAndNotEmpty(body.title)
+  && !isNullOrUndefined(body.banner) && isTruthyAndNotEmpty(body.content)
+  && Array.isArray(body.links)
 router.put('/posts/:postId', async (req, res) => {
   logger.info('Parsing body...')
   if (!isValidUpdatePostBody(req.body)) {

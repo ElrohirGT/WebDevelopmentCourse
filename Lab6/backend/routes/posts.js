@@ -1,6 +1,6 @@
 import express from 'express'
 import DB_POOL from './db.js'
-import { logger } from './lib.js'
+import { isTruthyAndNotEmpty, logger } from './lib.js'
 
 const router = express.Router()
 
@@ -22,7 +22,7 @@ FROM blog_posts b`
   }
 })
 
-const reqIsValid = (body) => (!!body?.title) && (!!body?.content)
+const reqIsValid = (body) => isTruthyAndNotEmpty(body.title) && isTruthyAndNotEmpty(body.content)
 
 router.post('/posts', async (req, res) => {
   logger.info('Creating a new post...')
