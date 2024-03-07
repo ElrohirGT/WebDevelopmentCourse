@@ -1,14 +1,14 @@
 import express from 'express'
-import pino from 'pino-http'
+import { logger, logMiddleware } from './routes/lib.js'
 import postsRouter from './routes/posts.js'
 import postIdRouter from './routes/posts[postid].js'
 import 'dotenv/config.js'
 
-const app = express(pino)
+const app = express()
 const host = 'localhost'
 const port = 3000
 
-app.use(pino()) // Log requests and responses
+app.use(logMiddleware) // Log requests and responses
 app.use(express.json()) // Parse JSON in the body
 
 app.get('/', (req, res) => {
@@ -19,5 +19,5 @@ app.use(postsRouter)
 app.use(postIdRouter)
 
 app.listen(port, host, () => {
-  console.log(`Example app listening on ${host}:${port}`)
+  logger.info(`Example app listening on ${host}:${port}`)
 })
