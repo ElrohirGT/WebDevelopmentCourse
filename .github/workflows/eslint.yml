@@ -32,17 +32,17 @@ jobs:
 
       - name: Install ESLint
         run: |
-          npm install eslint@8.10.0
+          cd Lab6/backend
+          yarn
 
       - name: Run ESLint
-        run: npx eslint Lab6/backend
-          --config ./Lab6/backend/.eslintrc.cjs
-          --ext .js,.jsx,.ts,.tsx
-          --output-file eslint-results.sarif
+        run: |
+          cd Lab6/backend
+          yarn lint --output-file eslint-results.sarif
         continue-on-error: true
 
       - name: Upload analysis results to GitHub
         uses: github/codeql-action/upload-sarif@v2
         with:
-          sarif_file: eslint-results.sarif
+          sarif_file: Lab6/backend/eslint-results.sarif
           wait-for-processing: true
