@@ -2,6 +2,7 @@ import express from 'express'
 import pino from 'pino-http'
 import postsRouter from './routes/posts.js'
 import postIdRouter from './routes/posts[postid].js'
+import 'dotenv/config.js'
 
 const app = express(pino)
 const host = 'localhost'

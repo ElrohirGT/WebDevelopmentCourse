@@ -23,10 +23,14 @@
             #inputs.something.overlays.default
           ];
         }));
+    dbImageName = "lab6_db_22386";
+    dbImageTag = "current";
+    dbContainerName = "Lab6DB_22386";
   in {
     packages = forAllSystems (pkgs: {
       dbDocker = pkgs.dockerTools.buildImage {
-        name = "Lab6_DB";
+        name = dbImageName;
+        tag = dbImageTag;
         created = "now";
         fromImage = pkgs.dockerTools.pullImage {
           imageName = "postgres";
@@ -55,12 +59,39 @@
         ];
       };
     });
+
     devShells = forAllSystems (pkgs: {
       default = pkgs.mkShell {
         packages = with pkgs; [
           nodejs_20
           yarn
         ];
+      };
+    });
+
+    apps = forAllSystems (pkgs: {
+      restartDBDocker = let
+        appName = "restartLab6DB";
+        app = pkgs.writeShellApplication {
+          name = appName;
+          text = ''
+            echo WARNING: This command should be executed inside the root of the directory!
+            docker stop ${dbContainerName} || true # Ignore error
+            echo y | docker container prune
+            docker rmi ${dbImageName}:${dbImageTag} || true # Ignore error
+
+            if nix build .#dbDocker && docker load < result; then
+            	set -o allexport
+            	# shellcheck disable=SC1091
+            	. .env
+            	set +o allexport
+            	docker run -d --name ${dbContainerName} -p "''$DB_PORT":5432 ${dbImageName}:${dbImageTag}
+            fi
+          '';
+        };
+      in {
+        type = "app";
+        program = app.outPath + "/bin/${appName}";
       };
     });
   };
