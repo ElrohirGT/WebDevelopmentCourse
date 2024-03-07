@@ -9,8 +9,8 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js | yarn pino-pretty",
+    "start": "yarn && node index.js",
+    "dev": "yarn && nodemon index.js | yarn pino-pretty",
     "format": "dprint fmt",
     "lint": "yarn eslint .",
     "fix": "yarn format && (yarn lint --fix)"
