@@ -13,7 +13,7 @@
     "dev": "nodemon index.js | yarn pino-pretty",
     "format": "dprint fmt",
     "lint": "yarn eslint .",
-    "fix": "yarn format && yarn lint --fix"
+    "fix": "yarn format && (yarn lint --fix)"
   },
   "dependencies": {
     "dotenv": "^16.4.5",

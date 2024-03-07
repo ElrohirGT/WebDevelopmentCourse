@@ -1,6 +1,7 @@
 {
   "typescript": {
     "semiColons": "asi",
+    "useTabs": false,
     "quoteStyle": "preferSingle"
   },
   "json": {
