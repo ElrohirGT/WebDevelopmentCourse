@@ -7,15 +7,31 @@ const router = express.Router()
 router.get('/posts', async (_req, res) => {
   try {
     logger.info('Obtaining posts from DB...')
-    const URL_SEP = ''
+    const URL_SEP = '[&%&]'
     const query = `
 SELECT blog_id, title, banner, content, created_at, (SELECT STRING_AGG(url, '${URL_SEP}') FROM external_links WHERE blog_id = b.blog_id) as external_links
 FROM blog_posts b`
 
-    const result = await DB_POOL.query(query)
+    const { rows } = await DB_POOL.query(query)
     logger.info('Obtained posts from DB!')
 
-    res.status(200).send(result.rows)
+    res.status(200).send(
+      rows.map(({
+        blog_id: blogId,
+        title,
+        banner,
+        content,
+        created_at: createdAt,
+        external_links: externalLinks,
+      }) => ({
+        blog_id: blogId,
+        title,
+        banner,
+        content,
+        created_at: createdAt,
+        links: externalLinks?.split(URL_SEP) ?? [],
+      })),
+    )
   } catch (e) {
     logger.error(e)
     res.status(500).send('Internal server error')
