@@ -12,7 +12,7 @@
 
 Monorepo containing everything you need to start developing the platform of NixOS Blogs.
 
-To install the development environment I recommend using [Nix](https://nixos.org/), but you can install everything manually if you prefer.
+To install the development environment I recommend using [Nix](https://nixos.org/), make sure to install it and [enable flakes](https://nixos.wiki/wiki/Flakes) by editing the `/etc/nix/nix.conf` file as the link says, but you can install everything manually if you prefer. I also recommend it since it's used to build the docker image, but you can use the one on the root of the project as well.
 
 ## [Documentation](https://elrohirgt.github.io/WebDevelopmentCourse/)
 You can also check out the documentation of the API running it locally and opening `localhost:3000`
