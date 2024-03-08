@@ -14,20 +14,26 @@
         "x86_64-linux"
         "x86_64-macos"
         "aarch64-linux"
-        "aarch64-macos"
+        "aarch64-darwin"
       ] (system:
-        function (import nixpkgs {
-          inherit system;
-          config.allowUnfree = true;
-          overlays = [
-            #inputs.something.overlays.default
-          ];
-        }));
+        function {
+          pkgs = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+            overlays = [
+              #inputs.something.overlays.default
+            ];
+          };
+          system = system;
+        });
     dbImageName = "lab6_db_22386";
     dbImageTag = "current";
     dbContainerName = "Lab6DB_22386";
   in {
-    packages = forAllSystems (pkgs: {
+    packages = forAllSystems ({
+      pkgs,
+      system,
+    }: {
       dbDocker = pkgs.dockerTools.buildImage {
         name = dbImageName;
         tag = dbImageTag;
@@ -35,7 +41,10 @@
         fromImage = pkgs.dockerTools.pullImage {
           imageName = "postgres";
           # Obtained using `nix run nixpkgs#nix-prefetch-docker -- --image-name postgres --image-tag 16`
-          imageDigest = "sha256:f58300ac8d393b2e3b09d36ea12d7d24ee9440440e421472a300e929ddb63460";
+          imageDigest =
+            if system == "aarch64-darwin"
+            then "sha256-dXZo5CaKobuKRUFS3FUgjN2jnBrmQ9do7+815lEZ2mo="
+            else "sha256:f58300ac8d393b2e3b09d36ea12d7d24ee9440440e421472a300e929ddb63460";
           sha256 = "1dpmibx8llrnsa9slq8cvx2r7ppsicxxf6kwaz00lnyvp9hwhs0k";
           finalImageTag = "16";
         };
