@@ -85,10 +85,10 @@
         app = pkgs.writeShellApplication {
           name = appName;
           text = ''
-            echo WARNING: This command should be executed inside the root of the directory!
-            docker stop ${dbContainerName} || true # Ignore error
-            echo y | docker container prune
-            docker rmi ${dbImageName}:${dbImageTag} || true # Ignore error
+            echo WARNING: This command should be executed inside the root of the project!
+            docker stop ${dbContainerName} || true # Ignore error, since we can't guarantee the container was running
+            docker rm ${dbContainerName} || true # Ignore error, since we can't guarantee the container already existed before
+            docker rmi ${dbImageName}:${dbImageTag} || true # Ignore error, since we can't guarantee the image exists
 
             if nix build .#dbDocker && docker load < result; then
             	set -o allexport

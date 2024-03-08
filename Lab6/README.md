@@ -67,8 +67,6 @@ All of this manual work is hard, thats why I created a nix script to automate it
 nix run .#restartDBDocker
 ```
 
-Be careful tho, this command will delete all stopped containers!
-
 ### Backend API
 To start the backend API simply `cd` into the `/backend` directory and run `yarn start`, like so:
 ```bash
