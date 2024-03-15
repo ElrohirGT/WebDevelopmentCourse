@@ -25,7 +25,7 @@ const MainComponent = () => {
         gridTemplateColumns: "20% 80%",
       }}
     >
-      <Sidebar setDisplayBlog={setBlog}></Sidebar>
+      <Sidebar setDisplayBlog={setBlog} currentBlog={blog}></Sidebar>
       {ROUTER[route]}
     </div>
   );

@@ -22,14 +22,15 @@ const fetchBlogs = async () => {
 };
 
 /**
- * @param {Blog} blog
+ * @param {{blog: Blog, blogSetter: Function, isSelected: boolean}} props
  */
-const BlogNavButton = ({ blog, blogSetter }) => (
+const BlogNavButton = ({ blog, blogSetter, isSelected }) => (
   <div
     style={{
-      backgroundColor: "#414141",
+      backgroundColor: isSelected ? "black" : "#414141",
       color: "#fff",
       padding: "1rem",
+      fontWeight: isSelected ? "bold" : "normal",
     }}
     onClick={() => blogSetter(blog)}
   >
@@ -45,7 +46,11 @@ const BlogNavButton = ({ blog, blogSetter }) => (
   </div>
 );
 
-const Sidebar = ({ setDisplayBlog }) => {
+/**
+ * Sidebar component
+ * @param {{ setDisplayBlog: Function, currentBlog: Blog }} props Function to set display of blogs
+ */
+const Sidebar = ({ setDisplayBlog, currentBlog }) => {
   const [blogs, setBlogs] = React.useState([]);
   React.useEffect(async () => {
     const response = await fetchBlogs();
@@ -58,13 +63,29 @@ const Sidebar = ({ setDisplayBlog }) => {
     <div
       style={{
         overflow: "scroll",
+        display: "grid",
+        gridTemplateRows: "95vh 5vh",
       }}
     >
-      {blogs.map((b) => {
-        return (
-          <BlogNavButton key={b.blog_id} blogSetter={setDisplayBlog} blog={b} />
-        );
-      })}
+      <div
+        style={{
+          overflow: "scroll",
+        }}
+      >
+        {blogs.map((b) => (
+          <BlogNavButton
+            key={b.blog_id}
+            blogSetter={setDisplayBlog}
+            blog={b}
+            isSelected={currentBlog.blog_id === b.blog_id}
+          />
+        ))}
+      </div>
+      <div>
+        <button>Crear</button>
+        <button>Editar</button>
+        <button>Borrar</button>
+      </div>
     </div>
   );
 };
