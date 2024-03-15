@@ -69,7 +69,10 @@
       };
     });
 
-    devShells = forAllSystems (pkgs: {
+    devShells = forAllSystems ({
+      pkgs,
+      system,
+    }: {
       default = pkgs.mkShell {
         packages = with pkgs; [
           nodejs_20
@@ -79,7 +82,10 @@
       };
     });
 
-    apps = forAllSystems (pkgs: {
+    apps = forAllSystems ({
+      pkgs,
+      system,
+    }: {
       restartDBDocker = let
         appName = "restartLab6DB";
         app = pkgs.writeShellApplication {
