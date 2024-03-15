@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NixOS Blogs</title>
+		<style>
+			* {
+				margin: 0;
+				box-sizing: border-box;
+			}
+			#root {
+				width: 100vw;
+				height: 100vh;
+			}
+		</style>
+</head>
+<body>
+	<div id="root"></div>
+
+   <!-- React CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.2/umd/react.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/17.0.2/umd/react-dom.development.js"></script>
+
+    <!-- Babel CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+
+		<!-- Import all components -->
+		<!-- <script id="imports" type="text/babel"> -->
+		<!-- 	const loadComponent = (source) => { -->
+		<!-- 		const scriptTag = document.createElement("script"); -->
+		<!-- 		scriptTag.setAttribute("src", source); -->
+		<!-- 		scriptTag.setAttribute("type", "text/babel"); -->
+		<!---->
+  <!--               document.getElementById("imports").after(scriptTag); -->
+		<!-- 	}; -->
+		<!---->
+		<!-- 	const sources = [ -->
+		<!-- 		"components/MainComponent.js", -->
+		<!-- 		"index.js" -->
+		<!-- 	]; -->
+		<!---->
+		<!-- 	for(let i=0; i<sources.length; i++) { -->
+		<!-- 		loadComponent(sources[i]) -->
+		<!-- 	} -->
+		<!-- 	//sources.forEach(loadComponent); -->
+		<!-- </script> -->
+
+		<script src="./components/MainComponent.js" type="text/babel"></script>
+		<script src="index.js" type="text/babel"></script>
+</body>
+</html>
