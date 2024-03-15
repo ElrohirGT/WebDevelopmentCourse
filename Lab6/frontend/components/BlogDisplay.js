@@ -9,13 +9,15 @@ const BlogDisplay = ({ blog }) => (
     }}
   >
     <div>
-      <img
-        style={{
-          height: "25vh",
-          maxWidth: "100%",
-        }}
-        src={blog.banner}
-      />
+      {blog.banner ? (
+        <img
+          style={{
+            height: "25vh",
+            maxWidth: "100%",
+          }}
+          src={blog.banner}
+        />
+      ) : null}
       <h1>{blog.title}</h1>
     </div>
     <p>{blog.content}</p>
