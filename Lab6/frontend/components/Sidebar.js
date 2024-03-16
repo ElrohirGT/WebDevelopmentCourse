@@ -50,7 +50,7 @@ const BlogNavButton = ({ blog, blogSetter, isSelected }) => (
  * Sidebar component
  * @param {{ setDisplayBlog: Function, currentBlog: Blog }} props Function to set display of blogs
  */
-const Sidebar = ({ setDisplayBlog, currentBlog }) => {
+const Sidebar = ({ setDisplayBlog, currentBlog, openCreateBlogDisplay }) => {
   const [blogs, setBlogs] = React.useState([]);
   React.useEffect(async () => {
     const response = await fetchBlogs();
@@ -82,7 +82,7 @@ const Sidebar = ({ setDisplayBlog, currentBlog }) => {
         ))}
       </div>
       <div>
-        <button>Crear</button>
+        <button onClick={openCreateBlogDisplay}>Crear</button>
         <button>Editar</button>
         <button>Borrar</button>
       </div>

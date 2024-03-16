@@ -15,7 +15,8 @@ const WELCOME_BLOG = {
 const MainComponent = () => {
   const [blog, setBlog] = React.useState(WELCOME_BLOG);
   const [route, setRoute] = React.useState(APP_ROUTE_DISPLAY_FORM);
-  ROUTER[APP_ROUTE_DISPLAY_FORM] = <BlogDisplay blog={blog}></BlogDisplay>;
+  ROUTER[APP_ROUTE_DISPLAY_FORM] = <BlogDisplay blog={blog} />;
+  ROUTER[APP_ROUTE_CREATE_FORM] = <CreateBlogForm />;
 
   return (
     <div
@@ -25,7 +26,11 @@ const MainComponent = () => {
         gridTemplateColumns: "20% 80%",
       }}
     >
-      <Sidebar setDisplayBlog={setBlog} currentBlog={blog}></Sidebar>
+      <Sidebar
+        setDisplayBlog={setBlog}
+        currentBlog={blog}
+        openCreateBlogDisplay={() => setRoute(APP_ROUTE_CREATE_FORM)}
+      ></Sidebar>
       {ROUTER[route]}
     </div>
   );
