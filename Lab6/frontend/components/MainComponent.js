@@ -17,6 +17,7 @@ const MainComponent = () => {
   const [route, setRoute] = React.useState(APP_ROUTE_DISPLAY_FORM);
   ROUTER[APP_ROUTE_DISPLAY_FORM] = <BlogDisplay blog={blog} />;
   ROUTER[APP_ROUTE_CREATE_FORM] = <CreateBlogForm />;
+  ROUTER[APP_ROUTE_UPDATE_FORM] = <UpdateBlogForm blog={blog} />;
 
   return (
     <div
@@ -29,9 +30,11 @@ const MainComponent = () => {
       <Sidebar
         setDisplayBlog={setBlog}
         currentBlog={blog}
+        openBlogDisplay={() => setRoute(APP_ROUTE_DISPLAY_FORM)}
         openCreateBlogDisplay={() => setRoute(APP_ROUTE_CREATE_FORM)}
+        openUpdateBlogDisplay={() => setRoute(APP_ROUTE_UPDATE_FORM)}
       ></Sidebar>
-      {ROUTER[route]}
+      <div style={{ overflow: "scroll" }}>{ROUTER[route]}</div>
     </div>
   );
 };

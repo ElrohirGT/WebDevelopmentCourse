@@ -1,8 +1,15 @@
 const CreateBlogForm = () => {
-  const onFormSubmit = () => {};
+  const onFormSubmit = (blogData) => {};
+
   return (
-    <div>
-      <BlogForm />
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        padding: "4rem",
+      }}
+    >
+      <BlogForm onSubmit={onFormSubmit} />
     </div>
   );
 };

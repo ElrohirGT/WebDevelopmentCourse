@@ -24,7 +24,7 @@ const fetchBlogs = async () => {
 /**
  * @param {{blog: Blog, blogSetter: Function, isSelected: boolean}} props
  */
-const BlogNavButton = ({ blog, blogSetter, isSelected }) => (
+const BlogNavButton = ({ blog, onClick, isSelected }) => (
   <div
     style={{
       backgroundColor: isSelected ? "black" : "#414141",
@@ -32,7 +32,7 @@ const BlogNavButton = ({ blog, blogSetter, isSelected }) => (
       padding: "1rem",
       fontWeight: isSelected ? "bold" : "normal",
     }}
-    onClick={() => blogSetter(blog)}
+    onClick={onClick}
   >
     <span
       style={{
@@ -50,7 +50,13 @@ const BlogNavButton = ({ blog, blogSetter, isSelected }) => (
  * Sidebar component
  * @param {{ setDisplayBlog: Function, currentBlog: Blog }} props Function to set display of blogs
  */
-const Sidebar = ({ setDisplayBlog, currentBlog, openCreateBlogDisplay }) => {
+const Sidebar = ({
+  setDisplayBlog,
+  currentBlog,
+  openBlogDisplay,
+  openCreateBlogDisplay,
+  openUpdateBlogDisplay,
+}) => {
   const [blogs, setBlogs] = React.useState([]);
   React.useEffect(async () => {
     const response = await fetchBlogs();
@@ -75,7 +81,10 @@ const Sidebar = ({ setDisplayBlog, currentBlog, openCreateBlogDisplay }) => {
         {blogs.map((b) => (
           <BlogNavButton
             key={b.blog_id}
-            blogSetter={setDisplayBlog}
+            onClick={() => {
+              setDisplayBlog(b);
+              openBlogDisplay();
+            }}
             blog={b}
             isSelected={currentBlog.blog_id === b.blog_id}
           />
@@ -83,7 +92,7 @@ const Sidebar = ({ setDisplayBlog, currentBlog, openCreateBlogDisplay }) => {
       </div>
       <div>
         <button onClick={openCreateBlogDisplay}>Crear</button>
-        <button>Editar</button>
+        <button onClick={openUpdateBlogDisplay}>Editar</button>
         <button>Borrar</button>
       </div>
     </div>

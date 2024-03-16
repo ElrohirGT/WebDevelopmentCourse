@@ -19,6 +19,9 @@ const BlogForm = ({ blog, onSubmit }) => {
       <textarea
         placeholder="Contenido:"
         defaultValue={blog?.content ? blog.content : ""}
+        style={{
+          height: "auto",
+        }}
       />
       <button>Subir</button>
     </React.Fragment>
