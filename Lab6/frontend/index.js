@@ -3,7 +3,7 @@ const API_BASE_URL = "http://localhost:3000";
 
 console.log("Error logging...");
 /**
- * Creates a function that logs an error object and appends a specified message.
+ * Creates a function that logs an error object and prepends a specified message.
  * @param {string} message The message to append to the log
  * @returns {Function} With a signature equivalent to `console.error`
  */

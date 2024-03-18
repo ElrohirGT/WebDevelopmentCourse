@@ -50,7 +50,14 @@ const MainComponent = () => {
   }, [refreshFlag]);
 
   ROUTER[APP_ROUTE_DISPLAY_FORM] = <BlogDisplay blog={blog} />;
-  ROUTER[APP_ROUTE_CREATE_FORM] = <CreateBlogForm />;
+  ROUTER[APP_ROUTE_CREATE_FORM] = (
+    <CreateBlogForm
+      onSubmit={(formBlog) => {
+        setBlog(formBlog);
+        refreshBlogs();
+      }}
+    />
+  );
   ROUTER[APP_ROUTE_UPDATE_FORM] = <UpdateBlogForm blog={blog} />;
 
   const openBlogDisplay = (blog) => {
