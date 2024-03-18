@@ -4,11 +4,12 @@ import pinoHTTP from 'pino-http'
 /**
  * Checks if a string is null or undefined
  */
-export const isNullOrUndefined = (str) => (typeof str === 'undefined' || str === null)
+export const isNullOrUndefined = (str) => typeof str === 'undefined' || str === null
 /**
  * Checks if a string is _truthy_ and not empty
+ * @param {string} str
  */
-export const isTruthyAndNotEmpty = (str) => !isNullOrUndefined(str) && !str.isEmpty()
+export const isTruthyAndNotEmpty = (str) => !isNullOrUndefined(str) && str.length > 0
 
 export const logMiddleware = pinoHTTP({
   logger: pino(),
