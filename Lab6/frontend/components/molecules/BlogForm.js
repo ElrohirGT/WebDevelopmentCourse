@@ -22,6 +22,8 @@ const BlogForm = ({ blog, onSubmit }) => {
 		Blog de ejemplo con un [link](www.google.com)
 	`;
 
+  const imageSource = banner || blog?.banner;
+
   return (
     <React.Fragment>
       <input
@@ -30,7 +32,15 @@ const BlogForm = ({ blog, onSubmit }) => {
         defaultValue={blog?.title ? blog.title : ""}
         onChange={(e) => setTitle(e.target.value)}
       />
-      <img src={banner || blog?.banner} />
+      <img
+        src={imageSource}
+        style={{
+          height: imageSource ? "30vh" : "0px",
+          alignSelf: "center",
+          width: "auto",
+          maxWidth: "100%",
+        }}
+      />
       <input
         type="file"
         placeholder="Banner:"
@@ -62,7 +72,17 @@ const BlogForm = ({ blog, onSubmit }) => {
         defaultValue={blog?.content ? blog.content : ""}
         onChange={(e) => setContent(e.target.value)}
       />
-      <button onClick={onSubmitForm} disabled={!canSubmit}>
+      <button
+        onClick={onSubmitForm}
+        disabled={!canSubmit}
+        style={{
+          color: "white",
+          fontWeight: "bold",
+          backgroundColor: "#414141",
+          padding: "1rem 2rem",
+          border: "0px",
+        }}
+      >
         Subir
       </button>
     </React.Fragment>

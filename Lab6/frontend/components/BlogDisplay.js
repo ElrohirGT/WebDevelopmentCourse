@@ -12,7 +12,7 @@ const BlogDisplay = ({ blog }) => (
       {blog.banner ? (
         <img
           style={{
-            height: "25vh",
+            height: "30vh",
             maxWidth: "100%",
           }}
           src={blog.banner}
