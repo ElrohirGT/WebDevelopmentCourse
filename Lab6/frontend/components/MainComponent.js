@@ -67,7 +67,15 @@ const MainComponent = () => {
       }}
     />
   );
-  ROUTER[APP_ROUTE_UPDATE_FORM] = <UpdateBlogForm blog={blog} />;
+  ROUTER[APP_ROUTE_UPDATE_FORM] = (
+    <UpdateBlogForm
+      blog={blog}
+      onSubmit={(formBlog) => {
+        refreshBlogs();
+        openBlogDisplay(formBlog);
+      }}
+    />
+  );
 
   return (
     <div

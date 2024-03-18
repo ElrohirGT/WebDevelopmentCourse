@@ -3,16 +3,18 @@
  * @param {{blog: Blog|null, onSubmit: function(Blog):void}} props
  **/
 const BlogForm = ({ blog, onSubmit }) => {
-  const [title, setTitle] = React.useState("");
-  const [content, setContent] = React.useState("");
-  const [banner, setBanner] = React.useState("");
+  const [title, setTitle] = React.useState(blog?.title ?? "");
+  const [content, setContent] = React.useState(blog?.content ?? "");
+  const [banner, setBanner] = React.useState(blog?.banner ?? "");
   const [canSubmit, setCanSubmit] = React.useState(true);
 
   const onSubmitForm = () => {
     if (!canSubmit) {
       return;
     }
-    const formBlog = Blog(title, banner, content);
+    const formBlog = Blog(title, banner, content, []);
+    console.log("BLOG", blog);
+    console.log("FORM_BLOG", formBlog);
     onSubmit({ ...blog, ...formBlog });
   };
 
