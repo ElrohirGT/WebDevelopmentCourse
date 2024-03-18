@@ -4,14 +4,14 @@ const insertBlogInDB = async (blog) => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: blog,
+    body: JSON.stringify(blog),
   }).catch(logError("An error occurred while trying to insert a post"));
 
   if (response === undefined) {
     return;
   }
 
-  const body = response
+  const body = await response
     .json()
     .catch(logError("An error occurred while trying to insert a post"));
 

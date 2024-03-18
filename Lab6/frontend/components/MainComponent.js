@@ -42,6 +42,15 @@ const MainComponent = () => {
   const [refreshFlag, setRefreshFlag] = React.useState(false);
   const refreshBlogs = () => setRefreshFlag(!refreshFlag);
 
+  const openBlogDisplay = (blog) => {
+    if (blog) {
+      setBlog(blog);
+    }
+    setRoute(APP_ROUTE_DISPLAY_FORM);
+  };
+  const openCreateBlogDisplay = () => setRoute(APP_ROUTE_CREATE_FORM);
+  const openUpdateBlogDisplay = () => setRoute(APP_ROUTE_UPDATE_FORM);
+
   React.useEffect(async () => {
     const response = await fetchBlogs();
     if (response !== undefined) {
@@ -53,21 +62,12 @@ const MainComponent = () => {
   ROUTER[APP_ROUTE_CREATE_FORM] = (
     <CreateBlogForm
       onSubmit={(formBlog) => {
-        setBlog(formBlog);
         refreshBlogs();
+        openBlogDisplay(formBlog);
       }}
     />
   );
   ROUTER[APP_ROUTE_UPDATE_FORM] = <UpdateBlogForm blog={blog} />;
-
-  const openBlogDisplay = (blog) => {
-    if (blog) {
-      setBlog(blog);
-    }
-    setRoute(APP_ROUTE_DISPLAY_FORM);
-  };
-  const openCreateBlogDisplay = () => setRoute(APP_ROUTE_CREATE_FORM);
-  const openUpdateBlogDisplay = () => setRoute(APP_ROUTE_UPDATE_FORM);
 
   return (
     <div

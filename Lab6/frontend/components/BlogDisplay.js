@@ -20,6 +20,6 @@ const BlogDisplay = ({ blog }) => (
       ) : null}
       <h1>{blog.title}</h1>
     </div>
-    <p>{blog.content}</p>
+    <window.Markdown>{blog.content}</window.Markdown>
   </div>
 );

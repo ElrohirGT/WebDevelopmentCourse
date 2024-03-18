@@ -12,8 +12,8 @@ const BlogForm = ({ blog, onSubmit }) => {
     if (!canSubmit) {
       return;
     }
-    const blog = Blog(title, banner, content);
-    onSubmit(blog);
+    const formBlog = Blog(title, banner, content);
+    onSubmit({ ...blog, ...formBlog });
   };
 
   const contentPlaceholder = `
