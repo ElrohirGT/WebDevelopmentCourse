@@ -33,6 +33,7 @@ const MainComponent = () => {
         openBlogDisplay={() => setRoute(APP_ROUTE_DISPLAY_FORM)}
         openCreateBlogDisplay={() => setRoute(APP_ROUTE_CREATE_FORM)}
         openUpdateBlogDisplay={() => setRoute(APP_ROUTE_UPDATE_FORM)}
+        deleteBlog={() => setBlog(WELCOME_BLOG)}
       ></Sidebar>
       <div style={{ overflow: "scroll" }}>{ROUTER[route]}</div>
     </div>

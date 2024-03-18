@@ -22,6 +22,19 @@ const fetchBlogs = async () => {
 };
 
 /**
+ * Makes a request to delete a blog.
+ * @param {number} blogId The ID of the blog to delete
+ */
+const deleteBlogRequest = async (blogId) => {
+  const url = API_BASE_URL + `/posts/${blogId}`;
+  const response = await fetch(url, {
+    method: "DELETE",
+  }).catch(logError("An error ocurred while deleting blog post"));
+
+  return response;
+};
+
+/**
  * @param {{blog: Blog, blogSetter: Function, isSelected: boolean}} props
  */
 const BlogNavButton = ({ blog, onClick, isSelected }) => (
@@ -56,14 +69,16 @@ const Sidebar = ({
   openBlogDisplay,
   openCreateBlogDisplay,
   openUpdateBlogDisplay,
+  deleteBlog,
 }) => {
   const [blogs, setBlogs] = React.useState([]);
+  const [updateBlogsFlag, updateBlogs] = React.useState(false);
   React.useEffect(async () => {
     const response = await fetchBlogs();
     if (response !== undefined) {
       setBlogs(response);
     }
-  }, []);
+  }, [updateBlogsFlag]);
 
   return (
     <div
@@ -93,7 +108,16 @@ const Sidebar = ({
       <div>
         <button onClick={openCreateBlogDisplay}>Crear</button>
         <button onClick={openUpdateBlogDisplay}>Editar</button>
-        <button>Borrar</button>
+        <button
+          onClick={async () => {
+            if (await deleteBlogRequest(currentBlog.blog_id)) {
+              updateBlogs(!updateBlogsFlag);
+              deleteBlog();
+            }
+          }}
+        >
+          Borrar
+        </button>
       </div>
     </div>
   );
