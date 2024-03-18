@@ -13,8 +13,6 @@ const BlogForm = ({ blog, onSubmit }) => {
       return;
     }
     const formBlog = Blog(title, banner, content, []);
-    console.log("BLOG", blog);
-    console.log("FORM_BLOG", formBlog);
     onSubmit({ ...blog, ...formBlog });
   };
 
@@ -32,7 +30,7 @@ const BlogForm = ({ blog, onSubmit }) => {
         defaultValue={blog?.title ? blog.title : ""}
         onChange={(e) => setTitle(e.target.value)}
       />
-      {blog?.banner || banner ? <img src={blog?.banner || banner} /> : null}
+      <img src={banner || blog?.banner} />
       <input
         type="file"
         placeholder="Banner:"
