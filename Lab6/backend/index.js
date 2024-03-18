@@ -13,7 +13,7 @@ const port = 3000
 const docsHandler = express.static('static/docs/')
 const corsConfig = {
   origin: true,
-  methods: ['GET', 'POST'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
 }
 
 app.use(logMiddleware) // Log requests and responses
