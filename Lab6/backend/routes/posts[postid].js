@@ -107,24 +107,35 @@ router.delete("/posts/:postId", async (req, res) => {
   const { postId } = req.params;
   logger.info(`Attempting to delete post with ID: ${postId}`);
 
-  logger.info("Starting transaction...");
-  const conn = await DB_POOL.connect();
-  await conn.query("BEGIN");
+  const conn = await DB_POOL.connect().catch((e) => logger.error(e));
+
+  if (conn === undefined) {
+    res.status(500).send("DB Error");
+  }
 
   try {
+    logger.info("Starting transaction...");
+    await conn.query("BEGIN");
+
+    logger.info("Deleting external links...");
     const deleteLinksQuery = "DELETE FROM external_links WHERE blog_id=$1";
     await conn.query(deleteLinksQuery, [postId]);
 
+    logger.info("Deleting blog post...");
     const deletePostQuery = "DELETE FROM blog_posts WHERE blog_id = $1";
     await conn.query(deletePostQuery, [postId]);
 
+    logger.info("Comitting transaction...");
     await conn.query("COMMIT");
+
+    res.status(200).send();
   } catch (e) {
     logger.error(e);
     logger.error("Rolling back, closing transaction...");
     await conn.query("ROLLBACK");
     res.status(500).send("Internal server error");
   } finally {
+    logger.info("Releasing client...");
     conn.release();
   }
 });
