@@ -36,6 +36,13 @@ const BlogNavButton = ({ blog, onClick, isSelected }) => (
   </div>
 );
 
+const ButtonStyle = {
+  padding: "1rem 2rem",
+  backgroundColor: "#414141",
+  color: "white",
+  fontWeight: "bold",
+  borderWidth: "0px",
+};
 /**
  * Sidebar component
  * @param {{ currentBlog: Blog }} props Function to set display of blogs
@@ -69,10 +76,21 @@ const Sidebar = ({
         />
       ))}
     </div>
-    <div>
-      <button onClick={openCreateBlogDisplay}>Crear</button>
-      <button onClick={openUpdateBlogDisplay}>Editar</button>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-around",
+        backgroundColor: "#414141",
+      }}
+    >
+      <button onClick={openCreateBlogDisplay} style={ButtonStyle}>
+        Crear
+      </button>
+      <button onClick={openUpdateBlogDisplay} style={ButtonStyle}>
+        Editar
+      </button>
       <button
+        style={ButtonStyle}
         onClick={async () => {
           if (await deleteBlogRequest(currentBlog.blog_id)) {
             deleteBlog();
