@@ -47,42 +47,40 @@ const Sidebar = ({
   openCreateBlogDisplay,
   openUpdateBlogDisplay,
   deleteBlog,
-}) => {
-  return (
+}) => (
+  <div
+    style={{
+      overflow: "scroll",
+      display: "grid",
+      gridTemplateRows: "95vh 5vh",
+    }}
+  >
     <div
       style={{
         overflow: "scroll",
-        display: "grid",
-        gridTemplateRows: "95vh 5vh",
       }}
     >
-      <div
-        style={{
-          overflow: "scroll",
+      {blogs.map((b) => (
+        <BlogNavButton
+          key={b.blog_id}
+          onClick={() => openBlogDisplay(b)}
+          blog={b}
+          isSelected={currentBlog.blog_id === b.blog_id}
+        />
+      ))}
+    </div>
+    <div>
+      <button onClick={openCreateBlogDisplay}>Crear</button>
+      <button onClick={openUpdateBlogDisplay}>Editar</button>
+      <button
+        onClick={async () => {
+          if (await deleteBlogRequest(currentBlog.blog_id)) {
+            deleteBlog();
+          }
         }}
       >
-        {blogs.map((b) => (
-          <BlogNavButton
-            key={b.blog_id}
-            onClick={() => openBlogDisplay(b)}
-            blog={b}
-            isSelected={currentBlog.blog_id === b.blog_id}
-          />
-        ))}
-      </div>
-      <div>
-        <button onClick={openCreateBlogDisplay}>Crear</button>
-        <button onClick={openUpdateBlogDisplay}>Editar</button>
-        <button
-          onClick={async () => {
-            if (await deleteBlogRequest(currentBlog.blog_id)) {
-              deleteBlog();
-            }
-          }}
-        >
-          Borrar
-        </button>
-      </div>
+        Borrar
+      </button>
     </div>
-  );
-};
+  </div>
+);
