@@ -11,9 +11,9 @@
   "scripts": {
     "start": "yarn && node index.js",
     "dev": "yarn && nodemon index.js | yarn pino-pretty",
-    "format": "dprint fmt",
-    "lint": "yarn eslint .",
-    "fix": "yarn format && (yarn lint --fix)"
+    "format": "yarn && dprint fmt",
+    "lint": "yarn && yarn eslint .",
+    "fix": "yarn && yarn format && (yarn lint --fix)"
   },
   "dependencies": {
     "body-parser": "^1.20.2",
