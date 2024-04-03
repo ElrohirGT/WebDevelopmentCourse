@@ -30,3 +30,8 @@ const Blog = (title, banner, content, links) => {
  * @type {object}
  * @property {Blog} blog
  */
+
+/**
+ * Creates a promise that waits for a specified amount of ms.
+ */
+const delay = (ms) => new Promise((res) => setTimeout(res, ms));

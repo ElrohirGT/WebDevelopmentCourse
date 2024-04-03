@@ -19,12 +19,18 @@ const insertBlogInDB = async (blog) => {
   return body;
 };
 
-const CreateBlogForm = ({ onSubmit }) => {
+const CreateBlogForm = ({ onSubmit, setIsLoading }) => {
   const onFormSubmit = async (blogData) => {
+    setIsLoading(true);
+
     let insertedBlog = await insertBlogInDB(blogData);
+    await delay(2000);
+
     if (insertedBlog !== undefined) {
       onSubmit(insertedBlog);
     }
+
+    setIsLoading(false);
   };
 
   return (

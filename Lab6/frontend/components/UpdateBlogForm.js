@@ -21,13 +21,18 @@ const updateBlogInDB = async (blog) => {
   return body;
 };
 
-const UpdateBlogForm = ({ blog, onSubmit }) => {
+const UpdateBlogForm = ({ blog, onSubmit, setIsLoading }) => {
   const onFormSubmit = async (formData) => {
+    setIsLoading(true);
+
     const updatedBlog = await updateBlogInDB(formData);
+    await delay(2000);
 
     if (updatedBlog !== undefined) {
       onSubmit(updatedBlog);
     }
+
+    setIsLoading(false);
   };
 
   return (

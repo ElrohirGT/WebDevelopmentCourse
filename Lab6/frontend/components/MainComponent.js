@@ -50,6 +50,8 @@ const fetchBlogs = async () => {
 };
 
 const MainComponent = () => {
+  const [isLoading, setIsLoading] = React.useState(true);
+
   const [blogs, setBlogs] = React.useState([]);
   const [blog, setBlog] = React.useState(WELCOME_BLOG);
   const [route, setRoute] = React.useState(APP_ROUTE_DISPLAY_FORM);
@@ -67,15 +69,23 @@ const MainComponent = () => {
 
   React.useEffect(async () => {
     console.log("Blogs refreshed!");
+    setIsLoading(true);
+
     const response = await fetchBlogs();
+    // Fake network latency
+    await delay(3000);
+
     if (response !== undefined) {
       setBlogs(response);
     }
+
+    setIsLoading(false);
   }, [refreshFlag]);
 
   ROUTER[APP_ROUTE_DISPLAY_FORM] = <BlogDisplay blog={blog} />;
   ROUTER[APP_ROUTE_CREATE_FORM] = (
     <CreateBlogForm
+      setIsLoading={setIsLoading}
       onSubmit={(formBlog) => {
         refreshBlogs();
         openBlogDisplay(formBlog);
@@ -84,6 +94,7 @@ const MainComponent = () => {
   );
   ROUTER[APP_ROUTE_UPDATE_FORM] = (
     <UpdateBlogForm
+      setIsLoading={setIsLoading}
       blog={blog}
       onSubmit={(formBlog) => {
         refreshBlogs();
@@ -100,6 +111,7 @@ const MainComponent = () => {
         gridTemplateColumns: "20% 80%",
       }}
     >
+      <LoadingView isLoading={isLoading} />
       <Sidebar
         blogs={blogs}
         currentBlog={blog}

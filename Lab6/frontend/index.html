@@ -1,62 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NixOS Blogs</title>
-		<style>
-			* {
-				margin: 0;
-				box-sizing: border-box;
-			}
-			#root {
-				width: 100vw;
-				height: 100vh;
-			}
-		</style>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>NixOS Blogs</title>
+	<style>
+		* {
+			margin: 0;
+			box-sizing: border-box;
+		}
+
+		#root {
+			width: 100vw;
+			height: 100vh;
+		}
+	</style>
 </head>
+
 <body>
 	<div id="root"></div>
 
-   <!-- React CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.2/umd/react.development.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/17.0.2/umd/react-dom.development.js"></script>
+	<!-- React CDN -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.2/umd/react.development.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/17.0.2/umd/react-dom.development.js"></script>
 
-    <!-- Babel CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.24.0/babel.min.js"></script>
+	<!-- Babel CDN -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.24.0/babel.min.js"></script>
 
-		<!-- React Markdown -->
-		<script type="module">
-			import Markdown from 'https://esm.sh/react-markdown@9?bundle'
-			// import remarkCodeBlocks from 'https://cdn.jsdelivr.net/npm/remark-code-blocks@2.0.1/+esm'
-			// import remarkMath from 'https://cdn.jsdelivr.net/npm/remark-math@6.0.0/+esm'
-			// import rehypeKatex from 'https://cdn.jsdelivr.net/npm/rehype-katex@7.0.0/+esm'
-			// import React from 'https://cdn.jsdelivr.net/npm/react@17.0.2/+esm'
-			// console.log("React object", <React.Fragment></React.Fragment>)
-			// import ReactDOM from 'https://cdn.jsdelivr.net/npm/react-dom@17.0.2/+esm'
+	<!-- React Markdown -->
+	<script type="module">
+		import Markdown from 'https://esm.sh/react-markdown@9?bundle'
+		// import remarkCodeBlocks from 'https://cdn.jsdelivr.net/npm/remark-code-blocks@2.0.1/+esm'
+		// import remarkMath from 'https://cdn.jsdelivr.net/npm/remark-math@6.0.0/+esm'
+		// import rehypeKatex from 'https://cdn.jsdelivr.net/npm/rehype-katex@7.0.0/+esm'
+		// import React from 'https://cdn.jsdelivr.net/npm/react@17.0.2/+esm'
+		// console.log("React object", <React.Fragment></React.Fragment>)
+		// import ReactDOM from 'https://cdn.jsdelivr.net/npm/react-dom@17.0.2/+esm'
 
-			// window.Markdown = ({ content }) => (
-			// <>
-			// <Markdown remarkPlugins=[remarkCodeBlocks, remarkMath, rehypeKatex]>
-			// {content}
-			// </Markdown>
-			// </>
-			// );
-			window.Markdown = Markdown
-		</script>
+		// window.Markdown = ({ content }) => (
+		// <>
+		// <Markdown remarkPlugins=[remarkCodeBlocks, remarkMath, rehypeKatex]>
+		// {content}
+		// </Markdown>
+		// </>
+		// );
+		window.Markdown = Markdown
+	</script>
 
-		<!-- Types -->
-		<script src="./types.js" type="text/babel"></script>
+	<!-- Types -->
+	<script src="./types.js" type="text/babel"></script>
 
-		<!-- Moleculas -->
-		<script src="./components/molecules/BlogForm.js" type="text/babel"></script>
+	<!-- Moleculas -->
+	<script src="./components/molecules/BlogForm.js" type="text/babel"></script>
 
-		<!-- Componentes -->
-		<script src="./components/BlogDisplay.js" type="text/babel"></script>
-		<script src="./components/CreateBlogForm.js" type="text/babel"></script>
-		<script src="./components/UpdateBlogForm.js" type="text/babel"></script>
-		<script src="./components/Sidebar.js" type="text/babel"></script>
-		<script src="./components/MainComponent.js" type="text/babel"></script>
-		<script src="index.js" type="text/babel"></script>
+	<!-- Componentes -->
+	<script src="./components/LoadingScreen.js" type="text/babel"></script>
+	<script src="./components/BlogDisplay.js" type="text/babel"></script>
+	<script src="./components/CreateBlogForm.js" type="text/babel"></script>
+	<script src="./components/UpdateBlogForm.js" type="text/babel"></script>
+	<script src="./components/Sidebar.js" type="text/babel"></script>
+	<script src="./components/MainComponent.js" type="text/babel"></script>
+	<script src="index.js" type="text/babel"></script>
 </body>
+
 </html>
