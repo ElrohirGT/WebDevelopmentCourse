@@ -1,35 +1,64 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import NotFound from './components/NotFound';
+import Home from './components/Home';
+import Login from './components/Login';
+import { ROUTE_NAMES } from './lib';
+
+
+/**
+	* @param {string} route 
+	* @returns {string} The found route or `ROUTE_NAMES.notFound`
+	*/
+const computeDefaultRoute = (route) => ROUTE_NAMES[route] ?? ROUTE_NAMES["/404"];
 
 function App() {
-  const [count, setCount] = useState(0)
+	const windowRoute = window.location.pathname;
+	console.log(windowRoute);
+	const defaultRoute = computeDefaultRoute(windowRoute);
+	const [route, setRoute] = useState(defaultRoute);
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+	const [loginData, setLoginData] = useSessionStorage("loginData");
+
+	/**
+		* @param {import('./components/Login').LoginData} loginData
+		*/
+	const onLogin = (loginData) => {
+		setLoginData(loginData);
+		setRoute(ROUTE_NAMES["/"]);
+	};
+
+	const onLoginRedirect = () => {
+		setLoginData(null);
+		setRoute(ROUTE_NAMES["/login"]);
+	};
+
+	const routes = {};
+	routes[ROUTE_NAMES["/404"]] = <NotFound />;
+	routes[ROUTE_NAMES["/"]] = <Home data={loginData} onLoginRedirect={onLoginRedirect} />;
+	routes[ROUTE_NAMES["/login"]] = <Login onLogin={onLogin} />;
+
+	return (
+		<>
+			{routes[route]}
+		</>
+	)
+}
+
+/**
+	* Custom REACT hook for using session storage.
+	*
+	* @param {string} key The key to use in session storage.
+	*/
+const useSessionStorage = (key) => {
+	const [state, setState] = useState(sessionStorage.getItem(key));
+
+	console.log("The login data is: ", JSON.parse(state));
+
+	return [JSON.parse(state), (newValue) => {
+		const json = JSON.stringify(newValue);
+		sessionStorage.setItem(key, json)
+		setState(json);
+	}];
 }
 
 export default App
