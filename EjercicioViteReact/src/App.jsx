@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { TaskList } from './components/TaskList'
 import { useLocalStorage } from "./lib"
-import { AddTaskView } from './views/AddTask';
+import { TaskForm } from './components/TaskForm';
 
 const HOME_ROUTE = "HOME";
 const ADD_TASK_ROUTE = "ADD_TASK";
+const EDIT_TASK_ROUTE = "EDIT_TASK";
 
 const URL_TO_ROUTE_MAP = {
 	"/": HOME_ROUTE,
@@ -15,7 +16,8 @@ const URL_TO_ROUTE_MAP = {
 function App() {
 	const urlRoute = window.location.pathname;
 	const defaultRoute = URL_TO_ROUTE_MAP[urlRoute] ?? HOME_ROUTE;
-	const [currentRoute, _] = useState(defaultRoute);
+	const [currentRoute, setCurrentRoute] = useState(defaultRoute);
+	const [selectedTask, setSelectedTask] = useState(null);
 
 	/**
 		* Set of completed tasks.
@@ -44,6 +46,14 @@ function App() {
 	}
 
 	/**
+		* @param {Task} task - The task to edit
+		*/
+	const onEditTask = (task) => {
+		setSelectedTask(task);
+		setCurrentRoute(EDIT_TASK_ROUTE);
+	}
+
+	/**
 		* @param {Task} task - The task to add.
 		* @returns {boolean} Whether the task was added or not.
 		*/
@@ -56,6 +66,36 @@ function App() {
 		return true;
 	};
 
+	/**
+		* @param {Task} task - The task to try to edit.
+		* @returns {boolean} True if it could be edited.
+		*/
+	const tryToEditTask = (task) => {
+		/**
+			* @param {Task[]} array
+			* @param {(newTasks: Task[])=>void} setArray
+			*/
+		const editTaskIfInArray = (array, setArray) => {
+			const newArray = array.map((t) => {
+				if (t.title === selectedTask.title && t.description === selectedTask.description) {
+					return task;
+				} else {
+					return t;
+				}
+			});
+
+			setArray(newArray);
+		};
+
+
+		editTaskIfInArray(uncompletedTasks, setUncompletedTasks);
+		editTaskIfInArray(completedTasks, setCompletedTasks);
+
+		setCurrentRoute(HOME_ROUTE);
+
+		return true;
+	};
+
 	const ROUTES = {};
 	ROUTES[HOME_ROUTE] = <>
 		<a href='add'>New Task</a>
@@ -63,10 +103,12 @@ function App() {
 		<TaskList
 			completedTasks={completedTasks}
 			uncompletedTasks={uncompletedTasks}
+			editTask={onEditTask}
 			completeTask={completeTask}
 			uncompleteTask={uncompleteTask} />
 	</>;
-	ROUTES[ADD_TASK_ROUTE] = <AddTaskView onFormSubmitted={tryToAddTask} />
+	ROUTES[ADD_TASK_ROUTE] = <TaskForm onFormSubmitted={tryToAddTask} />
+	ROUTES[EDIT_TASK_ROUTE] = <TaskForm onFormSubmitted={tryToEditTask} baseTask={selectedTask} />
 
 	return (
 		<div>

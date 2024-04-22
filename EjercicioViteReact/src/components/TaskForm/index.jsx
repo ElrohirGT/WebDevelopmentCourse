@@ -1,11 +1,12 @@
 import { useState } from "react";
-import "./AddTaskView.css"
+import "./TaskForm.css"
 
 /**
 	* @param {Object} props 
 	* @param {(newTask: Task)=>boolean} props.onFormSubmitted 
+	* @param {Task} props.baseTask 
 	*/
-export function AddTaskView({ onFormSubmitted }) {
+export function TaskForm({ onFormSubmitted, baseTask = null }) {
 	const [message, setMessage] = useState("");
 
 	const onFormSubmit = (e) => {
@@ -26,10 +27,10 @@ export function AddTaskView({ onFormSubmitted }) {
 		}
 	};
 
-	return <form className="add-task-view-container" onSubmit={onFormSubmit}>
+	return <form className="add-task-form-container" onSubmit={onFormSubmit}>
 		<h1>Create a Task</h1>
-		<input name="title" placeholder="Title:" />
-		<input name="description" placeholder="Description:" />
+		<input name="title" placeholder="Title:" defaultValue={baseTask?.title} />
+		<input name="description" placeholder="Description:" defaultValue={baseTask?.description} />
 		<a href="/">Go Back</a>
 		<button type="reset">Clear</button>
 		<button type="submit">Create</button>

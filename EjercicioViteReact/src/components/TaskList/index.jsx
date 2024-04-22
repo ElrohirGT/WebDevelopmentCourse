@@ -6,8 +6,9 @@ import "./TaskList.css"
 	* @param {Task[]} props.uncompletedTasks 
 	* @param {(task: Task) => void} props.completeTask 
 	* @param {(task: Task) => void} props.uncompleteTask 
+	* @param {(task: Task) => void} props.editTask
 	*/
-export function TaskList({ completedTasks, uncompletedTasks, completeTask, uncompleteTask }) {
+export function TaskList({ completedTasks, uncompletedTasks, completeTask, uncompleteTask, editTask }) {
 
 	/**
 		* @param {Task} task - The task to render
@@ -16,6 +17,11 @@ export function TaskList({ completedTasks, uncompletedTasks, completeTask, uncom
 		return <div key={`${task.title}-${task.description}`} className={"task-item " + (isCompleted ? "completed-task-item" : "")}>
 			<p>{task.title}</p>
 			<p>{task.description}</p>
+			<button onClick={() => {
+				if (!isCompleted) {
+					editTask(task)
+				}
+			}}>Edit</button>
 			<button onClick={() => {
 				isCompleted ? uncompleteTask(task) : completeTask(task);
 			}}>{isCompleted ? "Redo" : "Done"}</button>
