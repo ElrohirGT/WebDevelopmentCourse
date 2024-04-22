@@ -22,12 +22,13 @@ export function TaskList({ completedTasks, uncompletedTasks, completeTask, uncom
 		</div>
 	};
 
-	return <div>
+	return <div className="task-list">
 		<div className="task-items-container">
 			{
 				uncompletedTasks.map((t) => constructLisItem(t, false))
 			}
 		</div>
+		<hr />
 		<div className="task-items-container">
 			{
 				completedTasks.map((t) => constructLisItem(t, true))
