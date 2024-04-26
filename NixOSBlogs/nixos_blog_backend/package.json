@@ -9,7 +9,10 @@
   "scripts": {
     "dev": "nodemon ./index.js",
     "start": "node ./index.js",
-    "release": "cd ../nixos_blog_frontend/ && yarn build && cp -r dist ../nixos_blog_backend/static/ && cd ../nixos_blog_backend && yarn start"
+    "release": "cd ../nixos_blog_frontend/ && yarn build && cp -r dist ../nixos_blog_backend/static/ && cd ../nixos_blog_backend && yarn start",
+
+		"lint": "oxlint -D all -A nursery",
+		"lint:ci": "yarn lint --max-warnings 0"
   },
   "dependencies": {
     "express": "^4.19.2",

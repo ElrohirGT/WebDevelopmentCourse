@@ -6,9 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "oxlint -D all -A nursery",
     "preview": "vite preview",
-    "lint:ci": "yarn lint --max-warnings 0"
+    "lint": "oxlint -D all -A nursery",
+    "lint:ci": "yarn lint --max-warnings 0",
+    "format": "dprint fmt"
   },
   "dependencies": {
     "react": "^18.2.0",
