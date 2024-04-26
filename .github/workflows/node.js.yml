@@ -21,7 +21,7 @@ jobs:
     - name: Magic Nix Cache
       uses: DeterminateSystems/magic-nix-cache-action@v4
     - name: Checking
-      run: cd NixOSBlogs && nix develop --impure -c "cd nixos_blog_backend && yarn lint"
+      run: cd NixOSBlogs && nix develop --impure --command bash -c "cd nixos_blog_backend && yarn lint:ci"
       
   CheckFrontend:
     runs-on: ubuntu-latest
@@ -34,7 +34,7 @@ jobs:
     - name: Magic Nix Cache
       uses: DeterminateSystems/magic-nix-cache-action@v4
     - name: Checking
-      run: cd NixOSBlogs && nix develop --impure -c "cd nixos_blog_frontend && yarn lint"
+      run: cd NixOSBlogs && nix develop --impure --command bash -c "cd nixos_blog_frontend && yarn lint:ci"
 
   Deploy:
     runs-on: ubuntu-latest
@@ -55,6 +55,6 @@ jobs:
         instance-ids: ${{ secrets.INSTANCE_ID }}
 
         working-directory: /home/ubuntu/WebDevelopmentCourse
-        command: git pull && cd cd NixOSBlogs/ && nix develop --impure -c "cd nixos_blog_backend && yarn release"
+        command: git pull && cd cd NixOSBlogs/ && nix develop --impure --command bash -c "cd nixos_blog_backend && yarn release"
         comment: Releasing from CI/CD in Github Actions!
 
