@@ -7,7 +7,7 @@
   "license": "MIT",
   "private": false,
 	"scripts": {
-		"release": "cd ../nixos_blog_frontend/ && yarn build"
+		"release": "cd ../nixos_blog_frontend/ && yarn build && cp -r dist ../nixos_blog_backend/static/"
 	},
   "dependencies": {
     "express": "^4.19.2",
