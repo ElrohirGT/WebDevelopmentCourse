@@ -21,7 +21,7 @@ jobs:
     - name: Magic Nix Cache
       uses: DeterminateSystems/magic-nix-cache-action@v4
     - name: Checking
-      run: nix develop --impure -c "cd nixos_blog_backend && yarn lint"
+      run: cd NixOSBlogs && nix develop --impure -c "cd nixos_blog_backend && yarn lint"
       
   CheckFrontend:
     runs-on: ubuntu-latest
@@ -34,7 +34,7 @@ jobs:
     - name: Magic Nix Cache
       uses: DeterminateSystems/magic-nix-cache-action@v4
     - name: Checking
-      run: nix develop --impure -c "cd nixos_blog_frontend && yarn lint"
+      run: cd NixOSBlogs && nix develop --impure -c "cd nixos_blog_frontend && yarn lint"
 
   Deploy:
     runs-on: ubuntu-latest
