@@ -24,27 +24,3 @@ jobs:
       run: cd NixOSBlogs && nix develop --impure --command bash -c "cd nixos_blog_backend && yarn lint:ci"
     - name: Checking Frontend
       run: cd NixOSBlogs && nix develop --impure --command bash -c "cd nixos_blog_frontend && yarn lint:ci"
-
-  Deploy:
-    runs-on: ubuntu-latest
-    needs: [Linting]
-
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
-    - name: The Determinate Nix Installer
-      uses: DeterminateSystems/nix-installer-action@v10
-    - name: Magic Nix Cache
-      uses: DeterminateSystems/magic-nix-cache-action@v4
-    - name: AWS SSM Send-Command
-      uses: peterkimzz/aws-ssm-send-command@master
-      with:
-        aws-region: ${{ secrets.AWS_REGION }}
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        instance-ids: ${{ secrets.INSTANCE_ID }}
-
-        working-directory: /home/ubuntu/WebDevelopmentCourse
-        command: git pull && cd NixOSBlogs/ && nix develop --impure --command bash -c "cd nixos_blog_backend && yarn release"
-        comment: Releasing from CI/CD in Github Actions!
-
