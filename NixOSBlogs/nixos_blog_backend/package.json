@@ -6,12 +6,17 @@
   "author": "ElrohirGT",
   "license": "MIT",
   "private": false,
-	"scripts": {
-		"release": "cd ../nixos_blog_frontend/ && yarn build && cp -r dist ../nixos_blog_backend/static/"
-	},
+  "scripts": {
+    "dev": "nodemon ./index.js",
+    "start": "node ./index.js",
+    "release": "cd ../nixos_blog_frontend/ && yarn build && cp -r dist ../nixos_blog_backend/static/ && cd ../nixos_blog_backend && yarn start"
+  },
   "dependencies": {
     "express": "^4.19.2",
     "pino": "^9.0.0",
     "pino-http": "^9.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
   }
 }
