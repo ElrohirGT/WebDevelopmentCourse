@@ -46,8 +46,9 @@
         modules = [
           {
             packages = with pkgs; [
-              dprint
-              oxlint
+              dprint # Javascript formatter
+              oxlint # Javascript linter
+              awscli2
             ];
 
             languages.javascript = {
