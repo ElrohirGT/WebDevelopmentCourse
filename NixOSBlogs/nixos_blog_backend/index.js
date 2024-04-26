@@ -2,7 +2,9 @@ const { log, logger } = require("./src/utils/log.js");
 const express = require("express");
 const app = express();
 const host = "0.0.0.0";
-const port = 3000;
+// Custom port from env variable
+// Usefull for railway deployment
+const port = process.env.PORT || 3000;
 
 app.use(logger);
 
