@@ -42,21 +42,29 @@
           name = "NixOS Blogs WebServer build";
           runtimeInputs = with pkgs; [
             ansi
-            zip
           ];
 
           text = ''
-            echo -e "$(ansi yellow)Building frontend...$(ansi reset)"
-            nix develop --extra-experimental-features flakes --extra-experimental-features nix-command --impure --command bash -c "cd ./nixos_blog_frontend/ && yarn build"
+                  echo -e "$(ansi yellow)Building frontend...$(ansi reset)"
+                  nix develop --extra-experimental-features flakes --extra-experimental-features nix-command --impure --command bash -c "cd ./nixos_blog_frontend/ && yarn build"
+            rm -r ./nixos_blog_frontend/node_modules || rm ./nixos_blog_frontend/node_modules || true
 
-            echo -e "$(ansi yellow)Deleting static dir in backend if exists...$(ansi reset)"
-            rm -r ./nixos_blog_backend/static/ || rm -r ./nixos_blog_backend/static || true
+                  echo -e "$(ansi yellow)Deleting static dir in backend if exists...$(ansi reset)"
+                  rm -r ./nixos_blog_backend/static/ || rm ./nixos_blog_backend/static || true
 
-            echo -e "$(ansi yellow)Copying frontend build to backend...$(ansi reset)"
-            cp -r ./nixos_blog_frontend/dist ./nixos_blog_backend/static
+                  echo -e "$(ansi yellow)Copying frontend build to backend...$(ansi reset)"
+                  cp -r ./nixos_blog_frontend/dist ./nixos_blog_backend/static
+          '';
+        };
+        run-web-server = pkgs.writeShellApplication {
+          name = "NixOS Blogs WebServer run";
+          runtimeInputs = with pkgs; [
+            ansi
+          ];
 
-            echo -e "$(ansi yellow)Installing backend dependencies...$(ansi reset)"
-            nix develop --extra-experimental-features flakes --extra-experimental-features nix-command --impure --command bash -c "cd ./nixos_blog_backend/ && yarn"
+          text = ''
+            echo -e "$(ansi yellow)Starting server... $(ansi reset)"
+                  nix develop --extra-experimental-features flakes --extra-experimental-features nix-command --impure --command bash -c "cd ./nixos_blog_backend/ && yarn start"
           '';
         };
       }
