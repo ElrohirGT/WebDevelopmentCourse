@@ -1,0 +1,17 @@
+{
+  "name": "nixos_blog_backend",
+  "version": "1.0.0",
+  "description": "NixOS Blog Backend in Express",
+  "main": "index.js",
+  "author": "ElrohirGT",
+  "license": "MIT",
+  "private": false,
+	"scripts": {
+		"release": "cd ../nixos_blog_frontend/ && yarn build"
+	},
+  "dependencies": {
+    "express": "^4.19.2",
+    "pino": "^9.0.0",
+    "pino-http": "^9.0.0"
+  }
+}
