@@ -30,6 +30,8 @@
   } @ inputs: let
     overlays = [(import rust-overlay)];
     forEachSystem = nixpkgs.lib.genAttrs (import systems);
+    postgresHost = "127.0.0.1";
+    postgresPort = 5566;
   in {
     packages = forEachSystem (
       system: let
@@ -72,6 +74,8 @@
 
     devShells = forEachSystem (system: let
       pkgs = import nixpkgs {inherit system overlays;};
+      strFromDBFile = file: builtins.readFile ./db/${file};
+      dbInitFile = builtins.concatStringsSep "\n" [(strFromDBFile "init.sql") (strFromDBFile "tables.sql")];
     in {
       default = devenv.lib.mkShell {
         inherit pkgs inputs;
@@ -87,6 +91,20 @@
               enable = true;
               yarn = {
                 enable = true;
+              };
+            };
+
+            services.postgres = {
+              enable = true;
+              listen_addresses = postgresHost;
+              port = postgresPort;
+              initialScript = dbInitFile;
+              settings = {
+                log_connections = true;
+                log_statement = "all";
+                logging_collector = true;
+                log_disconnections = true;
+                log_destination = "stderr";
               };
             };
           }
