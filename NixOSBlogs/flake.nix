@@ -47,7 +47,7 @@
 
           text = ''
             echo -e "$(ansi yellow)Building frontend...$(ansi reset)"
-            nix develop --impure --command bash -c "cd ./nixos_blog_frontend/ && yarn build" --extra-experimental-features flakes --extra-experimental-features nix-command
+            nix develop --extra-experimental-features flakes --extra-experimental-features nix-command --impure --command bash -c "cd ./nixos_blog_frontend/ && yarn build"
 
             echo -e "$(ansi yellow)Deleting static dir in backend if exists...$(ansi reset)"
             rm -r ./nixos_blog_backend/static/ || rm -r ./nixos_blog_backend/static || true
@@ -56,7 +56,7 @@
             cp -r ./nixos_blog_frontend/dist ./nixos_blog_backend/static
 
             echo -e "$(ansi yellow)Installing backend dependencies...$(ansi reset)"
-            nix develop --impure --command bash -c "cd ./nixos_blog_backend/ && yarn" --extra-experimental-features flakes --extra-experimental-features nix-command
+            nix develop --extra-experimental-features flakes --extra-experimental-features nix-command --impure --command bash -c "cd ./nixos_blog_backend/ && yarn"
           '';
         };
       }
