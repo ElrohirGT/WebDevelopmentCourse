@@ -4,13 +4,8 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-23.11";
     systems.url = "github:nix-systems/default";
-    rust-overlay.url = "github:oxalica/rust-overlay";
     devenv = {
       url = "github:cachix/devenv";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    fenix = {
-      url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -24,18 +19,16 @@
     self,
     nixpkgs,
     systems,
-    rust-overlay,
     devenv,
     ...
   } @ inputs: let
-    overlays = [(import rust-overlay)];
     forEachSystem = nixpkgs.lib.genAttrs (import systems);
     postgresHost = "127.0.0.1";
     postgresPort = 5566;
   in {
     packages = forEachSystem (
       system: let
-        pkgs = import nixpkgs {inherit system overlays;};
+        pkgs = import nixpkgs {inherit system;};
       in {
         # For setting up devenv
         devenv-up = self.devShells.${system}.default.config.procfileScript;
@@ -87,7 +80,7 @@
     );
 
     devShells = forEachSystem (system: let
-      pkgs = import nixpkgs {inherit system overlays;};
+      pkgs = import nixpkgs {inherit system;};
       strFromDBFile = file: builtins.readFile ./db/${file};
       dbInitFile = builtins.concatStringsSep "\n" [(strFromDBFile "init.sql") (strFromDBFile "tables.sql")];
     in {
