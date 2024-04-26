@@ -8,6 +8,6 @@ app.use(logger);
 
 app.use(express.static("static"));
 
-app.listen(`${host}:${port}`, () => {
-  log.info(`Example app listening on port ${port}`);
+app.listen(port, host, () => {
+  log.info(`Example app listening on port ${host}:${port}`);
 });
