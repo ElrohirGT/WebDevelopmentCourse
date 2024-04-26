@@ -54,7 +54,6 @@
               enable = true;
               yarn = {
                 enable = true;
-                install.enable = true;
               };
             };
           }
