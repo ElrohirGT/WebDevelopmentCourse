@@ -91,7 +91,6 @@
             packages = with pkgs; [
               dprint # Javascript formatter
               oxlint # Javascript linter
-              awscli2
             ];
 
             languages.javascript = {
@@ -106,13 +105,6 @@
               listen_addresses = postgresHost;
               port = postgresPort;
               initialScript = dbInitFile;
-              settings = {
-                log_connections = true;
-                log_statement = "all";
-                logging_collector = true;
-                log_disconnections = true;
-                log_destination = "stderr";
-              };
             };
           }
         ];
