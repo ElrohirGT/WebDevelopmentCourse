@@ -4,7 +4,7 @@ import { log } from "../../utils/log.js";
 /**
  * @typedef {Object} UpdateBlogRequest
  * @property {string} token - The token given when loggin in
- * @property {Blog} blog - The blog with the info to update
+ * @property {import('./post.js').Blog} blog - The blog with the info to update
  */
 
 /**
@@ -13,7 +13,11 @@ import { log } from "../../utils/log.js";
  */
 const parseRequest = (body) => {
   const isInvalid =
-    !body.token || !body.blog || !body.blog.title || !body.blog.content;
+    !body.token ||
+    !body.blog ||
+    !body.blog.title ||
+    !body.blog.content ||
+    !body.blog.id;
   return { isInvalid, body };
 };
 

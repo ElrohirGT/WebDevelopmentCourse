@@ -7,7 +7,7 @@ const HOST = "127.0.0.1";
 const PORT = 3000;
 const BASE_URL = `http://${HOST}:${PORT}/api/blogs`;
 
-describe("Post Blogs endpoint", () => {
+describe("Update Blogs endpoint", () => {
   /**
    * @type {Object} adminUser
    * @property {string} adminUser.username
@@ -28,48 +28,59 @@ describe("Post Blogs endpoint", () => {
 
   test("Fail parsing when empty token", async () => {
     const payload = {
-      title: "asdlfkjliajsdf",
-      content: "asdflkjlijelkjasdf",
+      blog: {
+        title: "asdlfkj",
+        content: "asdlfkj",
+        id: "asdlfkj",
+      },
     };
 
-    await expect(() => axios.post(BASE_URL, payload)).rejects.toThrow();
+    await expect(() => axios.put(BASE_URL, payload)).rejects.toThrow();
   });
 
-  test("Fail parsing when empty title", async () => {
+  test("Fail parsing when empty blog", async () => {
     const payload = {
       token: "asdflkjlkjasdf",
-      content: "asdflkjlijelkjasdf",
     };
 
     await expect(() => axios.post(BASE_URL, payload)).rejects.toThrow();
   });
 
-  test("Fail parsing when empty content", async () => {
+  test("Fail parsing when empty blogs properties", async () => {
     const payload = {
       token: "asdflkjlkjasdf",
-      title: "asdflkjlasdfijlkj",
+      blog: {},
     };
 
     await expect(() => axios.post(BASE_URL, payload)).rejects.toThrow();
   });
 
-  test("Fail parsing when invalid token", async () => {
+  test("Fail request when invalid token", async () => {
     const payload = {
       token: "asdflkjlkjasdf",
-      title: "asdflkjlasdfijlkj",
-      content: "asdflkjlasdfijlkj",
+      blog: {
+        title: "asdlfkj",
+        content: "asdlfkj",
+        id: "asdlfkj",
+      },
     };
 
     await expect(() => axios.post(BASE_URL, payload)).rejects.toThrow();
   });
 
-  test("Blog created successfully", async () => {
+  test("Blog updated successfully", async () => {
     const token = await loginUser(adminUser);
+    const blog = await createBlog(token, {
+      title: "This title must have changed!",
+      content: "This blog is for testing if the API updates blogs correctly!",
+    });
 
     const payload = {
       token,
-      title: "Automatic integration test blog!",
-      content: "This blog was created using an automated test!",
+      blog: {
+        ...blog,
+        title: "The title was changed!",
+      },
     };
     const response = await axios.post(BASE_URL, payload);
 
@@ -85,22 +96,23 @@ describe("Post Blogs endpoint", () => {
 });
 
 /**
- * Create a blog with the specified session token.
+ * Updates a blog with the specified session token.
  *
  * @param {string} token
  * @param {Object} blog
+ * @param {number} blog.id
  * @param {string} blog.title
  * @param {string} blog.content
  * @param {string|null} blog.banner
  * @returns {Promise<Blog>} The blog created
  */
-export async function createBlog(token, blog) {
+export async function updateBlog(token, blog) {
   const payload = {
     token,
-    ...blog,
+    blog,
   };
 
-  const response = await axios.post(BASE_URL, payload);
+  const response = await axios.put(BASE_URL, payload);
 
   return response.data;
 }
