@@ -7,7 +7,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "dev": "yarn && nodemon ./index.js",
+    "dev": "yarn && nodemon ./index.js | pino-pretty",
     "start": "yarn && node ./index.js",
     "release": "cd ../nixos_blog_frontend/ && yarn build && cp -r dist ../nixos_blog_backend/static/ && cd ../nixos_blog_backend && yarn start",
     "lint": "oxlint -D all -A nursery",
@@ -23,6 +23,7 @@
     "pino-http": "^9.0.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.0"
+    "nodemon": "^3.1.0",
+    "pino-pretty": "^11.0.0"
   }
 }
