@@ -47,13 +47,16 @@
       # Run integration tests...
       integrationTests = pkgs.writeShellApplication {
         name = "NixOS Blogs integration tests";
-        runtimeInputs = with pkgs; [ansi sleep];
+        runtimeInputs = with pkgs; [ansi timer];
         text = ''
           echo -e "$(ansi yellow)" Initializing dev environment...
           nix develop --impure . --command bash -c "exit"
 
           echo -e "$(ansi yellow)" Starting services... "$(ansi reset)"
           nix run .#restartServices &
+
+          echo -e "$(ansi yellow)" Waiting for backend to boot up... "$(ansi reset)"
+          timer 7s -n "Backend startup"
 
           echo -e "$(ansi yellow)" Running tests... "$(ansi reset)"
           nix develop --impure . --command bash -c "yarn test-integration:ci"

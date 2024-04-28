@@ -36,4 +36,4 @@ jobs:
     - name: Magic Nix Cache
       uses: DeterminateSystems/magic-nix-cache-action@v4
     - name: Integration tests Backend
-      run: cd NixOSBlogs && nix run .#testIntegration
+      run: cd NixOSBlogs && nix run .#integrationTests
