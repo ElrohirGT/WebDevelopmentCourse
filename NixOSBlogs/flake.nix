@@ -79,9 +79,7 @@
           echo -e "$(ansi yellow)" Running tests... "$(ansi reset)"
           cd ./nixos_blog_backend
           # FIXME By some reason the kill command doesn't clean all jobs
-          {
-          nix develop --impure . --command bash -c "yarn test-integration:ci"
-          } || { kill "$APP_PID" && false }
+          (nix develop --impure . --command bash -c "yarn test-integration:ci") || ( kill "$APP_PID" && false )
           kill "$APP_PID"
         '';
       };
