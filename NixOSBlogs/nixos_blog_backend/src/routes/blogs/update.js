@@ -63,7 +63,7 @@ export default async (req, res) => {
     }
     log.info("Blog post updated!");
 
-    res.send(response.data[0]);
+    res.send(response.rows[0]);
   } catch (error) {
     log.error(error, "An error ocurred!");
     res.status(500).send(error);

@@ -1,9 +1,12 @@
 import axios from "axios";
 import { beforeEach, describe, expect, test } from "vitest";
-import { registerUser } from "../register.test";
-import { loginUser } from "../login.test";
+import { registerUser } from "../register.test.js";
+import { loginUser } from "../login.test.js";
+import { createBlog } from "./post.test.js";
+import { log } from "../../src/utils/log.js";
 
 const HOST = "127.0.0.1";
+import { log } from "../../src/utils/log.js";
 const PORT = 3000;
 const BASE_URL = `http://${HOST}:${PORT}/api/blogs`;
 
@@ -82,16 +85,22 @@ describe("Update Blogs endpoint", () => {
         title: "The title was changed!",
       },
     };
-    const response = await axios.post(BASE_URL, payload);
 
-    expect(response).toBeDefined();
-    expect(response.status).toBeDefined();
-    expect(response.status).toEqual(200);
+    try {
+      const response = await axios.put(BASE_URL, payload);
+      expect(response).toBeDefined();
+      expect(response.status).toBeDefined();
+      expect(response.status).toEqual(200);
 
-    expect(response.data).toBeDefined();
-    expect(response.data.title).toBeDefined();
-    expect(response.data.title).toEqual(payload.title);
-    expect(response.data.content).toEqual(payload.content);
+      expect(response.data).toBeDefined();
+      expect(response.data.title).toBeDefined();
+      expect(response.data.title).toEqual(payload.blog.title);
+      expect(response.data.content).toBeDefined();
+      expect(response.data.content).toEqual(payload.blog.content);
+    } catch (error) {
+      log.error(`An error has occurred on the request: ${error}`);
+      throw error.message;
+    }
   });
 });
 
