@@ -142,13 +142,14 @@
               };
 
               process = {
-                process-compose = {
+                process-compose = pkgs.lib.mkOptionDefault {
                   tui = "false";
                   # unix-socket = "/run/user/1000/devenv-d9c1243/pc.sock";
-                  unix-socket = "/run/user/1000/devenv-faae028/pc.sock";
-                  version = "0.5";
+                  # unix-socket = "/run/user/1000/devenv-faae028/pc.sock";
+                  # version = "0.5";
                 };
               };
+
               processes = {
                 # Start the backend with hot reloading...
                 backendApi = {
