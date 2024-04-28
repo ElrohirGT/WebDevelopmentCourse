@@ -10,7 +10,7 @@
     "dev": "yarn && nodemon ./index.js | pino-pretty",
     "start": "yarn && node ./index.js",
     "release": "cd ../nixos_blog_frontend/ && yarn build && cp -r dist ../nixos_blog_backend/static/ && cd ../nixos_blog_backend && yarn start",
-    "lint": "oxlint -D all -A nursery",
+    "lint": "oxlint -D all -A nursery -A no-ternary",
     "lint:ci": "yarn lint --max-warnings 0",
     "format": "dprint fmt",
 		"test-integration": "vitest"

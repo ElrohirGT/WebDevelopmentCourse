@@ -41,7 +41,7 @@ test("Register successfully", async () => {
  * @param {string} payload.payload
  * @returns {{username: string, password: string}} The username credentials.
  */
-export async function registerUser(payload = null) {
+export async function registerUser(payload = undefined) {
   const requestBody = {
     username: payload?.username ?? `TDD-username-${Math.random() * 100_000}`,
     password: payload?.password ?? "1234",

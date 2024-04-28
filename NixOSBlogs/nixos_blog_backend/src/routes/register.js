@@ -46,10 +46,10 @@ module.exports = async (req, res) => {
 
     await conn.query("COMMIT");
     res.send();
-  } catch (e) {
+  } catch (error) {
     await conn?.query("ROLLBACK");
 
-    log.error(`An error ocurred while connecting to the DB! ${e}`);
+    log.error(`An error ocurred while connecting to the DB! ${error}`);
     res.status(500).send("An error ocurred while connecting to the DB!");
   } finally {
     conn?.release();

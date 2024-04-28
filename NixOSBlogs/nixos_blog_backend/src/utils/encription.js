@@ -7,10 +7,7 @@ const SECRET_DELTA = 15;
  * @returns {string} The encripted password.
  */
 const encryptPassword = (password) => {
-  return password
-    .split("")
-    .map((c) => c.charCodeAt(0) + SECRET_DELTA)
-    .join("");
+  return [...password].map((c) => c.codePointAt(0) + SECRET_DELTA).join("");
 };
 
 module.exports = encryptPassword;
