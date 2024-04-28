@@ -37,6 +37,7 @@ jobs:
       uses: DeterminateSystems/magic-nix-cache-action@v4
     - name: Integration tests Backend
       run: |
-        (cd NixOSBlogs && nix develop --impure --command bash -c "exit") &&\
-        (cd NixOSBlogs && nix run .#restartServices) &\
-        (cd NixOSBlog && sleep 5 && nix develop --impure --command bash -c "cd nixos_blog_backend && yarn test-integration")
+        cd NixOSBlogs &&\
+        (nix develop --impure . --command bash -c "exit") &&\
+        (nix run .#restartServices) &\
+        (sleep 5 && nix develop --impure --command bash -c "cd nixos_blog_backend && yarn test-integration")
