@@ -7,7 +7,7 @@
     "dev": "yarn && vite",
     "build": "yarn && vite build",
     "preview": "yarn && vite preview",
-    "lint": "oxlint -D all -A nursery -A no-ternary",
+    "lint": "oxlint -D all -A nursery -A no-ternary -A react-in-jsx-scope",
     "lint:ci": "yarn lint --max-warnings 0",
     "format": "dprint fmt"
   },
