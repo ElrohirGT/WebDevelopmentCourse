@@ -6,7 +6,9 @@ module.exports = async (req, res) => {
 
   log.info("Getting blog posts...");
   try {
-    const result = await POOL.query("SELECT * FROM blog");
+    const result = await POOL.query(
+      "SELECT id, title, banner, published FROM blog",
+    );
     log.info(`${result.rows.length} Blog posts obtained!`);
 
     res.send(result.rows);
