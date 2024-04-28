@@ -11,7 +11,6 @@ on:
 
 defaults:
   run:
-    # shell: nix develop --impure . --command bash -- -e {0}
     working-directory: NixOSBlogs
 jobs:
   Linting:
@@ -40,4 +39,4 @@ jobs:
     - name: Magic Nix Cache
       uses: DeterminateSystems/magic-nix-cache-action@v4
     - name: Integration tests Backend
-      run: nix run .#integrationTests
+      run: nix run .#integrationTestsCi

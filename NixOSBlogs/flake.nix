@@ -31,7 +31,7 @@
 
       # Restart dev environment services...
       restartServices = pkgs.writeShellApplication {
-        name = "Sanitas dev server restarter";
+        name = "NixOS Blogs dev server restarter";
         runtimeInputs = with pkgs; [ansi];
         text = ''
           echo -e "$(ansi yellow)"WARNING:"$(ansi reset)" This script must be run on the project root directory!
@@ -40,7 +40,22 @@
           rm ./.devenv/state/postgres || rm -r ./.devenv/state/postgres || true
 
           echo "Entering devshell..."
-          nix develop --impure . -c devenv up
+          nix develop --impure . --command bash -c "devenv up"
+        '';
+      };
+
+      # Restart dev environment services for CI...
+      restartServicesCi = pkgs.writeShellApplication {
+        name = "NixOS Blogs dev server restarter for CI";
+        runtimeInputs = with pkgs; [ansi];
+        text = ''
+          echo -e "$(ansi yellow)"WARNING:"$(ansi reset)" This script must be run on the project root directory!
+
+          echo "Trying to remove old .devenv..."
+          rm ./.devenv/state/postgres || rm -r ./.devenv/state/postgres || true
+
+          echo "Entering devshell..."
+          nix develop --impure . --command bash -c "devenv up -d"
         '';
       };
 
@@ -53,12 +68,13 @@
           nix develop --impure . --command bash -c "exit"
 
           echo -e "$(ansi yellow)" Starting services... "$(ansi reset)"
-          nix run .#restartServices &
+          nix run .#restartServices > output &
 
           echo -e "$(ansi yellow)" Waiting for backend to boot up... "$(ansi reset)"
           timer 7s -n "Backend startup"
 
           echo -e "$(ansi yellow)" Running tests... "$(ansi reset)"
+          cd ./nixos_blog_frontend
           nix develop --impure . --command bash -c "yarn test-integration:ci"
         '';
       };
