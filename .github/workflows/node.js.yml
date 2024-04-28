@@ -39,4 +39,4 @@ jobs:
     - name: Magic Nix Cache
       uses: DeterminateSystems/magic-nix-cache-action@v4
     - name: Integration tests Backend
-      run: nix run .#integrationTestsCi
+      run: nix run .#integrationTests
