@@ -55,7 +55,6 @@ describe("blogs", () => {
 
   test("Blog created successfully", async () => {
     const token = await loginUser(adminUser);
-    console.log("The login token is: ", token);
 
     const payload = {
       token,

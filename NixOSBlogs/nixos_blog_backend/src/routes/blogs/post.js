@@ -1,4 +1,3 @@
-const { response } = require("express");
 const POOL = require("../../db/db.js");
 const { log } = require("../../utils/log.js");
 
