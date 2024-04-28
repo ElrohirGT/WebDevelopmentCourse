@@ -11,7 +11,7 @@ on:
 
 defaults:
   run:
-    shell: cd NixOSBlogs && nix develop --impure --command bash -- -e {0}
+    shell: nix develop --impure ./NixOSBlogs --command bash -- -e {0}
     working-directory: NixOSBlogs
 jobs:
   Linting:
