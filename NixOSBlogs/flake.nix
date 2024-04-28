@@ -52,7 +52,7 @@
         ];
 
         text = ''
-          -e "$(ansi yellow)Building frontend...$(ansi reset)"
+          echo -e "$(ansi yellow)Building frontend...$(ansi reset)"
           nix develop --extra-experimental-features flakes --extra-experimental-features nix-command --impure --command bash -c "cd ./nixos_blog_frontend/ && yarn build"
           rm -r ./nixos_blog_frontend/node_modules || rm ./nixos_blog_frontend/node_modules || true
 
