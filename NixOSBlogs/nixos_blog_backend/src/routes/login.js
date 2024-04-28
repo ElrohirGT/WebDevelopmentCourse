@@ -1,4 +1,4 @@
-import { query } from "../db/db.js";
+import { POOL } from "../db/db.js";
 import { log } from "../utils/log.js";
 import encryptPassword from "../utils/encription.js";
 import { v4 as uuidv4 } from "uuid";
@@ -34,7 +34,7 @@ export default async (req, res) => {
   log.info("Checking if user exists...");
   try {
     const encryptedPassword = encryptPassword(body.password);
-    const result = await query(
+    const result = await POOL.query(
       "SELECT * FROM blog_admin WHERE username=$1 AND password=$2 LIMIT 1",
       [body.username, encryptedPassword],
     );
@@ -49,7 +49,7 @@ export default async (req, res) => {
     log.info("Creating session...");
 
     const token = uuidv4();
-    await query("INSERT INTO sesion (token, username) VALUES ($1,$2)", [
+    await POOL.query("INSERT INTO sesion (token, username) VALUES ($1,$2)", [
       token,
       body.username,
     ]);

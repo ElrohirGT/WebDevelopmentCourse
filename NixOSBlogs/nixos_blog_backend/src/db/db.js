@@ -1,5 +1,8 @@
-import { Pool } from "pg";
-import { parse } from "pg-connection-string";
+import pgPkg from "pg";
+const { Pool } = pgPkg;
+
+import pgConnPkg from "pg-connection-string";
+const { parse } = pgConnPkg;
 
 const config = process.env.PG_CONN
   ? parse(process.env.PG_CONN)
@@ -11,7 +14,7 @@ const config = process.env.PG_CONN
       password: "backend",
       database: "nixos_blogs",
     };
-const POOL = new Pool(config);
+export const POOL = new Pool(config);
 
 /**
  * Checks if a session is valid or not.
@@ -19,7 +22,7 @@ const POOL = new Pool(config);
  * @param {string} token - The session token
  * @returns {Promise<boolean>}
  */
-async function sessionIsValid(pool, token) {
+export async function sessionIsValid(pool, token) {
   const now = new Date();
   const twoDaysInMS = 2 * 24 * 60 * 60 * 1000;
   const twoDaysAgo = new Date(now.getTime() - twoDaysInMS);
@@ -31,5 +34,3 @@ async function sessionIsValid(pool, token) {
 
   return response.rowCount < 1;
 }
-
-export default { POOL, sessionIsValid };

@@ -1,4 +1,4 @@
-import { connect } from "../db/db.js";
+import { POOL } from "../db/db.js";
 import { log } from "../utils/log.js";
 import encryptPassword from "../utils/encription.js";
 
@@ -33,7 +33,7 @@ export default async (req, res) => {
   log.info("Connecting to DB...");
   let conn;
   try {
-    conn = await connect();
+    conn = await POOL.connect();
     log.info("Connection established!");
 
     log.info("Starting transaction...");

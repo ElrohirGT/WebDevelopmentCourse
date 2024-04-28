@@ -1,16 +1,7 @@
 import pino from "pino";
+import pinoLogger from "pino-http";
 
-const log = pino();
-const logger = require("pino-http")({
+export const log = pino();
+export const logger = pinoLogger({
   logger: log,
 });
-
-/**
- * Log module of the application.
- * Uses to log information to the console.
- * @module
- */
-export default {
-  log,
-  logger,
-};
