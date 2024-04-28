@@ -40,4 +40,4 @@ jobs:
         cd NixOSBlogs &&\
         (nix develop --impure . --command bash -c "exit") &&\
         (nix run .#restartServices) &\
-        (sleep 5 && nix develop --impure --command bash -c "cd nixos_blog_backend && yarn test-integration")
+        (sleep 7 && cd NixOSBlogs && nix develop --impure . --command bash -c "cd nixos_blog_backend && yarn test-integration:ci")

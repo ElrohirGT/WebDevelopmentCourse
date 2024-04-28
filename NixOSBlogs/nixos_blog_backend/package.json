@@ -13,7 +13,8 @@
     "lint": "oxlint -D all -A nursery -A no-ternary",
     "lint:ci": "yarn lint --max-warnings 0",
     "format": "dprint fmt",
-    "test-integration": "vitest"
+    "test-integration": "vitest",
+    "test-integration:ci": "vitest run"
   },
   "dependencies": {
     "express": "^4.19.2",
