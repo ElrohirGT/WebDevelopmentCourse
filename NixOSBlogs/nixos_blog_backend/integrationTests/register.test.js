@@ -39,7 +39,7 @@ test("Register successfully", async () => {
  * @param {Object|null} payload
  * @param {string} payload.username
  * @param {string} payload.payload
- * @returns {{username: string, password: string}} The username credentials.
+ * @returns {Promise<{username: string, password: string}>} The username credentials.
  */
 export async function registerUser(payload = undefined) {
   const requestBody = {

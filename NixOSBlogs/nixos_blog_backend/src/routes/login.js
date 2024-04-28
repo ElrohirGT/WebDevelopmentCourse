@@ -12,19 +12,19 @@ const { v4: uuidv4 } = require("uuid");
 /**
  * A login request must have a username and a password.
  * @param {Object} body - Request body to check.
- * @returns {{isValid: Boolean, body: LoginRequestBody}} True if body is valid.
+ * @returns {{isInvalid: Boolean, body: LoginRequestBody}} True if body is valid.
  */
 const requestIsInvalid = (body) => {
-  const isValid = !body.username || !body.password;
-  return { isValid, body };
+  const isInvalid = !body.username || !body.password;
+  return { isInvalid, body };
 };
 
 module.exports = async (req, res) => {
   log.info("Entering logging route...");
 
   log.info("Validating request body...");
-  const { isValid, body } = requestIsInvalid(req.body);
-  if (isValid) {
+  const { isInvalid, body } = requestIsInvalid(req.body);
+  if (isInvalid) {
     log.error("Invalid request body!");
     res.status(400).send("The request body is invalid!");
     return;
