@@ -2,6 +2,7 @@ import axios from "axios";
 import { beforeEach, describe, expect, test } from "vitest";
 import { registerUser } from "../register.test";
 import { loginUser } from "../login.test";
+import { wait } from "../../src/utils/promises";
 
 const HOST = "127.0.0.1";
 const PORT = 3000;

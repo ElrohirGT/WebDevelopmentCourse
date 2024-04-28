@@ -59,7 +59,7 @@ export default async (req, res) => {
     const params = body.banner
       ? [body.title, body.content, body.banner]
       : [body.title, body.content];
-    response = await conn.query(query, params);
+    const response = await conn.query(query, params);
 
     if (response.rowCount < 1) {
       log.error("Blog couldn't be inserted!");

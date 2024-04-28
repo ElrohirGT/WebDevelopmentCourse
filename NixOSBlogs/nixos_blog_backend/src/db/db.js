@@ -4,6 +4,8 @@ const { Pool } = pgPkg;
 import pgConnPkg from "pg-connection-string";
 const { parse } = pgConnPkg;
 
+import { log } from "../utils/log.js";
+
 const config = process.env.PG_CONN
   ? parse(process.env.PG_CONN)
   : // Dev connection
@@ -26,11 +28,12 @@ export async function sessionIsValid(pool, token) {
   const now = new Date();
   const twoDaysInMS = 2 * 24 * 60 * 60 * 1000;
   const twoDaysAgo = new Date(now.getTime() - twoDaysInMS);
+  log.info({ twoDaysAgo, now }, "Checking sessions between this range:");
 
   let response = await pool.query(
     "SELECT true FROM sesion WHERE token=$1 AND start BETWEEN $2 AND $3",
     [token, twoDaysAgo, now],
   );
 
-  return response.rowCount < 1;
+  return response.rowCount > 0;
 }
