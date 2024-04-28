@@ -9,6 +9,10 @@ on:
   pull_request:
     branches: [ "main" ]
 
+defaults:
+  run:
+    shell: nix develop --impure --command bash -- -e {0}
+    working-directory: NixOSBlogs
 jobs:
   Linting:
     runs-on: ubuntu-latest
@@ -21,9 +25,9 @@ jobs:
     - name: Magic Nix Cache
       uses: DeterminateSystems/magic-nix-cache-action@v4
     - name: Checking Backend
-      run: cd NixOSBlogs && nix develop --impure --command bash -c "cd nixos_blog_backend && yarn lint:ci"
+      run: cd nixos_blog_backend && yarn lint:ci
     - name: Checking Frontend
-      run: cd NixOSBlogs && nix develop --impure --command bash -c "cd nixos_blog_frontend && yarn lint:ci"
+      run: cd nixos_blog_frontend && yarn lint:ci
 
   Testing:
     runs-on: ubuntu-latest
@@ -36,4 +40,4 @@ jobs:
     - name: Magic Nix Cache
       uses: DeterminateSystems/magic-nix-cache-action@v4
     - name: Integration tests Backend
-      run: cd NixOSBlogs && nix run .#integrationTests
+      run: nix run .#integrationTests
