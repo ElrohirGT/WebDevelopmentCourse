@@ -24,3 +24,19 @@ jobs:
       run: cd NixOSBlogs && nix develop --impure --command bash -c "cd nixos_blog_backend && yarn lint:ci"
     - name: Checking Frontend
       run: cd NixOSBlogs && nix develop --impure --command bash -c "cd nixos_blog_frontend && yarn lint:ci"
+
+  Testing:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+    - name: The Determinate Nix Installer
+      uses: DeterminateSystems/nix-installer-action@v10
+    - name: Magic Nix Cache
+      uses: DeterminateSystems/magic-nix-cache-action@v4
+    - name: Integration tests Backend
+      run: |
+        (cd NixOSBlogs && nix develop --impure --command bash -c "exit") &&\
+        (cd NixOSBlogs && nix run .#restartServices) &\
+        (cd NixOSBlog && sleep 5 && nix develop --impure --command bash -c "cd nixos_blog_backend && yarn test-integration")
