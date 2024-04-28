@@ -1,4 +1,4 @@
-const { Pool } = require("pg-pool");
+const { Pool } = require("pg");
 const { parse } = require("pg-connection-string");
 
 const config = process.env.PG_CONN
@@ -6,7 +6,7 @@ const config = process.env.PG_CONN
   : // Dev connection
     {
       host: "127.0.0.1",
-      port: 5433,
+      port: 5566,
       user: "backend",
       password: "backend",
     };
