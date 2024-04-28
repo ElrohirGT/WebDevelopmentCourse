@@ -11,7 +11,9 @@ test("Fail parsing when empty username", async () => {
     password: "asdlfkjlij",
   };
 
-  await expect(() => axios.post(`${BASE_URL}/login`, payload)).rejects.toThrow();
+  await expect(() =>
+    axios.post(`${BASE_URL}/login`, payload),
+  ).rejects.toThrow();
 });
 
 test("Fail parsing when empty password", async () => {
@@ -19,7 +21,9 @@ test("Fail parsing when empty password", async () => {
     username: "asdflkjlkjasdf",
   };
 
-  await expect(() => axios.post(`${BASE_URL}/login`, payload)).rejects.toThrow();
+  await expect(() =>
+    axios.post(`${BASE_URL}/login`, payload),
+  ).rejects.toThrow();
 });
 
 test("Login successfully", async () => {
@@ -33,4 +37,7 @@ test("Login successfully", async () => {
 
   expect(response).toBeDefined();
   expect(response.status).toBe(200);
+
+  expect(response.data).toBeDefined();
+  expect(response.data).toBeTypeOf("string");
 });

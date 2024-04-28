@@ -1,6 +1,7 @@
 const POOL = require("../db/db.js");
 const { log } = require("../utils/log.js");
 const encryptPassword = require("../utils/encription.js");
+const { v4: uuidv4 } = require("uuid");
 
 /**
  * @typedef {Object} LoginRequestBody
@@ -37,16 +38,23 @@ module.exports = async (req, res) => {
       "SELECT * FROM blog_admin WHERE username=$1 AND password=$2 LIMIT 1",
       [body.username, encryptedPassword],
     );
-    log.info(result, "RETRIEVED:");
 
     if (result.rows.length <= 0) {
       log.error("User doesnt exists!");
       res.status(400).send("The user doesn't exists!");
       return;
     }
+    log.info("Correct credentials!");
 
-    // Here we would calculate a token and send it as a login parameter
-    res.send();
+    log.info("Creating session...");
+
+    const token = uuidv4();
+    await POOL.query("INSERT INTO sesion (token, username) VALUES ($1,$2)", [
+      token,
+      body.username,
+    ]);
+
+    res.send(token);
   } catch (error) {
     log.error(`An error has ocurred: ${error}`);
     res.status(500).send(error);

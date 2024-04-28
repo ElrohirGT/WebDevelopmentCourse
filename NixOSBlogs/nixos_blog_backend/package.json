@@ -22,7 +22,8 @@
     "pg-connection-string": "^2.6.4",
     "pg-pool": "^3.6.2",
     "pino": "^9.0.0",
-    "pino-http": "^9.0.0"
+    "pino-http": "^9.0.0",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "axios": "^1.6.8",

@@ -3,6 +3,12 @@ CREATE TABLE blog_admin(
 	password text not null
 );
 
+CREATE TABLE sesion(
+	token text not null primary key,
+	start timestamp not null default NOW(),
+	username text not null references blog_admin(username)
+);
+
 CREATE TABLE blog (
 	id serial not null primary key,
 	title text not null,
