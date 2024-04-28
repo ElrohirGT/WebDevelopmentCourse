@@ -1,5 +1,5 @@
-import { expect, test } from "vitest";
 import axios from "axios";
+import { expect, test } from "vitest";
 import { registerUser } from "./register.test";
 
 const HOST = "127.0.0.1";
@@ -11,9 +11,7 @@ test("Fail parsing when empty username", async () => {
     password: "asdlfkjlij",
   };
 
-  await expect(() =>
-    axios.post(`${BASE_URL}/login`, payload),
-  ).rejects.toThrow();
+  await expect(() => axios.post(`${BASE_URL}/login`, payload)).rejects.toThrow();
 });
 
 test("Fail parsing when empty password", async () => {
@@ -21,9 +19,7 @@ test("Fail parsing when empty password", async () => {
     username: "asdflkjlkjasdf",
   };
 
-  await expect(() =>
-    axios.post(`${BASE_URL}/login`, payload),
-  ).rejects.toThrow();
+  await expect(() => axios.post(`${BASE_URL}/login`, payload)).rejects.toThrow();
 });
 
 test("Login successfully", async () => {

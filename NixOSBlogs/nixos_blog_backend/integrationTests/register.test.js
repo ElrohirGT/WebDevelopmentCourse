@@ -1,5 +1,5 @@
-import { expect, test } from "vitest";
 import axios from "axios";
+import { expect, test } from "vitest";
 
 const HOST = "127.0.0.1";
 const PORT = 3000;
