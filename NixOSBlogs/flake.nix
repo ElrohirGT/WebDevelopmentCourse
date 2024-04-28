@@ -134,6 +134,7 @@
               packages = with pkgs; [
                 dprint # Javascript formatter
                 oxlint # Javascript linter
+                act # run github actions locally
               ];
 
               languages.javascript = {
