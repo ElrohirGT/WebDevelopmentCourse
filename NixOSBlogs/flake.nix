@@ -62,20 +62,25 @@
       # Run integration tests...
       integrationTests = pkgs.writeShellApplication {
         name = "NixOS Blogs integration tests";
-        runtimeInputs = with pkgs; [ansi timer];
+        runtimeInputs = with pkgs; [ansi];
         text = ''
-          echo -e "$(ansi yellow)" Initializing dev environment...
+          echo -e "$(ansi red)" This command should only be run on CI "$(ansi reset)"
+          echo -e "$(ansi yellow)" Initializing dev environment... "$(ansi reset)"
           nix develop --impure . --command bash -c "exit"
 
           echo -e "$(ansi yellow)" Starting services... "$(ansi reset)"
           nix run .#restartServices > output &
+          APP_PID=$!
+          echo -e "$(ansi yellow) THE APP PID IS: $(ansi cyan) $APP_PID $(ansi reset)"
 
           echo -e "$(ansi yellow)" Waiting for backend to boot up... "$(ansi reset)"
-          timer 7s -n "Backend startup"
+          sleep 7
 
           echo -e "$(ansi yellow)" Running tests... "$(ansi reset)"
-          cd ./nixos_blog_frontend
-          nix develop --impure . --command bash -c "yarn test-integration:ci"
+          cd ./nixos_blog_backend
+          # FIXME By some reason the kill command doesn't work
+          nix develop --impure . --command bash -c "yarn test-integration:ci" || kill -SIGINT "$APP_PID"
+          kill -SIGINT "$APP_PID"
         '';
       };
 
@@ -136,11 +141,37 @@
                 };
               };
 
+              process = {
+                process-compose = {
+                  tui = "false";
+                  # unix-socket = "/run/user/1000/devenv-d9c1243/pc.sock";
+                  unix-socket = "/run/user/1000/devenv-faae028/pc.sock";
+                  version = "0.5";
+                };
+              };
               processes = {
                 # Start the backend with hot reloading...
-                backendApi.exec = "cd ./nixos_blog_backend/ && yarn dev";
+                backendApi = {
+                  exec = "cd ./nixos_blog_backend/ && yarn dev";
+                  process-compose = {
+                    depends_on = {
+                      postgres = {
+                        condition = "process_started";
+                      };
+                    };
+                  };
+                };
                 # Start the frontend with hot reloading...
-                viteBundler.exec = "cd ./nixos_blog_frontend/ && yarn dev";
+                viteBundler = {
+                  exec = "cd ./nixos_blog_frontend/ && yarn dev";
+                  process-compose = {
+                    depends_on = {
+                      backendApi = {
+                        condition = "process_started";
+                      };
+                    };
+                  };
+                };
               };
 
               services.postgres = {
