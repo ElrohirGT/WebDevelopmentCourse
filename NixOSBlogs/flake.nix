@@ -101,6 +101,13 @@
                 };
               };
 
+              processes = {
+                # Start the backend with hot reloading...
+                backendApi.exec = "cd ./nixos_blog_backend/ && yarn dev";
+                # Start the frontend with hot reloading...
+                viteBundler.exec = "cd ./nixos_blog_frontend/ && yarn dev";
+              };
+
               services.postgres = {
                 enable = true;
                 listen_addresses = postgresHost;
