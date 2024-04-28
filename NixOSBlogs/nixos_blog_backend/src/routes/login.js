@@ -1,7 +1,7 @@
-const POOL = require("../db/db.js");
-const { log } = require("../utils/log.js");
-const encryptPassword = require("../utils/encription.js");
-const { v4: uuidv4 } = require("uuid");
+import { query } from "../db/db.js";
+import { log } from "../utils/log.js";
+import encryptPassword from "../utils/encription.js";
+import { v4 as uuidv4 } from "uuid";
 
 /**
  * @typedef {Object} LoginRequestBody
@@ -19,7 +19,7 @@ const requestIsInvalid = (body) => {
   return { isInvalid, body };
 };
 
-module.exports = async (req, res) => {
+export default async (req, res) => {
   log.info("Entering logging route...");
 
   log.info("Validating request body...");
@@ -34,7 +34,7 @@ module.exports = async (req, res) => {
   log.info("Checking if user exists...");
   try {
     const encryptedPassword = encryptPassword(body.password);
-    const result = await POOL.query(
+    const result = await query(
       "SELECT * FROM blog_admin WHERE username=$1 AND password=$2 LIMIT 1",
       [body.username, encryptedPassword],
     );
@@ -49,7 +49,7 @@ module.exports = async (req, res) => {
     log.info("Creating session...");
 
     const token = uuidv4();
-    await POOL.query("INSERT INTO sesion (token, username) VALUES ($1,$2)", [
+    await query("INSERT INTO sesion (token, username) VALUES ($1,$2)", [
       token,
       body.username,
     ]);

@@ -10,4 +10,4 @@ const encryptPassword = (password) => {
   return [...password].map((c) => c.codePointAt(0) + SECRET_DELTA).join("");
 };
 
-module.exports = encryptPassword;
+export default encryptPassword;

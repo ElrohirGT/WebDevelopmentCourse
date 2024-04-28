@@ -1,7 +1,7 @@
-const POOL = require("../../db/db.js");
-const { log } = require("../../utils/log.js");
+import { POOL } from "../../db/db.js";
+import { log } from "../../utils/log.js";
 
-module.exports = async (req, res) => {
+export default async (req, res) => {
   log.info("Entering get blogs route...");
 
   log.info("Getting blog posts...");

@@ -1,5 +1,5 @@
-const POOL = require("../../db/db.js");
-const { log } = require("../../utils/log.js");
+import { POOL, sessionIsValid } from "../../db/db.js";
+import { log } from "../../utils/log.js";
 
 /**
  * @typedef {Object} PostBlogRequest
@@ -26,7 +26,7 @@ const parseRequest = (body) => {
   return { isInvalid, body };
 };
 
-module.exports = async (req, res) => {
+export default async (req, res) => {
   log.info("Entering post blog route...");
 
   log.info("Parsing request body...");
@@ -42,20 +42,10 @@ module.exports = async (req, res) => {
   let conn;
   try {
     conn = await POOL.connect();
-    log.info("Connection established...");
+    log.info("Connection established!");
 
     log.info("Checking if session is valid...");
-    const now = new Date();
-    const twoDaysInMS = 2 * 24 * 60 * 60 * 1000;
-    const twoDaysAgo = new Date(now.getTime() - twoDaysInMS);
-    log.info({ now, twoDaysAgo }, "Dates to check");
-
-    let response = await conn.query(
-      "SELECT true FROM sesion WHERE token=$1 AND start BETWEEN $2 AND $3",
-      [body.token, twoDaysAgo, now],
-    );
-
-    if (response.rowCount < 1) {
+    if (!(await sessionIsValid(POOL, body.token))) {
       log.error("No valid session found! Log in required!");
       res.status(401).send("Invalid session! Login first...");
       return;
@@ -79,7 +69,7 @@ module.exports = async (req, res) => {
 
     res.send(response.rows[0]);
   } catch (error) {
-    log.error(`An error has ocurred: ${error}`);
+    log.error(error, "An error has ocurred!");
     res.status(500).send(error);
   } finally {
     conn?.release();

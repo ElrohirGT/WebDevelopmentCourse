@@ -1,9 +1,9 @@
-const express = require("express");
-const router = express.Router();
-const getBlogs = require("./get.js");
-const postBlog = require("./post.js");
+import { Router } from "express";
+import getBlogs from "./get.js";
+import postBlog from "./post.js";
+const router = Router();
 
 router.get("/", getBlogs);
 router.post("/", postBlog);
 
-module.exports = router;
+export default router;

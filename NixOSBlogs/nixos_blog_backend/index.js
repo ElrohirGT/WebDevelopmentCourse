@@ -1,7 +1,7 @@
-const { log, logger } = require("./src/utils/log.js");
-const express = require("express");
+import { log, logger } from "./src/utils/log.js";
+import express, { json, static as expressStatic } from "express";
+import API_ROUTER from "./src/routes/index.js";
 const app = express();
-const API_ROUTER = require("./src/routes/index.js");
 
 const host = "0.0.0.0";
 // Custom port from env variable
@@ -9,8 +9,8 @@ const host = "0.0.0.0";
 const port = process.env.PORT || 3000;
 
 app.use(logger);
-app.use(express.json());
-app.use(express.static("static"));
+app.use(json());
+app.use(expressStatic("static"));
 app.use("/api", API_ROUTER);
 
 app.listen(port, host, () => {

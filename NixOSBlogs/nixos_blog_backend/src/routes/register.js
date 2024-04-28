@@ -1,6 +1,6 @@
-const POOL = require("../db/db.js");
-const { log } = require("../utils/log.js");
-const encryptPassword = require("../utils/encription.js");
+import { connect } from "../db/db.js";
+import { log } from "../utils/log.js";
+import encryptPassword from "../utils/encription.js";
 
 /**
  * @typedef {Object} RegisterRequestBody
@@ -18,7 +18,7 @@ const requestIsInvalid = (body) => {
   return { isInvalid, body };
 };
 
-module.exports = async (req, res) => {
+export default async (req, res) => {
   log.info("Entering the register route...");
 
   log.info("Validating request body...");
@@ -33,7 +33,7 @@ module.exports = async (req, res) => {
   log.info("Connecting to DB...");
   let conn;
   try {
-    conn = await POOL.connect();
+    conn = await connect();
     log.info("Connection established!");
 
     log.info("Starting transaction...");

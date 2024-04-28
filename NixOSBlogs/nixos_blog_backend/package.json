@@ -5,6 +5,7 @@
   "main": "index.js",
   "author": "ElrohirGT",
   "license": "MIT",
+	"type": "module",
   "private": false,
   "scripts": {
     "dev": "yarn && nodemon ./index.js | pino-pretty",

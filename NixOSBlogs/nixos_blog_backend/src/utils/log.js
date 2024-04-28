@@ -1,4 +1,5 @@
-const pino = require("pino");
+import pino from "pino";
+
 const log = pino();
 const logger = require("pino-http")({
   logger: log,
@@ -9,7 +10,7 @@ const logger = require("pino-http")({
  * Uses to log information to the console.
  * @module
  */
-module.exports = {
+export default {
   log,
   logger,
 };
