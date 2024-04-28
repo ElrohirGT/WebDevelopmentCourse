@@ -9,6 +9,7 @@ const host = "0.0.0.0";
 const port = process.env.PORT || 3000;
 
 app.use(logger);
+app.use(express.json());
 app.use(express.static("static"));
 app.use("/api", API_ROUTER);
 
