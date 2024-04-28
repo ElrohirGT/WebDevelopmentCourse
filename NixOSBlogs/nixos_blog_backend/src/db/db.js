@@ -9,6 +9,7 @@ const config = process.env.PG_CONN
       port: 5566,
       user: "backend",
       password: "backend",
+      database: "nixos_blogs",
     };
 
 module.exports = new Pool(config);

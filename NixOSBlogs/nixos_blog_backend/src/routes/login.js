@@ -1,6 +1,11 @@
 const POOL = require("../db/db.js");
 const { log } = require("../utils/log.js");
 
+/**
+ * A login request must have a username and a password.
+ * @param {Object} body - Request body to check.
+ * @returns {Boolean} True if body is valid.
+ */
 const requestIsInvalid = (body) => {
   return !body.username || !body.password;
 };
