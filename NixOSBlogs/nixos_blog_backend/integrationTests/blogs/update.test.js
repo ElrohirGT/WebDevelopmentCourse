@@ -1,13 +1,10 @@
 import axios from "axios";
 import { beforeEach, describe, expect, test } from "vitest";
-import { registerUser } from "../register.utils.js";
-import { loginUser } from "../login.utils.js";
-import { createBlog } from "./post.utils.js";
-import { log } from "../../src/utils/log.js";
-
-const HOST = "127.0.0.1";
-const PORT = 3000;
-const BASE_URL = `http://${HOST}:${PORT}/api/blogs`;
+import { registerUser } from "../register.utils";
+import { loginUser } from "../login.utils";
+import { createBlog } from "./post.utils";
+import { log } from "../../src/utils/log";
+import { BLOG_UPDATE_ENDPOINT } from "./update.utils";
 
 describe("Update Blogs endpoint", () => {
   /**
@@ -37,7 +34,9 @@ describe("Update Blogs endpoint", () => {
       },
     };
 
-    await expect(() => axios.put(BASE_URL, payload)).rejects.toThrow();
+    await expect(() =>
+      axios.put(BLOG_UPDATE_ENDPOINT, payload),
+    ).rejects.toThrow();
   });
 
   test("Fail parsing when empty blog", async () => {
@@ -45,7 +44,9 @@ describe("Update Blogs endpoint", () => {
       token: "asdflkjlkjasdf",
     };
 
-    await expect(() => axios.post(BASE_URL, payload)).rejects.toThrow();
+    await expect(() =>
+      axios.post(BLOG_UPDATE_ENDPOINT, payload),
+    ).rejects.toThrow();
   });
 
   test("Fail parsing when empty blogs properties", async () => {
@@ -54,7 +55,9 @@ describe("Update Blogs endpoint", () => {
       blog: {},
     };
 
-    await expect(() => axios.post(BASE_URL, payload)).rejects.toThrow();
+    await expect(() =>
+      axios.post(BLOG_UPDATE_ENDPOINT, payload),
+    ).rejects.toThrow();
   });
 
   test("Fail request when invalid token", async () => {
@@ -67,7 +70,9 @@ describe("Update Blogs endpoint", () => {
       },
     };
 
-    await expect(() => axios.post(BASE_URL, payload)).rejects.toThrow();
+    await expect(() =>
+      axios.post(BLOG_UPDATE_ENDPOINT, payload),
+    ).rejects.toThrow();
   });
 
   test("Blog updated successfully", async () => {
@@ -86,7 +91,7 @@ describe("Update Blogs endpoint", () => {
     };
 
     try {
-      const response = await axios.put(BASE_URL, payload);
+      const response = await axios.put(BLOG_UPDATE_ENDPOINT, payload);
       expect(response).toBeDefined();
       expect(response.status).toBeDefined();
       expect(response.status).toEqual(200);
@@ -102,25 +107,3 @@ describe("Update Blogs endpoint", () => {
     }
   });
 });
-
-/**
- * Updates a blog with the specified session token.
- *
- * @param {string} token
- * @param {Object} blog
- * @param {number} blog.id
- * @param {string} blog.title
- * @param {string} blog.content
- * @param {string|null} blog.banner
- * @returns {Promise<Blog>} The blog created
- */
-export async function updateBlog(token, blog) {
-  const payload = {
-    token,
-    blog,
-  };
-
-  const response = await axios.put(BASE_URL, payload);
-
-  return response.data;
-}
