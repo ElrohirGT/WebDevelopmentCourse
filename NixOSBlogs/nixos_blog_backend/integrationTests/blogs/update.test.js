@@ -1,12 +1,11 @@
 import axios from "axios";
 import { beforeEach, describe, expect, test } from "vitest";
-import { registerUser } from "../register.test.js";
-import { loginUser } from "../login.test.js";
-import { createBlog } from "./post.test.js";
+import { registerUser } from "../register.utils.js";
+import { loginUser } from "../login.utils.js";
+import { createBlog } from "./post.utils.js";
 import { log } from "../../src/utils/log.js";
 
 const HOST = "127.0.0.1";
-import { log } from "../../src/utils/log.js";
 const PORT = 3000;
 const BASE_URL = `http://${HOST}:${PORT}/api/blogs`;
 

@@ -1,11 +1,10 @@
 import axios from "axios";
 import { beforeEach, describe, expect, test } from "vitest";
-import { registerUser } from "../register.test";
-import { loginUser } from "../login.test";
+import { registerUser } from "../register.utils";
+import { loginUser } from "../login.utils";
+import { BLOG_POST_URL } from "./post.utils";
 
-const HOST = "127.0.0.1";
-const PORT = 3000;
-const BASE_URL = `http://${HOST}:${PORT}/api/blogs`;
+const BLOG_POST_URL = "";
 
 describe("Post Blogs endpoint", () => {
   /**
@@ -32,7 +31,7 @@ describe("Post Blogs endpoint", () => {
       content: "asdflkjlijelkjasdf",
     };
 
-    await expect(() => axios.post(BASE_URL, payload)).rejects.toThrow();
+    await expect(() => axios.post(BLOG_POST_URL, payload)).rejects.toThrow();
   });
 
   test("Fail parsing when empty title", async () => {
@@ -41,7 +40,7 @@ describe("Post Blogs endpoint", () => {
       content: "asdflkjlijelkjasdf",
     };
 
-    await expect(() => axios.post(BASE_URL, payload)).rejects.toThrow();
+    await expect(() => axios.post(BLOG_POST_URL, payload)).rejects.toThrow();
   });
 
   test("Fail parsing when empty content", async () => {
@@ -50,7 +49,7 @@ describe("Post Blogs endpoint", () => {
       title: "asdflkjlasdfijlkj",
     };
 
-    await expect(() => axios.post(BASE_URL, payload)).rejects.toThrow();
+    await expect(() => axios.post(BLOG_POST_URL, payload)).rejects.toThrow();
   });
 
   test("Fail parsing when invalid token", async () => {
@@ -60,7 +59,7 @@ describe("Post Blogs endpoint", () => {
       content: "asdflkjlasdfijlkj",
     };
 
-    await expect(() => axios.post(BASE_URL, payload)).rejects.toThrow();
+    await expect(() => axios.post(BLOG_POST_URL, payload)).rejects.toThrow();
   });
 
   test("Blog created successfully", async () => {
@@ -71,7 +70,7 @@ describe("Post Blogs endpoint", () => {
       title: "Automatic integration test blog!",
       content: "This blog was created using an automated test!",
     };
-    const response = await axios.post(BASE_URL, payload);
+    const response = await axios.post(BLOG_POST_URL, payload);
 
     expect(response).toBeDefined();
     expect(response.status).toBeDefined();
@@ -83,24 +82,3 @@ describe("Post Blogs endpoint", () => {
     expect(response.data.content).toEqual(payload.content);
   });
 });
-
-/**
- * Create a blog with the specified session token.
- *
- * @param {string} token
- * @param {Object} blog
- * @param {string} blog.title
- * @param {string} blog.content
- * @param {string|null} blog.banner
- * @returns {Promise<Blog>} The blog created
- */
-export async function createBlog(token, blog) {
-  const payload = {
-    token,
-    ...blog,
-  };
-
-  const response = await axios.post(BASE_URL, payload);
-
-  return response.data;
-}

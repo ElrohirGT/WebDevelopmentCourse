@@ -1,10 +1,7 @@
 import axios from "axios";
 import { describe, expect, test } from "vitest";
-import { registerUser } from "./register.test";
-
-const HOST = "127.0.0.1";
-const PORT = 3000;
-const BASE_URL = `http://${HOST}:${PORT}/api/login`;
+import { registerUser } from "./register.utils";
+import { LOGIN_URL } from "./login.utils";
 
 describe("Login", () => {
   test("Fail parsing when empty username", async () => {
@@ -12,7 +9,7 @@ describe("Login", () => {
       password: "asdlfkjlij",
     };
 
-    await expect(() => axios.post(BASE_URL, payload)).rejects.toThrow();
+    await expect(() => axios.post(LOGIN_URL, payload)).rejects.toThrow();
   });
 
   test("Fail parsing when empty password", async () => {
@@ -20,7 +17,7 @@ describe("Login", () => {
       username: "asdflkjlkjasdf",
     };
 
-    await expect(() => axios.post(BASE_URL, payload)).rejects.toThrow();
+    await expect(() => axios.post(LOGIN_URL, payload)).rejects.toThrow();
   });
 
   test("Login successfully", async () => {
@@ -30,7 +27,7 @@ describe("Login", () => {
     };
 
     await registerUser(payload);
-    const response = await axios.post(BASE_URL, payload);
+    const response = await axios.post(LOGIN_URL, payload);
 
     expect(response).toBeDefined();
     expect(response.status).toBe(200);
@@ -39,16 +36,3 @@ describe("Login", () => {
     expect(response.data).toBeTypeOf("string");
   });
 });
-
-/**
- * Logins a user into the database.
- * This function doesn't create a user.
- * @param {Object} user
- * @param {string} user.username
- * @param {string} user.password
- * @returns {Promise<string>} The token of the user session
- */
-export async function loginUser(user) {
-  const response = await axios.post(BASE_URL, user);
-  return response.data;
-}

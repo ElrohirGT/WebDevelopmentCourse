@@ -1,9 +1,6 @@
 import axios from "axios";
 import { describe, expect, test } from "vitest";
-
-const HOST = "127.0.0.1";
-const PORT = 3000;
-const BASE_URL = `http://${HOST}:${PORT}/api/register`;
+import { REGISTER_URL, registerUser } from "./register.utils";
 
 describe("Register", () => {
   test("Fail parsing when empty username", async () => {
@@ -11,7 +8,7 @@ describe("Register", () => {
       password: "asdlfkjlij",
     };
 
-    await expect(() => axios.post(BASE_URL, payload)).rejects.toThrow();
+    await expect(() => axios.post(REGISTER_URL, payload)).rejects.toThrow();
   });
 
   test("Fail parsing when empty password", async () => {
@@ -19,37 +16,11 @@ describe("Register", () => {
       username: "asdflkjlkjasdf",
     };
 
-    await expect(() => axios.post(BASE_URL, payload)).rejects.toThrow();
+    await expect(() => axios.post(REGISTER_URL, payload)).rejects.toThrow();
   });
 
   test("Register successfully", async () => {
-    const payload = {
-      username: `TDD-username-${Math.random() * 100_000}`,
-      password: `1234`,
-    };
-
-    const response = await axios.post(BASE_URL, payload);
-
+    const response = registerUser();
     expect(response).toBeDefined();
   });
 });
-
-/**
- * Registers a user with the provided credentials.
- * It can also create a new user if no credentials are provided.
- *
- * @param {Object|null} payload
- * @param {string} payload.username
- * @param {string} payload.payload
- * @returns {Promise<{username: string, password: string}>} The username credentials.
- */
-export async function registerUser(payload = undefined) {
-  const requestBody = {
-    username: payload?.username ?? `TDD-username-${Math.random() * 100_000}`,
-    password: payload?.password ?? "1234",
-  };
-
-  await axios.post(BASE_URL, requestBody);
-
-  return requestBody;
-}
