@@ -55,7 +55,7 @@
           rm ./.devenv/state/postgres || rm -r ./.devenv/state/postgres || true
 
           echo "Entering devshell..."
-          nix develop --impure . --command bash -c "devenv up -d"
+          nix develop --impure .#ci --command bash -c "devenv up"
         '';
       };
 
@@ -66,10 +66,10 @@
         text = ''
           echo -e "$(ansi red)" This command should only be run on CI "$(ansi reset)"
           echo -e "$(ansi yellow)" Initializing dev environment... "$(ansi reset)"
-          nix develop --impure . --command bash -c "exit"
+          nix develop --impure .#ci --command bash -c "exit"
 
           echo -e "$(ansi yellow)" Starting services... "$(ansi reset)"
-          nix run .#restartServices > output &
+          nix run .#restartServicesCi > output &
           APP_PID=$!
           echo -e "$(ansi yellow) THE APP PID IS: $(ansi cyan) $APP_PID $(ansi reset)"
 
@@ -79,7 +79,7 @@
           echo -e "$(ansi yellow)" Running tests... "$(ansi reset)"
           cd ./nixos_blog_backend
           # FIXME By some reason the kill command doesn't clean all jobs
-          (nix develop --impure . --command bash -c "yarn test-integration:ci") || ( kill "$APP_PID" && false )
+          (nix develop --impure .#ci --command bash -c "yarn test-integration:ci") || ( kill "$APP_PID" && false )
           kill "$APP_PID"
         '';
       };
@@ -125,6 +125,49 @@
         strFromDBFile = file: builtins.readFile ./db/${file};
         dbInitFile = builtins.concatStringsSep "\n" [(strFromDBFile "init.sql") (strFromDBFile "tables.sql") (strFromDBFile "inserts.sql")];
       in {
+        ci = devenv.lib.mkShell {
+          inherit inputs pkgs;
+          modules = [
+            {
+              packages = with pkgs; [
+                oxlint
+              ];
+
+              languages.javascript = {
+                enable = true;
+                yarn.enable = true;
+              };
+
+              process = {
+                process-compose = pkgs.lib.mkOptionDefault {
+                  tui = "false";
+                };
+              };
+
+              processes = {
+                # Start the backend...
+                backendApi = {
+                  exec = "cd ./nixos_blog_backend/ && yarn start";
+                  process-compose = {
+                    depends_on = {
+                      postgres = {
+                        condition = "process_started";
+                      };
+                    };
+                  };
+                };
+              };
+
+              services.postgres = {
+                enable = true;
+                listen_addresses = postgresHost;
+                port = postgresPort;
+                initialScript = dbInitFile;
+              };
+            }
+          ];
+        };
+
         default = devenv.lib.mkShell {
           inherit inputs pkgs;
           modules = [
@@ -139,15 +182,6 @@
                 enable = true;
                 yarn = {
                   enable = true;
-                };
-              };
-
-              process = {
-                process-compose = pkgs.lib.mkOptionDefault {
-                  tui = "false";
-                  # unix-socket = "/run/user/1000/devenv-d9c1243/pc.sock";
-                  # unix-socket = "/run/user/1000/devenv-faae028/pc.sock";
-                  # version = "0.5";
                 };
               };
 
