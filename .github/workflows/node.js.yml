@@ -24,9 +24,9 @@ jobs:
     - name: Magic Nix Cache
       uses: DeterminateSystems/magic-nix-cache-action@v4
     - name: Checking Backend
-      run: nix develop --impure . --command bash -c "cd nixos_blog_backend && yarn lint:ci"
+      run: nix develop --impure .#ci --command bash -c "cd nixos_blog_backend && yarn lint:ci"
     - name: Checking Frontend
-      run: nix develop --impure . --command bash -c "cd nixos_blog_frontend && yarn lint:ci"
+      run: nix develop --impure .#ci --command bash -c "cd nixos_blog_frontend && yarn lint:ci"
 
   Testing:
     runs-on: ubuntu-latest
