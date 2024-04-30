@@ -14,7 +14,7 @@
     "lint": "oxlint -D all -A nursery -A no-ternary",
     "lint:ci": "yarn lint --max-warnings 0",
     "format": "dprint fmt",
-    "test-integration": "yarn && vitest",
+    "test-integration": "yarn && vitest ./integrationTests/blogs/delete.test.js",
     "test-integration:ci": "yarn && vitest run"
   },
   "dependencies": {
