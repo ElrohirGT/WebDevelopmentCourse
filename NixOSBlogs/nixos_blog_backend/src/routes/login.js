@@ -1,7 +1,7 @@
-import { POOL } from "../db/db.js";
-import { log } from "../utils/log.js";
-import encryptPassword from "../utils/encription.js";
 import { v4 as uuidv4 } from "uuid";
+import { POOL } from "../db/db.js";
+import encryptPassword from "../utils/encription.js";
+import { log } from "../utils/log.js";
 
 /**
  * @typedef {Object} LoginRequestBody

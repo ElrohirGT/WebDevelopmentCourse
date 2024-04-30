@@ -2,6 +2,7 @@ import { Router } from "express";
 import getBlogs from "./get.js";
 import postBlog from "./post.js";
 import putBlogs from "./update.js";
+// TODO: Add delete endpoint
 
 const router = Router();
 

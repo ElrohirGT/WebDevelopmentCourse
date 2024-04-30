@@ -1,6 +1,6 @@
 import { POOL } from "../db/db.js";
-import { log } from "../utils/log.js";
 import encryptPassword from "../utils/encription.js";
+import { log } from "../utils/log.js";
 
 /**
  * @typedef {Object} RegisterRequestBody

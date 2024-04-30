@@ -1,7 +1,7 @@
-import { log, logger } from "./src/utils/log.js";
 import bodyParser from "body-parser";
 import express, { json, static as expressStatic } from "express";
 import API_ROUTER from "./src/routes/index.js";
+import { log, logger } from "./src/utils/log.js";
 const app = express();
 
 const host = "0.0.0.0";

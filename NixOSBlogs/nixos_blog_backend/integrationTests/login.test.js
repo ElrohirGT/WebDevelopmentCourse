@@ -1,7 +1,7 @@
 import axios from "axios";
 import { describe, expect, test } from "vitest";
-import { registerUser } from "./register.utils";
 import { LOGIN_URL } from "./login.utils";
+import { registerUser } from "./register.utils";
 
 describe("Login", () => {
   test("Fail parsing when empty username", async () => {

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { beforeEach, describe, expect, test } from "vitest";
-import { registerUser } from "../register.utils";
 import { loginUser } from "../login.utils";
+import { registerUser } from "../register.utils";
 import { BLOG_POST_URL } from "./post.utils";
 
 const BLOG_POST_URL = "";

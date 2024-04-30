@@ -1,9 +1,9 @@
 import axios from "axios";
 import { beforeEach, describe, expect, test } from "vitest";
-import { registerUser } from "../register.utils";
-import { loginUser } from "../login.utils";
-import { createBlog } from "./post.utils";
 import { log } from "../../src/utils/log";
+import { loginUser } from "../login.utils";
+import { registerUser } from "../register.utils";
+import { createBlog } from "./post.utils";
 import { BLOG_UPDATE_ENDPOINT } from "./update.utils";
 
 describe("Update Blogs endpoint", () => {
@@ -34,9 +34,7 @@ describe("Update Blogs endpoint", () => {
       },
     };
 
-    await expect(() =>
-      axios.put(BLOG_UPDATE_ENDPOINT, payload),
-    ).rejects.toThrow();
+    await expect(() => axios.put(BLOG_UPDATE_ENDPOINT, payload)).rejects.toThrow();
   });
 
   test("Fail parsing when empty blog", async () => {
@@ -44,9 +42,7 @@ describe("Update Blogs endpoint", () => {
       token: "asdflkjlkjasdf",
     };
 
-    await expect(() =>
-      axios.post(BLOG_UPDATE_ENDPOINT, payload),
-    ).rejects.toThrow();
+    await expect(() => axios.post(BLOG_UPDATE_ENDPOINT, payload)).rejects.toThrow();
   });
 
   test("Fail parsing when empty blogs properties", async () => {
@@ -55,9 +51,7 @@ describe("Update Blogs endpoint", () => {
       blog: {},
     };
 
-    await expect(() =>
-      axios.post(BLOG_UPDATE_ENDPOINT, payload),
-    ).rejects.toThrow();
+    await expect(() => axios.post(BLOG_UPDATE_ENDPOINT, payload)).rejects.toThrow();
   });
 
   test("Fail request when invalid token", async () => {
@@ -70,9 +64,7 @@ describe("Update Blogs endpoint", () => {
       },
     };
 
-    await expect(() =>
-      axios.post(BLOG_UPDATE_ENDPOINT, payload),
-    ).rejects.toThrow();
+    await expect(() => axios.post(BLOG_UPDATE_ENDPOINT, payload)).rejects.toThrow();
   });
 
   test("Blog updated successfully", async () => {

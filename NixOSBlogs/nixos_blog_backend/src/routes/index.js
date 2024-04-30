@@ -1,7 +1,7 @@
 import { Router } from "express";
-import register from "./register.js";
-import login from "./login.js";
 import blogs from "./blogs/index.js";
+import login from "./login.js";
+import register from "./register.js";
 const router = Router();
 
 router.post("/register", register);
