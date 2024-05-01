@@ -10,7 +10,7 @@ export const BLOG_POST_URL = `${BASE_URL}/api/blogs`;
  * @param {Object} blog
  * @param {string} blog.title
  * @param {string} blog.content
- * @param {string|null} blog.banner
+ * @param {string|undefined} blog.banner
  * @returns {Promise<import('../../src/routes/blogs/post.js').Blog>} The blog created
  */
 export async function createBlog(token, blog) {

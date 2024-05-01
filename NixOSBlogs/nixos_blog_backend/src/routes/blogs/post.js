@@ -11,6 +11,7 @@ import { log } from "../../utils/log.js";
 
 /**
  * @typedef {Object} Blog
+ * @property {number} id
  * @property {string} title
  * @property {string} banner
  * @property {string} content
