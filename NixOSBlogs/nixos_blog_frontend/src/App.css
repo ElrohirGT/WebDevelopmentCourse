@@ -1,0 +1,42 @@
+* {
+	background: #2e383c;
+	color: whitesmoke;
+	box-sizing: content-box;
+	margin: 0;
+}
+
+h1 {
+	font-family: 'Jura';
+	font-size: 3rem;
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: 'Ledger';
+}
+
+h2 {
+	font-size: 2rem;
+}
+
+p {
+	font-family: 'Roboto Slab';
+}
+
+@font-face {
+	font-family: Jura;
+	src: local('Jura'), url(./fonts/Jura/static/Jura-Regular.ttf)
+}
+
+@font-face {
+	font-family: Ledger;
+	src: local('Ledger'), url(./fonts/Ledger/Ledger-Regular.ttf)
+}
+
+@font-face {
+	font-family: Roboto Slab;
+	src: local('Roboto Slab'), url(./fonts/Roboto_Slab/static/RobotoSlab-Regular.ttf)
+}

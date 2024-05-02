@@ -9,6 +9,7 @@
 
 import axios from "axios";
 import { API_URL } from "./settings";
+import { delay } from "./utils/general";
 
 /**
  * @typedef {Object} BlogPreview
@@ -25,6 +26,8 @@ import { API_URL } from "./settings";
 export const getBlogsPreviews = async () => {
   const url = `${API_URL}/blogs`;
   const { data } = await axios.get(url);
+  //TODO: Simulated loading for suspense testing...
+  await delay(5000);
   return data;
 };
 
