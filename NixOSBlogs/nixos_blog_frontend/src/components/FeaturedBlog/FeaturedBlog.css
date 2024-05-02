@@ -9,6 +9,7 @@
 	grid-column: 1/2;
 
 	width: 100vw;
+	height: 90vh;
 	object-fit: cover;
 }
 
