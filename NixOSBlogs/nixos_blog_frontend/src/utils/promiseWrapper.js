@@ -21,9 +21,9 @@ export default function WrapPromise(promise) {
       status = "success";
       response = res;
     },
-    (rej) => {
+    (error) => {
       status = "error";
-      response = rej;
+      response = error;
     },
   );
 

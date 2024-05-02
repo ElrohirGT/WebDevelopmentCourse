@@ -26,7 +26,7 @@ import { delay } from "./utils/general";
 export const getBlogsPreviews = async () => {
   const url = `${API_URL}/blogs`;
   const { data } = await axios.get(url);
-  //TODO: Simulated loading for suspense testing...
+  // TODO: Simulated loading for suspense testing...
   await delay(5000);
   return data;
 };
