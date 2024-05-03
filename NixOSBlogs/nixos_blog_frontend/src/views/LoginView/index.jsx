@@ -6,7 +6,7 @@ export default function LoginView() {
 			<h2>Login</h2>
 			<input placeholder="Username:" />
 			<input placeholder="Password:" />
-			<button className="PrimaryButton">Log In</button>
+			<button className="PrimaryButton" type="button">Log In</button>
 		</div>
 	</div>
 }
