@@ -12,6 +12,12 @@ import { Suspense } from "react";
 	* @param {AdminViewProps} props
 	*/
 export default function AdminView({ loginToken, blogsPreviewsResource }) {
+	if (!loginToken) {
+		const url = window.location.href
+		const idx = url.indexOf("/", 9)
+		window.location.assign(url.substring(0, idx))
+	}
+
 	return <div className="adminViewContainer">
 		<h1>Admin Panel</h1>
 		<div className="adminViewHeader">

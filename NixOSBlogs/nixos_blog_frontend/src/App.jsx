@@ -59,7 +59,7 @@ export default function App() {
 		<BlogDetailsView blogPreview={currentBlogPreview} navigateToMainView={navigateToMainView} loginToken={loginToken} />
 	);
 	routeToComponentMapper[ROUTES.login] = <LoginView onLogin={onLogin} />;
-	routeToComponentMapper[ROUTES.admin] = <AdminView blogsPreviewsResource={blogsPreviewsResource} />;
+	routeToComponentMapper[ROUTES.admin] = <AdminView blogsPreviewsResource={blogsPreviewsResource} loginToken={loginToken} />;
 
 	return routeToComponentMapper[currentRoute];
 }
