@@ -51,7 +51,7 @@ export default function App() {
 
 	const routeToComponentMapper = {};
 	routeToComponentMapper[ROUTES.home] = (
-		<MainView navigateToLogin={navigateToLogin} navigateToBlogDetails={navigateToBlogDetails} />
+		<MainView navigateToLogin={navigateToLogin} navigateToAdminView={navigateToAdminView} navigateToBlogDetails={navigateToBlogDetails} loginToken={loginToken} />
 	);
 	routeToComponentMapper[ROUTES.blogDetails] = (
 		<BlogDetailsView blogPreview={currentBlogPreview} navigateToMainView={navigateToMainView} loginToken={loginToken} />
