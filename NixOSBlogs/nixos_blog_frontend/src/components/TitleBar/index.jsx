@@ -7,6 +7,6 @@ import "./TitleBar.css"
 export default function TitleBar({ navigateToLogin }) {
 	return <div className="titleBar">
 		<h1>Nix<span>OS</span> Blogs</h1>
-		<button onClick={navigateToLogin} type="button">Login</button>
+		<button className="PrimaryButton" onClick={navigateToLogin} type="button">Login</button>
 	</div>
 }
