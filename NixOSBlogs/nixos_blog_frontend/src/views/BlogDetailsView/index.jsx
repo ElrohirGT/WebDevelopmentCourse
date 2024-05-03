@@ -1,7 +1,8 @@
-import WrapPromise, { WrapPromiseErrorMock, WrapPromisePrendingMock } from "src/utils/promiseWrapper";
+import WrapPromise from "src/utils/promiseWrapper";
 import "./BlogDetailsView.css"
 import { getBlogContent } from "src/dataAccess";
 import { Suspense, useEffect, useState } from "react";
+import Markdown from "react-markdown";
 
 
 /**
@@ -19,9 +20,11 @@ export default function BlogDetailsView({ blogPreview, navigateToMainView }) {
 
 	return <div className='BlogDetailsContainer'>
 		<div className='DetailsHeader'>
-			<h1>{title}</h1>
-			<p>{published}</p>
+			<button className="PrimaryButton" type="button" onClick={navigateToMainView}>Main Menu</button>
+			<h3>{new Date(published).toLocaleString()}</h3>
+			<button className="PrimaryButton" type="button">Edit</button>
 		</div>
+		<img src={banner} />
 		<Suspense fallback={<p>Loading content...</p>}>
 			<BlogContentDisplay blogContentResource={contentResource} />
 		</Suspense>
@@ -30,5 +33,5 @@ export default function BlogDetailsView({ blogPreview, navigateToMainView }) {
 
 function BlogContentDisplay({ blogContentResource }) {
 	const blogContent = blogContentResource.read();
-	return <p>{blogContent}</p>
+	return <Markdown>{blogContent}</Markdown>
 }

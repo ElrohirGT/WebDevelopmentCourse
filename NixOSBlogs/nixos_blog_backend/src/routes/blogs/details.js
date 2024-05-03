@@ -11,7 +11,7 @@ export default async (req, res) => {
   log.info("Getting blog details...");
   try {
     const result = await POOL.query(
-      "SELECT id, title, banner, published FROM blog WHERE id=$1",
+      "SELECT id, title, banner, published, content FROM blog WHERE id=$1",
       [blogId],
     );
 
