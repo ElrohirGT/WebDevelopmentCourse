@@ -1,0 +1,13 @@
+.FormBanner {
+	width: auto;
+	max-width: 100%;
+	height: 30vh;
+	align-self: center;
+}
+
+.FormInput {
+	border-width: .2rem;
+	border-color: white;
+	padding: 1rem;
+	font-size: 1.2rem;
+}

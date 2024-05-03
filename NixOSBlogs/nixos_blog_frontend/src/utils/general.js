@@ -5,3 +5,14 @@
 export const delay = (ms) => {
   return new Promise((res) => setTimeout(res, ms));
 };
+
+/**
+ * Creates a function that logs an error object and prepends a specified message.
+ * @param {string} message The message to append to the log
+ * @returns {Function} With a signature equivalent to `console.error`
+ */
+export const logError = (message) => {
+  return (obj) => {
+    console.error(message, obj);
+  };
+};

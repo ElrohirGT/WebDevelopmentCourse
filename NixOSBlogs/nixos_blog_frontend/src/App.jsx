@@ -7,12 +7,14 @@ import BlogDetailsView from "src/views/BlogDetailsView";
 import { getBlogsPreviews, loginUser } from "src/dataAccess";
 import { useLocalStorage } from "src/utils/hooks";
 import WrapPromise from "./utils/promiseWrapper";
+import CreateBlogForm from "./views/CreateBlogView";
 
 export const ROUTES = {
 	home: "HOME",
 	login: "LOGIN",
 	admin: "ADMIN",
-	blogForm: "BLOGFORM",
+	createBlogForm: "CREATE_BLOG",
+	updateBlogForm: "UPDATE_BLOG",
 	blogDetails: "DETAILS",
 };
 
@@ -36,6 +38,10 @@ export default function App() {
 		setCurrentBlog(undefined);
 		setCurrentRoute(ROUTES.home);
 	};
+	const navigateToCreateBlogForm = () => {
+		setCurrentBlog(undefined);
+		setCurrentRoute(ROUTES.createBlogForm);
+	};
 
 	useEffect(() => {
 		const currentUrlRoute = window.location.pathname;
@@ -50,6 +56,9 @@ export default function App() {
 		setLoginToken(token)
 		navigateToAdminView()
 	}
+	const onCreateBlogFormSubmit = (data) => {
+		console.log("The data to create a blog is: ", data)
+	}
 
 	const routeToComponentMapper = {};
 	routeToComponentMapper[ROUTES.home] = (
@@ -59,7 +68,8 @@ export default function App() {
 		<BlogDetailsView blogPreview={currentBlogPreview} navigateToMainView={navigateToMainView} loginToken={loginToken} />
 	);
 	routeToComponentMapper[ROUTES.login] = <LoginView onLogin={onLogin} />;
-	routeToComponentMapper[ROUTES.admin] = <AdminView blogsPreviewsResource={blogsPreviewsResource} loginToken={loginToken} navigateToBlogDetails={navigateToBlogDetails} />;
+	routeToComponentMapper[ROUTES.admin] = <AdminView blogsPreviewsResource={blogsPreviewsResource} loginToken={loginToken} navigateToBlogDetails={navigateToBlogDetails} navigateToCreateBlogForm={navigateToCreateBlogForm} />;
+	routeToComponentMapper[ROUTES.createBlogForm] = <CreateBlogForm onSubmit={onCreateBlogFormSubmit} />;
 
 	return routeToComponentMapper[currentRoute];
 }

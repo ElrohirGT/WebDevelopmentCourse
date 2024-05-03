@@ -7,12 +7,13 @@ import { Suspense } from "react";
 	* @property {string} loginToken
 	* @property {import("src/utils/promiseWrapper").SuspenseResource<import("src/dataAccess").BlogPreview[]>} blogsPreviewsResource
 	* @property {(blogPreview: import("src/dataAccess").BlogPreview)=>void} navigateToBlogDetails
+	* @property {()=>void} navigateToCreateBlogForm
 	*/
 
 /**
 	* @param {AdminViewProps} props
 	*/
-export default function AdminView({ loginToken, blogsPreviewsResource, navigateToBlogDetails }) {
+export default function AdminView({ loginToken, blogsPreviewsResource, navigateToBlogDetails, navigateToCreateBlogForm }) {
 	const navigateToHome = () => {
 		const url = window.location.href
 		const idx = url.indexOf("/", 9)
@@ -27,7 +28,7 @@ export default function AdminView({ loginToken, blogsPreviewsResource, navigateT
 		<h1>Admin Panel</h1>
 		<div className="adminViewHeader">
 			<button className="SecondaryButton" type="button" onClick={navigateToHome}>Home</button>
-			<button className="PrimaryButton" type="button">Create Blog</button>
+			<button className="PrimaryButton" type="button" onClick={navigateToCreateBlogForm}>Create Blog</button>
 		</div>
 		<Suspense fallback={<p>Loading...</p>}>
 			<AdminBlogList blogResource={blogsPreviewsResource} navigateToBlogDetails={navigateToBlogDetails} />
