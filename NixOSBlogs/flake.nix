@@ -74,7 +74,7 @@
           echo -e "$(ansi yellow) THE APP PID IS: $(ansi cyan) $APP_PID $(ansi reset)"
 
           echo -e "$(ansi yellow)" Waiting for backend to boot up... "$(ansi reset)"
-          sleep 7
+          sleep 12
 
           echo -e "$(ansi yellow)" Running tests... "$(ansi reset)"
           cd ./nixos_blog_backend
