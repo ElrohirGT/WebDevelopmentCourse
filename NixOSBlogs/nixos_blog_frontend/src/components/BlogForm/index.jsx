@@ -52,7 +52,7 @@ Blog de ejemplo con un [link](www.google.com)
 				type="text"
 				placeholder="Título:"
 				className='FormInput'
-				defaultValue={blogInfo?.title ? blogInfo.title : ""}
+				defaultValue={blogInfo?.title ?? ""}
 				onChange={(e) => setTitle(e.target.value)}
 			/>
 			<img
@@ -73,8 +73,8 @@ Blog de ejemplo con un [link](www.google.com)
 					const file = e.target.files[0];
 					const dataURL = await new Promise((res, rej) => {
 						const reader = new FileReader();
-						reader.onloadend = (_) => res(reader.result);
-						reader.onerror = (e) => rej(e);
+						reader.addEventListener("loadend", (_) => res(reader.result))
+						reader.addEventListener("error", rej)
 						reader.readAsDataURL(file);
 					}).catch(
 						logError("An error ocurred while retrieving banner binary data!"),
@@ -94,12 +94,13 @@ Blog de ejemplo con un [link](www.google.com)
 				}}
 				className='FormInput'
 				placeholder={contentPlaceholder}
-				defaultValue={blogInfo?.content ? blogInfo.content : ""}
+				defaultValue={blogInfo?.content ?? ""}
 				onChange={(e) => setContent(e.target.value)}
 			/>
 			<button
 				onClick={onSubmitForm}
 				disabled={!canSubmit}
+				type='button'
 				className='PrimaryButton'
 			>
 				Subir

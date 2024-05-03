@@ -3,12 +3,12 @@ import { useState } from "react";
 /**
  * A useState react hook that uses internally localStorage to save its state.
  * @param {string} key - The key to save this object into
- * @param {T|null} defaultValue - The default value to save inside local storage.
+ * @param {T|undefined} defaultValue - The default value to save inside local storage.
  * @returns {[T, (newValue: T)=>void]} The custom react hook.
  */
-export const useLocalStorage = (key, defaultValue = null) => {
+export const useLocalStorage = (key, defaultValue = undefined) => {
   if (localStorage.getItem(key) === null) {
-    localStorage.setItem(key, JSON.stringify(defaultValue));
+    localStorage.setItem(key, JSON.stringify(defaultValue ?? null));
   }
   const [value, setValue] = useState(JSON.parse(localStorage.getItem(key)));
 

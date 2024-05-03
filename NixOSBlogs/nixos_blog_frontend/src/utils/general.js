@@ -13,6 +13,8 @@ export const delay = (ms) => {
  */
 export const logError = (message) => {
   return (obj) => {
+    /* eslint-disable no-console*/
     console.error(message, obj);
+    /* eslint-enable no-console*/
   };
 };

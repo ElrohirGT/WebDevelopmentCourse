@@ -24,8 +24,7 @@ export default function LoginView({ onLogin }) {
 		const formJson = Object.fromEntries(formData.entries());
 		try {
 			await onLogin(formJson)
-		} catch (error) {
-			console.error("COULDN'T LOGIN", error)
+		} catch {
 			setLoginError("Usuario o contraseña incorrecta!")
 		}
 	}
@@ -37,7 +36,7 @@ export default function LoginView({ onLogin }) {
 				<input placeholder="Username:" name="username" />
 				<input placeholder="Password:" name="password" type="password" />
 				<button className="PrimaryButton" type="submit">Log In</button>
-				{loginError.length != 0 ? <p className="ErrorText">{loginError}</p> : null}
+				{loginError.length === 0 ? null : <p className="ErrorText">{loginError}</p>}
 			</form>
 		</div>
 	);

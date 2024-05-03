@@ -17,7 +17,7 @@ export default function AdminView({ loginToken, blogsPreviewsResource, navigateT
 	const navigateToHome = () => {
 		const url = window.location.href
 		const idx = url.indexOf("/", 9)
-		window.location.assign(url.substring(0, idx))
+		window.location.assign(url.slice(0, idx))
 	}
 
 	if (!loginToken) {
@@ -50,8 +50,8 @@ function AdminBlogList({ blogResource, navigateToBlogDetails }) {
 				return <div className="adminBlogListItem" key={b.id} onClick={() => navigateToBlogDetails(b)}>
 					<h3>{b.title}</h3>
 					<div className="adminBlogListItemControls">
-						<button className="PrimaryButton InfoButton">Update</button>
-						<button className="PrimaryButton NegativeButton">Delete</button>
+						<button className="PrimaryButton InfoButton" type="button">Update</button>
+						<button className="PrimaryButton NegativeButton" type="button">Delete</button>
 					</div>
 				</div>
 			})

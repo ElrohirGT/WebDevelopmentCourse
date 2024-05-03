@@ -27,9 +27,10 @@ export default function BlogDetailsView({ blogPreview, navigateToMainView, login
 			<div className="DetailsHeader">
 				<button className="PrimaryButton" type="button" onClick={navigateToMainView}>Main Menu</button>
 				<h3>{new Date(published).toLocaleString()} - {title}</h3>
-				{loginToken != null ?
+				{loginToken === null ?
+					null
+					:
 					<button className="PrimaryButton" type="button">Edit</button>
-					: null
 				}
 			</div>
 			<img src={banner} />

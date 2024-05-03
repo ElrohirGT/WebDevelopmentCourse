@@ -57,7 +57,6 @@ export default function App() {
 		navigateToAdminView()
 	}
 	const onCreateBlogFormSubmit = async (data) => {
-		console.log("The data to create a blog is: ", data)
 		await createBlog(loginToken, data);
 	}
 
