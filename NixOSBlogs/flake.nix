@@ -64,24 +64,23 @@
         name = "NixOS Blogs integration tests";
         runtimeInputs = with pkgs; [ansi];
         text = ''
-               echo -e "$(ansi red)" This command should only be run on CI "$(ansi reset)"
-               echo -e "$(ansi yellow)" Initializing dev environment... "$(ansi reset)"
-               nix develop --impure . --command bash -c "exit"
+          echo -e "$(ansi red)" This command should only be run on CI "$(ansi reset)"
+          echo -e "$(ansi yellow)" Initializing dev environment... "$(ansi reset)"
+          nix develop --impure . --command bash -c "exit"
 
-               echo -e "$(ansi yellow)" Starting services... "$(ansi reset)"
-               nix run .#restartServices > output &
-               APP_PID=$!
-               echo -e "$(ansi yellow) THE APP PID IS: $(ansi cyan) $APP_PID $(ansi reset)"
+          echo -e "$(ansi yellow)" Starting services... "$(ansi reset)"
+          nix run .#restartServices > output &
+          APP_PID=$!
+          echo -e "$(ansi yellow) THE APP PID IS: $(ansi cyan) $APP_PID $(ansi reset)"
 
-               echo -e "$(ansi yellow)" Waiting for backend to boot up... "$(ansi reset)"
-               sleep 7
+          echo -e "$(ansi yellow)" Waiting for backend to boot up... "$(ansi reset)"
+          sleep 7
 
-               echo -e "$(ansi yellow)" Running tests... "$(ansi reset)"
-               cd ./nixos_blog_backend
-               # FIXME By some reason the kill command doesn't clean all jobs
-               (nix develop --impure . --command bash -c "yarn test-integration:ci") || ( kill "$APP_PID" && false )
-               kill "$APP_PID"
-          cat output
+          echo -e "$(ansi yellow)" Running tests... "$(ansi reset)"
+          cd ./nixos_blog_backend
+          # FIXME By some reason the kill command doesn't clean all jobs
+          (nix develop --impure . --command bash -c "yarn test-integration:ci") || ( kill "$APP_PID" && false )
+          kill "$APP_PID"
         '';
       };
 
