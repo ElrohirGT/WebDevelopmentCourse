@@ -3,8 +3,8 @@ import { beforeEach, describe, expect, test } from "vitest";
 import { log } from "../../src/utils/log";
 import { loginUser } from "../login.utils";
 import { registerUser } from "../register.utils";
-import { createBlog } from "./post.utils";
 import { BLOG_DELETE_ENDPOINT } from "./delete.utils";
+import { createBlog } from "./post.utils";
 
 describe("Delete Blogs endpoint", () => {
   /**
@@ -35,9 +35,7 @@ describe("Delete Blogs endpoint", () => {
       blogId: 1,
     };
 
-    await expect(() =>
-      axios.delete(BLOG_DELETE_ENDPOINT, payload),
-    ).rejects.toThrow();
+    await expect(() => axios.delete(BLOG_DELETE_ENDPOINT, payload)).rejects.toThrow();
   });
 
   test("Fail parsing when empty blogId", async () => {
@@ -45,9 +43,7 @@ describe("Delete Blogs endpoint", () => {
       token: "asdflkjlkjasdf",
     };
 
-    await expect(() =>
-      axios.delete(BLOG_DELETE_ENDPOINT, payload),
-    ).rejects.toThrow();
+    await expect(() => axios.delete(BLOG_DELETE_ENDPOINT, payload)).rejects.toThrow();
   });
 
   test("Fail request when invalid token", async () => {
@@ -56,9 +52,7 @@ describe("Delete Blogs endpoint", () => {
       blogId: 5,
     };
 
-    await expect(() =>
-      axios.delete(BLOG_DELETE_ENDPOINT, payload),
-    ).rejects.toThrow();
+    await expect(() => axios.delete(BLOG_DELETE_ENDPOINT, payload)).rejects.toThrow();
   });
 
   test("Blog deleted successfully", async () => {

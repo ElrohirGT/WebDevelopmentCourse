@@ -1,9 +1,9 @@
 import { Router } from "express";
+import deleteBlogs from "./delete.js";
+import getBlogDetails from "./details.js";
 import getBlogs from "./get.js";
 import postBlog from "./post.js";
 import putBlogs from "./update.js";
-import deleteBlogs from "./delete.js";
-import getBlogDetails from "./details.js";
 
 const router = Router();
 

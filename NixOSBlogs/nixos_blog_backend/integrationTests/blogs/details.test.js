@@ -1,9 +1,9 @@
-import { beforeEach, describe, expect, test } from "vitest";
-import { registerUser } from "../register.utils";
-import { loginUser } from "../login.utils";
-import { createBlog } from "./post.utils";
 import axios from "axios";
+import { beforeEach, describe, expect, test } from "vitest";
+import { loginUser } from "../login.utils";
+import { registerUser } from "../register.utils";
 import { BASE_URL } from "../testUtils";
+import { createBlog } from "./post.utils";
 
 describe("Blog details endpoint", () => {
   /**

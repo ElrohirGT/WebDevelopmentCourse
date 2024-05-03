@@ -1,12 +1,14 @@
-import "./Login.css"
+import "./Login.css";
 
 export default function LoginView() {
-	return <div className="LoginViewContainer">
-		<div className="LoginContainer">
-			<h2>Login</h2>
-			<input placeholder="Username:" />
-			<input placeholder="Password:" />
-			<button className="PrimaryButton" type="button">Log In</button>
-		</div>
-	</div>
+  return (
+    <div className="LoginViewContainer">
+      <div className="LoginContainer">
+        <h2>Login</h2>
+        <input placeholder="Username:" />
+        <input placeholder="Password:" />
+        <button className="PrimaryButton" type="button">Log In</button>
+      </div>
+    </div>
+  );
 }
