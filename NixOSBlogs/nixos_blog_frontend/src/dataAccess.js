@@ -27,17 +27,17 @@ export const getBlogsPreviews = async () => {
   const url = `${API_URL}/blogs`;
   const { data } = await axios.get(url);
   // TODO: Simulated loading for suspense testing...
-  await delay(5000);
+  await delay(1000);
   return data;
 };
 
 /**
  * Obtains the content of the blog.
- * @param {number} blogId - The id of the blog to retrieve th contents for
+ * @param {number} blogId - The id of the blog to retrieve the contents for
  * @returns {Promise<string>} Markdown string that contains the contents of the blog.
  */
 export const getBlogContent = async (blogId) => {
-  const url = `${API_URL}/blogs}`;
+  const url = `${API_URL}/blogs/${blogId}`;
   const { data } = await axios.get(url);
   return data.content;
 };

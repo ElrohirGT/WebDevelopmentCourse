@@ -4,6 +4,8 @@
  * @property {() => T} read
  */
 
+import { delay } from "./general";
+
 /**
  * Function used to wrap a promise for use with suspense.
  * If you want to use the `SuspenseResource` returned by this function please do so according to:
@@ -34,6 +36,39 @@ export default function WrapPromise(promise) {
       throw response;
     } else {
       return response;
+    }
+  };
+
+  return { read };
+}
+
+/**
+ * @template T
+ * @returns {SuspenseResource<T>}
+ */
+export function WrapPromiseErrorMock() {
+  return {
+    read: () => {
+      throw "MOCK ERROR";
+    },
+  };
+}
+
+/**
+ * @param {number} msTimeout - The number of ms to simulate before failing.
+ */
+export function WrapPromisePrendingMock(msTimeout) {
+  let status = "pending";
+  const promise = delay(msTimeout).then((res) => {
+    status = "error";
+    res();
+  });
+
+  const read = () => {
+    if (status === "pending") {
+      throw promise;
+    } else {
+      throw "MOCK ERROR";
     }
   };
 
