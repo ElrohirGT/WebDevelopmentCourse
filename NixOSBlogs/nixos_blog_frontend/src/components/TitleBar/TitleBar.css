@@ -10,14 +10,15 @@
 	color: #7fbbb3;
 }
 
-.titleBar a {
+.titleBar button {
 	padding: 1rem 2rem;
 	background-color: #689e6a;
 	font-family: Roboto Slab;
 	font-weight: bolder;
 	text-decoration: none;
+	border-width: 0;
 }
 
-.titleBar a:hover {
+.titleBar button:hover {
 	background-color: #68936a;
 }
