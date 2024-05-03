@@ -58,6 +58,7 @@ export default function App() {
 	}
 	const onCreateBlogFormSubmit = async (data) => {
 		await createBlog(loginToken, data);
+		navigateToAdminView()
 	}
 
 	const routeToComponentMapper = {};

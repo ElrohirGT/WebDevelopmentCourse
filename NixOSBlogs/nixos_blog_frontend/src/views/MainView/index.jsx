@@ -1,11 +1,8 @@
 import { Suspense } from "react";
 import BlogList from "src/components/BlogList";
 import FeaturedBlog from "src/components/FeaturedBlog";
-import { getBlogsPreviews } from "src/dataAccess";
-// import "./App.css";
 import "./MainView.css";
 import TitleBar from "src/components/TitleBar";
-import WrapPromise from "src/utils/promiseWrapper";
 
 
 /**
