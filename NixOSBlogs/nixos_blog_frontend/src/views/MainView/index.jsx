@@ -7,28 +7,27 @@ import "./MainView.css";
 import TitleBar from "src/components/TitleBar";
 import WrapPromise from "src/utils/promiseWrapper";
 
-const retrievedBlogs = WrapPromise(getBlogsPreviews());
 
 /**
 	* @typedef {Object} MainViewProps
 	* @property {()=>void} navigateToLogin
-	* @property {()=>void} navigateToAdminView
 	* @property {string} loginToken
+	* @property {import("src/utils/promiseWrapper").SuspenseResource<import("src/dataAccess").BlogPreview[]>} blogsPreviewsResource
  * @property {(blogId: number)=>void} navigateToBlogDetails
 	*/
 
 /**
  * @param {MainViewProps} props
  */
-export default function MainView({ navigateToLogin, navigateToAdminView, navigateToBlogDetails, loginToken }) {
+export default function MainView({ navigateToLogin, navigateToBlogDetails, loginToken, blogsPreviewsResource }) {
 	return (
 		<div className="MainViewContainer">
-			<TitleBar navigateToLogin={navigateToLogin} navigateToAdminView={navigateToAdminView} loginToken={loginToken} />
+			<TitleBar navigateToLogin={navigateToLogin} loginToken={loginToken} />
 			<Suspense fallback={<LoadingView />}>
 				<h2 className="mainTitle">Most Recent</h2>
-				<FeaturedBlog blogsResource={retrievedBlogs} />
+				<FeaturedBlog blogsResource={blogsPreviewsResource} />
 				<h2 className="mainTitle">Historical</h2>
-				<BlogList blogsResource={retrievedBlogs} navigateToBlogDetails={navigateToBlogDetails} />
+				<BlogList blogsResource={blogsPreviewsResource} navigateToBlogDetails={navigateToBlogDetails} />
 			</Suspense>
 		</div>
 	);

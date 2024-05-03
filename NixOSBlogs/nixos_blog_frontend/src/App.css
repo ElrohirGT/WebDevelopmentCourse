@@ -59,6 +59,37 @@ p {
 	background-color: #68936a;
 }
 
+.SecondaryButton {
+	padding: 1rem 2rem;
+	background-color: transparent;
+	font-family: Roboto Slab;
+	font-size: 1rem;
+	font-weight: bolder;
+	text-decoration: none;
+	border-width: .2rem;
+	border-color: #689e6a;
+}
+
+.SecondaryButton:hover {
+	border-color: #68936a;
+}
+
+.NegativeButton {
+	background-color: #b86566;
+}
+
+.NegativeButton:hover {
+	background-color: #a1585a;
+}
+
+.InfoButton {
+	background-color: #66968f;
+}
+
+.InfoButton:hover {
+	background-color: #59837d;
+}
+
 @font-face {
 	font-family: Jura;
 	src: local('Jura'), url(./fonts/Jura/static/Jura-Regular.ttf)

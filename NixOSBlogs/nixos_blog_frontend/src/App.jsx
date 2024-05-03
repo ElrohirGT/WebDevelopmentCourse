@@ -4,8 +4,9 @@ import AdminView from "src/views/AdminView";
 import LoginView from "src/views/LoginView";
 import MainView from "src/views/MainView";
 import BlogDetailsView from "src/views/BlogDetailsView";
-import { loginUser } from "src/dataAccess";
+import { getBlogsPreviews, loginUser } from "src/dataAccess";
 import { useLocalStorage } from "src/utils/hooks";
+import WrapPromise from "./utils/promiseWrapper";
 
 export const ROUTES = {
 	home: "HOME",
@@ -19,6 +20,7 @@ export default function App() {
 	const [currentRoute, setCurrentRoute] = useState(ROUTES.home);
 	const [currentBlogPreview, setCurrentBlog] = useState(undefined);
 	const [loginToken, setLoginToken] = useLocalStorage("NixOSBlogs_LoginToken")
+	const blogsPreviewsResource = WrapPromise(getBlogsPreviews());
 
 	const navigateToAdminView = () => {
 		setCurrentRoute(ROUTES.admin);
@@ -51,13 +53,13 @@ export default function App() {
 
 	const routeToComponentMapper = {};
 	routeToComponentMapper[ROUTES.home] = (
-		<MainView navigateToLogin={navigateToLogin} navigateToAdminView={navigateToAdminView} navigateToBlogDetails={navigateToBlogDetails} loginToken={loginToken} />
+		<MainView navigateToLogin={navigateToLogin} navigateToBlogDetails={navigateToBlogDetails} loginToken={loginToken} blogsPreviewsResource={blogsPreviewsResource} />
 	);
 	routeToComponentMapper[ROUTES.blogDetails] = (
 		<BlogDetailsView blogPreview={currentBlogPreview} navigateToMainView={navigateToMainView} loginToken={loginToken} />
 	);
 	routeToComponentMapper[ROUTES.login] = <LoginView onLogin={onLogin} />;
-	routeToComponentMapper[ROUTES.admin] = <AdminView />;
+	routeToComponentMapper[ROUTES.admin] = <AdminView blogsPreviewsResource={blogsPreviewsResource} />;
 
 	return routeToComponentMapper[currentRoute];
 }

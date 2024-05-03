@@ -3,21 +3,20 @@ import "./TitleBar.css";
 /**
 	* @typedef {Object} TitleBarProps
 	* @property {()=>void} navigateToLogin
-	* @property {()=>void} navigateToAdminView
 	* @property {string} loginToken
 	*/
 
 /**
  * @param {TitleBarProps} props
  */
-export default function TitleBar({ navigateToLogin, navigateToAdminView, loginToken }) {
+export default function TitleBar({ navigateToLogin, loginToken }) {
 	return (
 		<div className="titleBar">
 			<h1>
 				Nix<span>OS</span> Blogs
 			</h1>
 			{loginToken ?
-				<button className="PrimaryButton" onClick={navigateToAdminView} type="button">Admin Panel</button>
+				<a className="PrimaryButton" href="/admin">Admin Panel</a>
 				:
 				<button className="PrimaryButton" onClick={navigateToLogin} type="button">Login</button>
 			}
