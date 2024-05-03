@@ -9,9 +9,13 @@ import TitleBar from "src/components/TitleBar";
 
 const retrievedBlogs = WrapPromise(getBlogsPreviews());
 
-export default function MainView() {
+/**
+	* @param {Object} props 
+	* @param {()=>void} props.navigateToLogin 
+	*/
+export default function MainView({ navigateToLogin }) {
 	return <div className="MainViewContainer">
-		<TitleBar />
+		<TitleBar navigateToLogin={navigateToLogin} />
 		<Suspense fallback={<LoadingView />}>
 			<h2 className="mainTitle">Most Recent</h2>
 			<FeaturedBlog blogsResource={retrievedBlogs} />
