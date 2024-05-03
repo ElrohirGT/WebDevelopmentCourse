@@ -41,3 +41,20 @@ export const getBlogContent = async (blogId) => {
   const { data } = await axios.get(url);
   return data.content;
 };
+
+/**
+ * @typedef {Object} User
+ * @property {string} username
+ * @property {string} password
+ */
+
+/**
+ * Tries to login a user in the API.
+ * @param {User} user
+ * @returns {Promise<string>} The token to access requests.
+ */
+export const loginUser = async (user) => {
+  const url = `${API_URL}/login`;
+  const { data } = await axios.post(url, user);
+  return data;
+};

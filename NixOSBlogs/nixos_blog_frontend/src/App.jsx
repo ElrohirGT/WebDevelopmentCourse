@@ -3,51 +3,61 @@ import "./App.css";
 import AdminView from "src/views/AdminView";
 import LoginView from "src/views/LoginView";
 import MainView from "src/views/MainView";
-import BlogDetailsView from "./views/BlogDetailsView";
+import BlogDetailsView from "src/views/BlogDetailsView";
+import { loginUser } from "src/dataAccess";
+import { useLocalStorage } from "src/utils/hooks";
 
 export const ROUTES = {
-  home: "HOME",
-  login: "LOGIN",
-  admin: "ADMIN",
-  blogForm: "BLOGFORM",
-  blogDetails: "DETAILS",
+	home: "HOME",
+	login: "LOGIN",
+	admin: "ADMIN",
+	blogForm: "BLOGFORM",
+	blogDetails: "DETAILS",
 };
 
 export default function App() {
-  const [currentRoute, setCurrentRoute] = useState(ROUTES.home);
-  const [currentBlogPreview, setCurrentBlog] = useState(undefined);
+	const [currentRoute, setCurrentRoute] = useState(ROUTES.home);
+	const [currentBlogPreview, setCurrentBlog] = useState(undefined);
+	const [loginToken, setLoginToken] = useLocalStorage("NixOSBlogs_LoginToken")
 
-  const navigateToAdminView = () => {
-    setCurrentRoute(ROUTES.admin);
-  };
-  const navigateToLogin = () => {
-    setCurrentRoute(ROUTES.login);
-  };
-  const navigateToBlogDetails = (blogPreview) => {
-    setCurrentBlog(blogPreview);
-    setCurrentRoute(ROUTES.blogDetails);
-  };
-  const navigateToMainView = () => {
-    setCurrentBlog(undefined);
-    setCurrentRoute(ROUTES.home);
-  };
+	const navigateToAdminView = () => {
+		setCurrentRoute(ROUTES.admin);
+	};
+	const navigateToLogin = () => {
+		setCurrentRoute(ROUTES.login);
+	};
+	const navigateToBlogDetails = (blogPreview) => {
+		setCurrentBlog(blogPreview);
+		setCurrentRoute(ROUTES.blogDetails);
+	};
+	const navigateToMainView = () => {
+		setCurrentBlog(undefined);
+		setCurrentRoute(ROUTES.home);
+	};
 
-  useEffect(() => {
-    const currentUrlRoute = window.location.pathname;
-    if (currentUrlRoute === "/admin") {
-      navigateToAdminView();
-    }
-  }, []);
+	useEffect(() => {
+		const currentUrlRoute = window.location.pathname;
+		if (currentUrlRoute === "/admin") {
+			navigateToAdminView();
+		}
+	}, []);
 
-  const routeToComponentMapper = {};
-  routeToComponentMapper[ROUTES.home] = (
-    <MainView navigateToLogin={navigateToLogin} navigateToBlogDetails={navigateToBlogDetails} />
-  );
-  routeToComponentMapper[ROUTES.blogDetails] = (
-    <BlogDetailsView blogPreview={currentBlogPreview} navigateToMainView={navigateToMainView} />
-  );
-  routeToComponentMapper[ROUTES.login] = <LoginView />;
-  routeToComponentMapper[ROUTES.admin] = <AdminView />;
+	const onLogin = async (user) => {
+		// console.log(user)
+		const token = await loginUser(user);
+		setLoginToken(token)
+		navigateToAdminView()
+	}
 
-  return routeToComponentMapper[currentRoute];
+	const routeToComponentMapper = {};
+	routeToComponentMapper[ROUTES.home] = (
+		<MainView navigateToLogin={navigateToLogin} navigateToBlogDetails={navigateToBlogDetails} />
+	);
+	routeToComponentMapper[ROUTES.blogDetails] = (
+		<BlogDetailsView blogPreview={currentBlogPreview} navigateToMainView={navigateToMainView} />
+	);
+	routeToComponentMapper[ROUTES.login] = <LoginView onLogin={onLogin} />;
+	routeToComponentMapper[ROUTES.admin] = <AdminView />;
+
+	return routeToComponentMapper[currentRoute];
 }
