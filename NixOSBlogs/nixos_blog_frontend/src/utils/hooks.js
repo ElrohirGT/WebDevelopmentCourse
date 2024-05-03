@@ -7,7 +7,9 @@ import { useState } from "react";
  * @returns {[T, (newValue: T)=>void]} The custom react hook.
  */
 export const useLocalStorage = (key, defaultValue = null) => {
-  localStorage.setItem(key, JSON.stringify(defaultValue));
+  if (localStorage.getItem(key) === null) {
+    localStorage.setItem(key, JSON.stringify(defaultValue));
+  }
   const [value, setValue] = useState(JSON.parse(localStorage.getItem(key)));
 
   return [

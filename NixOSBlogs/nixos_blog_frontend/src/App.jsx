@@ -54,7 +54,7 @@ export default function App() {
 		<MainView navigateToLogin={navigateToLogin} navigateToBlogDetails={navigateToBlogDetails} />
 	);
 	routeToComponentMapper[ROUTES.blogDetails] = (
-		<BlogDetailsView blogPreview={currentBlogPreview} navigateToMainView={navigateToMainView} />
+		<BlogDetailsView blogPreview={currentBlogPreview} navigateToMainView={navigateToMainView} loginToken={loginToken} />
 	);
 	routeToComponentMapper[ROUTES.login] = <LoginView onLogin={onLogin} />;
 	routeToComponentMapper[ROUTES.admin] = <AdminView />;
