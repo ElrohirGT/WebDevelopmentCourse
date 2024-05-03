@@ -1,16 +1,16 @@
 import { Suspense } from "react";
-import BlogList from "./components/BlogList";
-import FeaturedBlog from "./components/FeaturedBlog";
-import { getBlogsPreviews } from "./dataAccess";
-import "./App.css";
-import WrapPromise from "./utils/promiseWrapper";
-import TitleBar from "./components/TitleBar";
-import MainView from "./views/MainView";
+import BlogList from "src/components/BlogList";
+import FeaturedBlog from "src/components/FeaturedBlog";
+import { getBlogsPreviews } from "src/dataAccess";
+// import "./App.css";
+import "./MainView.css";
+import WrapPromise from "src/utils/promiseWrapper";
+import TitleBar from "src/components/TitleBar";
 
 const retrievedBlogs = WrapPromise(getBlogsPreviews());
 
 export default function MainView() {
-	return <div>
+	return <div className="MainViewContainer">
 		<TitleBar />
 		<Suspense fallback={<LoadingView />}>
 			<h2 className="mainTitle">Most Recent</h2>

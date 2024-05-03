@@ -2,6 +2,7 @@
 	display: grid;
 	grid-template-rows: 1fr;
 	grid-template-columns: 1fr;
+	box-shadow: 0.3vw 0.3vw .1vw 0vw rgba(0, 0, 0, 1);
 }
 
 .featuredContainer img {

@@ -2,6 +2,12 @@
 	display: flex;
 	width: 100%;
 	justify-content: space-between;
+	box-shadow: 0.3vw 0.3vw .1vw 0vw rgba(0, 0, 0, 1);
+	padding: 1rem;
+}
+
+.titleBar span {
+	color: #7fbbb3;
 }
 
 .titleBar a {
@@ -10,8 +16,8 @@
 	font-family: Roboto Slab;
 	font-weight: bolder;
 	text-decoration: none;
-	border-right: .2rem solid #1f2c20;
-	border-bottom: .2rem solid #1f2c20;
+	/* border-right: .2rem solid #1f2c20; */
+	/* border-bottom: .2rem solid #1f2c20; */
 }
 
 .titleBar a:hover {
