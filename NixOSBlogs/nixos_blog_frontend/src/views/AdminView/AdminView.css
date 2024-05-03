@@ -27,6 +27,9 @@
 }
 
 .adminBlogsPreview {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
 	box-shadow: 0.3vw 0.3vw .2vw 0vw rgba(0, 0, 0, 1);
 	padding: 2rem;
 }

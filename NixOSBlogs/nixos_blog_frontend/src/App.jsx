@@ -4,7 +4,7 @@ import AdminView from "src/views/AdminView";
 import LoginView from "src/views/LoginView";
 import MainView from "src/views/MainView";
 import BlogDetailsView from "src/views/BlogDetailsView";
-import { getBlogsPreviews, loginUser } from "src/dataAccess";
+import { createBlog, getBlogsPreviews, loginUser } from "src/dataAccess";
 import { useLocalStorage } from "src/utils/hooks";
 import WrapPromise from "./utils/promiseWrapper";
 import CreateBlogForm from "./views/CreateBlogView";
@@ -56,8 +56,9 @@ export default function App() {
 		setLoginToken(token)
 		navigateToAdminView()
 	}
-	const onCreateBlogFormSubmit = (data) => {
+	const onCreateBlogFormSubmit = async (data) => {
 		console.log("The data to create a blog is: ", data)
+		await createBlog(loginToken, data);
 	}
 
 	const routeToComponentMapper = {};

@@ -43,6 +43,17 @@ export const getBlogContent = async (blogId) => {
 };
 
 /**
+ * Creates a blog inside the API
+ * @param {string} token
+ * @param {import("./components/BlogForm").BlogData} blogData
+ * @returns {Promise<void>}
+ */
+export const createBlog = async (token, blogData) => {
+  const url = `${API_URL}/blogs`;
+  await axios.post(url, { ...blogData, token });
+};
+
+/**
  * @typedef {Object} User
  * @property {string} username
  * @property {string} password
