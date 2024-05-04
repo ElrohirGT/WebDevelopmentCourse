@@ -45,6 +45,7 @@ export default function AdminView({ loginToken, blogsPreviewsResource, navigateT
 	*/
 function AdminBlogList({ blogResource, navigateToBlogDetails, deleteBlog }) {
 	const [blogs, setBlogs] = useState(blogResource.read())
+	const [error, setError] = useState("")
 
 	const onDelete = async (ev, blogId) => {
 		ev.stopPropagation()
@@ -52,12 +53,13 @@ function AdminBlogList({ blogResource, navigateToBlogDetails, deleteBlog }) {
 		try {
 			await deleteBlog(blogId)
 			setBlogs(blogs.filter(b => b.id !== blogId))
-		} catch (error) {
-			console.error("CANT DELETE BLOG!", blogId)
+		} catch {
+			setError("No se pudo borrar el blog!")
 		}
 	}
 
 	return <div className="adminBlogsPreview">
+		{error.length > 0 ? <p className="ErrorText ErrorInAdmin">{error}</p> : null}
 		{
 			blogs.map(b => {
 				return <div className="adminBlogListItem" key={b.id} onClick={() => navigateToBlogDetails(b)}>
