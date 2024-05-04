@@ -12,12 +12,11 @@ import { log } from "../../utils/log.js";
  * @returns {{isInvalid: boolean, body: UpdateBlogRequest}}
  */
 const parseRequest = (body) => {
-  const isInvalid =
-    !body.token ||
-    !body.blog ||
-    !body.blog.title ||
-    !body.blog.content ||
-    !body.blog.id;
+  const isInvalid = !body.token
+    || !body.blog
+    || !body.blog.title
+    || !body.blog.content
+    || !body.blog.id;
   return { isInvalid, body };
 };
 
