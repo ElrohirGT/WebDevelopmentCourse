@@ -22,7 +22,7 @@ export default function MainView({ navigateToLogin, navigateToBlogDetails, login
 			<TitleBar navigateToLogin={navigateToLogin} loginToken={loginToken} />
 			<Suspense fallback={<LoadingView />}>
 				<h2 className="mainTitle">Most Recent</h2>
-				<FeaturedBlog blogsResource={blogsPreviewsResource} />
+				<FeaturedBlog blogsResource={blogsPreviewsResource} navigateToBlogDetails={navigateToBlogDetails} />
 				<h2 className="mainTitle">Historical</h2>
 				<BlogList blogsResource={blogsPreviewsResource} navigateToBlogDetails={navigateToBlogDetails} />
 			</Suspense>
