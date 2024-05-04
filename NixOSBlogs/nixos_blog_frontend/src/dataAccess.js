@@ -54,6 +54,17 @@ export const createBlog = async (token, blogData) => {
 };
 
 /**
+ * Updates a blog inside the API
+ * @param {string} token
+ * @param {import("./components/BlogForm").BlogData} blogData
+ * @returns {Promise<void>}
+ */
+export const updateBlog = async (token, blogData) => {
+  const url = `${API_URL}/blogs`;
+  await axios.put(url, { token, blog: blogData });
+};
+
+/**
  * Deletes a blog inside the API
  * @param {string} token
  * @param {number} blogId

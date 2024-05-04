@@ -4,10 +4,11 @@ import AdminView from "src/views/AdminView";
 import LoginView from "src/views/LoginView";
 import MainView from "src/views/MainView";
 import BlogDetailsView from "src/views/BlogDetailsView";
-import { createBlog, deleteBlog, getBlogsPreviews, loginUser } from "src/dataAccess";
+import { createBlog, deleteBlog, getBlogsPreviews, loginUser, updateBlog } from "src/dataAccess";
 import { useLocalStorage } from "src/utils/hooks";
 import WrapPromise from "./utils/promiseWrapper";
 import CreateBlogForm from "./views/CreateBlogView";
+import UpdateBlogForm from "./views/UpdateBlogView";
 
 export const ROUTES = {
 	home: "HOME",
@@ -20,7 +21,8 @@ export const ROUTES = {
 
 export default function App() {
 	const [currentRoute, setCurrentRoute] = useState(ROUTES.home);
-	const [currentBlogPreview, setCurrentBlog] = useState(undefined);
+	const [currentBlogPreview, setCurrentBlogPreview] = useState(undefined);
+	const [currentBlogData, setCurrentBlogData] = useState(undefined);
 	const [loginToken, setLoginToken] = useLocalStorage("NixOSBlogs_LoginToken")
 	const blogsPreviewsResource = WrapPromise(getBlogsPreviews());
 
@@ -31,17 +33,21 @@ export default function App() {
 		setCurrentRoute(ROUTES.login);
 	};
 	const navigateToBlogDetails = (blogPreview) => {
-		setCurrentBlog(blogPreview);
+		setCurrentBlogPreview(blogPreview);
 		setCurrentRoute(ROUTES.blogDetails);
 	};
 	const navigateToMainView = () => {
-		setCurrentBlog(undefined);
+		setCurrentBlogPreview(undefined);
 		setCurrentRoute(ROUTES.home);
 	};
 	const navigateToCreateBlogForm = () => {
-		setCurrentBlog(undefined);
+		setCurrentBlogPreview(undefined);
 		setCurrentRoute(ROUTES.createBlogForm);
 	};
+	const navigateToUpdateBlogForm = (content) => {
+		setCurrentBlogData({ ...currentBlogPreview, content })
+		setCurrentRoute(ROUTES.updateBlogForm)
+	}
 
 	useEffect(() => {
 		const currentUrlRoute = window.location.pathname;
@@ -60,17 +66,22 @@ export default function App() {
 		await createBlog(loginToken, data);
 		navigateToAdminView()
 	}
+	const onUpdateBlogFormSubmit = async (data) => {
+		await updateBlog(loginToken, data);
+		navigateToAdminView()
+	}
 
 	const routeToComponentMapper = {};
 	routeToComponentMapper[ROUTES.home] = (
 		<MainView navigateToLogin={navigateToLogin} navigateToBlogDetails={navigateToBlogDetails} loginToken={loginToken} blogsPreviewsResource={blogsPreviewsResource} />
 	);
 	routeToComponentMapper[ROUTES.blogDetails] = (
-		<BlogDetailsView blogPreview={currentBlogPreview} navigateToMainView={navigateToMainView} loginToken={loginToken} />
+		<BlogDetailsView blogPreview={currentBlogPreview} navigateToMainView={navigateToMainView} loginToken={loginToken} navigateToUpdateBlogForm={navigateToUpdateBlogForm} />
 	);
 	routeToComponentMapper[ROUTES.login] = <LoginView onLogin={onLogin} />;
 	routeToComponentMapper[ROUTES.admin] = <AdminView blogsPreviewsResource={blogsPreviewsResource} loginToken={loginToken} navigateToBlogDetails={navigateToBlogDetails} navigateToCreateBlogForm={navigateToCreateBlogForm} deleteBlog={(id) => deleteBlog(loginToken, id)} />;
 	routeToComponentMapper[ROUTES.createBlogForm] = <CreateBlogForm onSubmit={onCreateBlogFormSubmit} />;
+	routeToComponentMapper[ROUTES.updateBlogForm] = <UpdateBlogForm onSubmit={onUpdateBlogFormSubmit} blog={currentBlogData} />;
 
 	return routeToComponentMapper[currentRoute];
 }

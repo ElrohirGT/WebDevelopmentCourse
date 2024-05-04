@@ -1,8 +1,22 @@
 * {
-	background: #2e383c;
-	color: whitesmoke;
 	box-sizing: border-box;
 	margin: 0;
+}
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+button,
+a,
+body,
+html {
+	background: #2e383c;
+	color: whitesmoke;
 }
 
 body {

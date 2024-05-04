@@ -37,6 +37,7 @@ export default function BlogForm({ blogInfo, onSubmit }) {
 			banner,
 			content,
 		};
+		console.log("Sending form data...", formBlog)
 		onSubmit({ ...blogInfo, ...formBlog });
 	};
 
@@ -84,6 +85,7 @@ Blog de ejemplo con un [link](www.google.com)
 						return;
 					}
 
+					console.log("Changing banner...")
 					setBanner(dataURL);
 					setCanSubmit(true);
 				}}

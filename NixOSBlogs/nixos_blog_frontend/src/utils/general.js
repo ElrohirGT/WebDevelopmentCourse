@@ -18,3 +18,17 @@ export const logError = (message) => {
     /* eslint-enable no-console*/
   };
 };
+
+/**
+ * Function that returns true when the lambda provided throws.
+ * @param {()=>void} lambda
+ * @returns {boolean} True if the lambda throws, false otherwise.
+ */
+export const lambdaThrows = (lambda) => {
+  try {
+    lambda();
+    return false;
+  } catch {
+    return true;
+  }
+};
