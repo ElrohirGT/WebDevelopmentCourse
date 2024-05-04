@@ -10,12 +10,12 @@ import "./FeaturedBlog.css";
  * @param {FeaturedBlogProps} props
  */
 export default function FeaturedBlog({ blogsResource, navigateToBlogDetails }) {
-	const blog = (blogsResource.read())[0];
+  const blog = (blogsResource.read())[0];
 
-	return (
-		<div className="featuredContainer" onClick={() => navigateToBlogDetails(blog)}>
-			<img src={blog.banner} />
-			<h2>{blog.title}</h2>
-		</div>
-	);
+  return (
+    <div className="featuredContainer" onClick={() => navigateToBlogDetails(blog)}>
+      <img src={blog.banner} />
+      <h2>{blog.title}</h2>
+    </div>
+  );
 }
