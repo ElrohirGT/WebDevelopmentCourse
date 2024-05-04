@@ -4,7 +4,7 @@ import AdminView from "src/views/AdminView";
 import LoginView from "src/views/LoginView";
 import MainView from "src/views/MainView";
 import BlogDetailsView from "src/views/BlogDetailsView";
-import { createBlog, getBlogsPreviews, loginUser } from "src/dataAccess";
+import { createBlog, deleteBlog, getBlogsPreviews, loginUser } from "src/dataAccess";
 import { useLocalStorage } from "src/utils/hooks";
 import WrapPromise from "./utils/promiseWrapper";
 import CreateBlogForm from "./views/CreateBlogView";
@@ -69,7 +69,7 @@ export default function App() {
 		<BlogDetailsView blogPreview={currentBlogPreview} navigateToMainView={navigateToMainView} loginToken={loginToken} />
 	);
 	routeToComponentMapper[ROUTES.login] = <LoginView onLogin={onLogin} />;
-	routeToComponentMapper[ROUTES.admin] = <AdminView blogsPreviewsResource={blogsPreviewsResource} loginToken={loginToken} navigateToBlogDetails={navigateToBlogDetails} navigateToCreateBlogForm={navigateToCreateBlogForm} />;
+	routeToComponentMapper[ROUTES.admin] = <AdminView blogsPreviewsResource={blogsPreviewsResource} loginToken={loginToken} navigateToBlogDetails={navigateToBlogDetails} navigateToCreateBlogForm={navigateToCreateBlogForm} deleteBlog={(id) => deleteBlog(loginToken, id)} />;
 	routeToComponentMapper[ROUTES.createBlogForm] = <CreateBlogForm onSubmit={onCreateBlogFormSubmit} />;
 
 	return routeToComponentMapper[currentRoute];

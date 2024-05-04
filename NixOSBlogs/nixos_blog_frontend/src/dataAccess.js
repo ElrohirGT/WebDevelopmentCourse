@@ -54,6 +54,23 @@ export const createBlog = async (token, blogData) => {
 };
 
 /**
+ * Deletes a blog inside the API
+ * @param {string} token
+ * @param {number} blogId
+ * @returns {Promise<void>}
+ */
+export const deleteBlog = async (token, blogId) => {
+  const url = `${API_URL}/blogs`;
+  await axios.delete(url, {
+    method: "delete",
+    data: {
+      token,
+      blogId,
+    },
+  });
+};
+
+/**
  * @typedef {Object} User
  * @property {string} username
  * @property {string} password
