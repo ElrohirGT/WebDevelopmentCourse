@@ -7,7 +7,7 @@ export default async (req, res) => {
   log.info("Getting blog posts...");
   try {
     const result = await POOL.query(
-      "SELECT id, title, banner, published FROM blog",
+      "SELECT id, title, banner, published FROM blog ORDER BY published DESC",
     );
     log.info(`${result.rows.length} Blog posts obtained!`);
 
