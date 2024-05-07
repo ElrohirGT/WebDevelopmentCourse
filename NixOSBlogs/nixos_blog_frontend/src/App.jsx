@@ -26,6 +26,10 @@ export default function App() {
   const [loginToken, setLoginToken] = useLocalStorage("NixOSBlogs_LoginToken");
   const blogsPreviewsResource = WrapPromise(getBlogsPreviews());
 
+  const resetLoginToken = () => {
+    setLoginToken(null);
+  };
+
   const navigateToAdminView = () => {
     setCurrentRoute(ROUTES.admin);
   };
@@ -77,6 +81,7 @@ export default function App() {
       navigateToLogin={navigateToLogin}
       navigateToBlogDetails={navigateToBlogDetails}
       loginToken={loginToken}
+      resetLoginToken={resetLoginToken}
       blogsPreviewsResource={blogsPreviewsResource}
     />
   );

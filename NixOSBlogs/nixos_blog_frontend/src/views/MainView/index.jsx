@@ -10,15 +10,18 @@ import TitleBar from "src/components/TitleBar";
  * @property {string} loginToken
  * @property {import("src/utils/promiseWrapper").SuspenseResource<import("src/dataAccess").BlogPreview[]>} blogsPreviewsResource
  * @property {(blogId: number)=>void} navigateToBlogDetails
+ * @property {()=>void} resetLoginToken
  */
 
 /**
  * @param {MainViewProps} props
  */
-export default function MainView({ navigateToLogin, navigateToBlogDetails, loginToken, blogsPreviewsResource }) {
+export default function MainView(
+  { navigateToLogin, navigateToBlogDetails, loginToken, blogsPreviewsResource, resetLoginToken },
+) {
   return (
     <div className="MainViewContainer">
-      <TitleBar navigateToLogin={navigateToLogin} loginToken={loginToken} />
+      <TitleBar navigateToLogin={navigateToLogin} loginToken={loginToken} resetLoginToken={resetLoginToken} />
       <Suspense fallback={<LoadingView />}>
         <h2 className="mainTitle">Most Recent</h2>
         <FeaturedBlog blogsResource={blogsPreviewsResource} navigateToBlogDetails={navigateToBlogDetails} />
