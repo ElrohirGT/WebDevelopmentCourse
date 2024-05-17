@@ -8,12 +8,15 @@
 	* A calculator button.
 	* @param {CalculatorButtonProps} props 
 	*/
-export default function Button({ onClick, text }) {
+export default function CalcButton({ onClick, text }) {
 	const isNotANumber = isNaN(parseInt(text));
 	const baseStyles = {
 		padding: "1rem",
 		borderWidth: 0,
 		fontWeight: "bold",
+		fontFamily: "monospace",
+		fontSize: "2rem",
+		flexGrow: 1
 	};
 
 	const conditionalStyles = isNotANumber ? {
@@ -22,7 +25,7 @@ export default function Button({ onClick, text }) {
 	} : {}
 
 	const styles = { ...baseStyles, ...conditionalStyles }
-	return <button onClick={onclick} style={styles}>
+	return <button onClick={onClick} style={styles}>
 		{text}
 	</button>
 }
