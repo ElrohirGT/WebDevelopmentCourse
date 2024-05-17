@@ -40,13 +40,11 @@
               packages = with pkgs; [
                 dprint # Javascript formatter
                 oxlint # Javascript linter
+                yarn-berry
               ];
 
               languages.javascript = {
                 enable = true;
-                yarn = {
-                  enable = true;
-                };
               };
             }
           ];
