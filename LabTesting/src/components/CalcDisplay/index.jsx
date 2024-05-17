@@ -10,7 +10,7 @@ import "./index.css"
 	* @param {CalcDisplayProps} props
 	*/
 export default function CalcDisplay({ text }) {
-	const displayText = text.substring(0, 9)
+	const displayText = text.toUpperCase().substring(0, 9)
 	const styles = {
 		backgroundColor: "black",
 		padding: ".5rem",

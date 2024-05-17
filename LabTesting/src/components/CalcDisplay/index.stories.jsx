@@ -9,3 +9,9 @@ export const Default = {
 		text: "100"
 	}
 }
+
+export const ErrorCase = {
+	args: {
+		text: "MathErr"
+	}
+}
