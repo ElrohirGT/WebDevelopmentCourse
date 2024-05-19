@@ -19,7 +19,8 @@
       in {
         default = pkgs.mkShell {
           packages = with pkgs; [
-            elmPackages.elm
+            nodejs_20
+            yarn-berry
           ];
         };
       }
