@@ -1,0 +1,7 @@
+{
+  "name": "Portafolio",
+  "packageManager": "yarn@4.2.2",
+  "dependencies": {
+    "reveal.js": "^5.1.0"
+  }
+}
