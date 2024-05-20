@@ -36,7 +36,7 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@main
       - uses: DeterminateSystems/magic-nix-cache-action@main
       - name: Build Frontend
-        uses: cd Portafolio/ && nix develop --command bash -c "yarn build"
+        run: cd Portafolio/ && nix develop --command bash -c "yarn build"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
