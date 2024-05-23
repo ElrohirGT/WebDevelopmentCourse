@@ -321,6 +321,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tabler/icons@npm:^3.5.0":
+  version: 3.5.0
+  resolution: "@tabler/icons@npm:3.5.0"
+  checksum: 10c0/0d6b15266e116dcf56bca417d013f1027b57404e5ed7f9a2a14e216eabdd04980ff971129491b666ffdc11953107c0b4540033c92d611fa74e127fc9d443fc4f
+  languageName: node
+  linkType: hard
+
 "@types/estree@npm:1.0.5":
   version: 1.0.5
   resolution: "@types/estree@npm:1.0.5"
@@ -1001,6 +1008,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "portfolio@workspace:."
   dependencies:
+    "@tabler/icons": "npm:^3.5.0"
     reveal.js: "npm:^5.1.0"
     vite: "npm:^5.2.0"
   languageName: unknown
