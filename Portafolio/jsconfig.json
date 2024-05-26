@@ -1,0 +1,10 @@
+{
+	"exclude": "node_modules",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "slides/*": ["./src/slides/*"],
+      "fonts/*": ["./src/fonts/*"]
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import "./styles.css";
-import { createElement } from "../../lib";
+import { createElement } from "src/lib";
 
 /**
  * @returns {Element} - The section slide element
@@ -7,7 +7,7 @@ import { createElement } from "../../lib";
 export const buildSlide = () => {
   const slide = createElement("section").build();
   const container = createElement("div")
-    .setProperty("class", "container")
+    .setProperty("class", "twoColumnsContainer")
     .setParent(slide);
 
   // Fox animation
@@ -26,8 +26,22 @@ export const buildSlide = () => {
   createElement("div").setProperty("id", "rightEye").setParent(foxContainer);
 
   // About Me
-  const title = createElement("h1")
-    .addTextNode("Flavio Galán")
+  const aboutMeContainer = createElement("div")
+    .setProperty("id", "aboutMeContainer")
     .setParent(container);
+  createElement("h1").addTextNode("Flavio Galán").setParent(aboutMeContainer);
+  createElement("h2")
+    .addTextNode("Eternal student, mobile and fullstack developer")
+    .setParent(aboutMeContainer);
+  const quoteContainer = createElement("div")
+    .setProperty("id", "quoteContainer")
+    .setParent(aboutMeContainer);
+  createElement("blockquote")
+    .addTextNode(
+      "The illiterate of the twenty-first century will not be those who cannot read and write, but those who cannot learn, unlearn, and relearn.",
+    )
+    .setParent(quoteContainer);
+  createElement("p").addTextNode("~ Alvin Toffler").setParent(quoteContainer);
+
   return slide;
 };
