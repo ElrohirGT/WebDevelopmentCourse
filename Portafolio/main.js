@@ -76,18 +76,43 @@ function createEmptyCommandBlock(parent = document.querySelector("body")) {
 /**
  * Function that represents a command the user can input
  *
- * @callback TerminalCommand
+ * @callback TerminalCommandLambda
  * @param {HTMLElement} [resultElement=undefined] resultElement
  * @param {...string} args
  * @returns {void}
  */
 
-const AVAILABLE_COMMANDS = {
-  /** @type {TerminalCommand} */
-  help: renderHelpCommand,
-  /** @type {TerminalCommand} */
-  clear: () => {
-    document.body.replaceChildren();
+/**
+ * A command that can be run inside the terminal emulator
+ *
+ * @typedef {Object} TerminalCommand
+ * @property {TerminalCommandLambda} function
+ * @property {string[]} usageInfo
+ */
+
+export const AVAILABLE_COMMANDS = {
+  /** @type {TerminalCommandLambda} */
+  help: {
+    function: renderHelpCommand,
+    usageInfo: ["Usage: help", "Displays this command block again."],
+  },
+  /** @type {TerminalCommandLambda} */
+  clear: {
+    function: () => {
+      document.body.replaceChildren();
+    },
+    usageInfo: ["Usage: clear", "Clears the console."],
+  },
+  aboutMe: {
+    function: (resultElement) => {
+      createElement("p")
+        .addTextNode("Not implemented yet!")
+        .setParent(resultElement);
+    },
+    usageInfo: [
+      "Usage: aboutMe",
+      "Displays some extra information about who I am.",
+    ],
   },
 };
 
@@ -174,7 +199,7 @@ function renderDisplay(message) {
     const { command, args } = message;
 
     if (AVAILABLE_COMMANDS[command] !== undefined) {
-      AVAILABLE_COMMANDS[command](windowState.resultElement, ...args);
+      AVAILABLE_COMMANDS[command].function(windowState.resultElement, ...args);
     } else {
       createElement("p")
         .addTextNode(

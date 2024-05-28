@@ -1,3 +1,4 @@
+import { AVAILABLE_COMMANDS } from "../main.js";
 import { createElement, toPixelsString } from "src/lib.mjs";
 
 /**
@@ -158,16 +159,7 @@ export const renderHelpCommand = (resultElement) => {
     .addTextNode("-".repeat(subTitle.length))
     .setParent(aboutMeContainer);
 
-  const commands = {
-    help: ["Usage: help", "Displays this command block again."],
-    clear: ["Usage: clear", "Clears the console."],
-    aboutMe: [
-      "Usage: aboutMe",
-      "Displays some extra information about who I am.",
-    ],
-  };
-
-  for (const key in commands) {
+  for (const key in AVAILABLE_COMMANDS) {
     createElement("p")
       .style({
         paddingLeft: "2rem",
@@ -178,7 +170,7 @@ export const renderHelpCommand = (resultElement) => {
       })
       .addTextNode(key)
       .setParent(aboutMeContainer);
-    commands[key].forEach((s) =>
+    AVAILABLE_COMMANDS[key].usageInfo.forEach((s) =>
       createElement("p")
         .style({
           paddingLeft: "2rem",
