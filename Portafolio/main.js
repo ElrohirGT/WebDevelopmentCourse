@@ -175,6 +175,12 @@ function renderDisplay(message) {
 
     if (AVAILABLE_COMMANDS[command] !== undefined) {
       AVAILABLE_COMMANDS[command](windowState.resultElement, ...args);
+    } else {
+      createElement("p")
+        .addTextNode(
+          `Unknown command: \`${command}\`. Type \`help\` to get a list of all the available commands`,
+        )
+        .setParent(windowState.resultElement);
     }
     windowState.cursorElement.remove();
     windowState = createEmptyCommandBlock();

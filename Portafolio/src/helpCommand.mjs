@@ -114,15 +114,85 @@ export const renderHelpCommand = (resultElement) => {
       flexDirection: "column",
     })
     .setParent(container);
-  createElement("h1").addTextNode("Flavio Galán").setParent(aboutMeContainer);
-  createElement("h2")
-    .addTextNode("Eternal student, mobile and fullstack developer")
+  const user = "flavio@galan";
+  createElement("p")
+    .style({
+      fontWeight: "bold",
+      color: "#e86f25",
+    })
+    .addTextNode(user)
     .setParent(aboutMeContainer);
+  createElement("p")
+    .addTextNode("-".repeat(user.length))
+    .setParent(aboutMeContainer);
+
+  const attributes = {
+    Description: "Flavio's Portfolio, a never ending student",
+    Field: "Mobile and Backend development",
+    LastUpdated: new Date(2024, 4, 28).toLocaleDateString(),
+  };
+
+  for (const key in attributes) {
+    const descriptionContainer = createElement("p").setParent(aboutMeContainer);
+    createElement("span")
+      .style({
+        fontWeight: "bold",
+        color: "#e86f25",
+        display: "inline-block",
+        minWidth: "fitContent",
+        width: "11rem",
+      })
+      .addTextNode(`${key}: `)
+      .setParent(descriptionContainer);
+    createElement("span")
+      .addTextNode(attributes[key])
+      .setParent(descriptionContainer);
+  }
+
+  const subTitle = "Commands:";
+  createElement("p")
+    .style({ color: "#e86f25", fontWeight: "bold", paddingTop: "2rem" })
+    .addTextNode(subTitle)
+    .setParent(aboutMeContainer);
+  createElement("p")
+    .addTextNode("-".repeat(subTitle.length))
+    .setParent(aboutMeContainer);
+
+  const commands = {
+    help: ["Usage: help", "Displays this command block again."],
+    clear: ["Usage: clear", "Clears the console."],
+    aboutMe: [
+      "Usage: aboutMe",
+      "Displays some extra information about who I am.",
+    ],
+  };
+
+  for (const key in commands) {
+    createElement("p")
+      .style({
+        paddingLeft: "2rem",
+        fontWeight: "bold",
+        color: "#e86f25",
+        paddingTop: "1rem",
+        paddingBottom: "1rem",
+      })
+      .addTextNode(key)
+      .setParent(aboutMeContainer);
+    commands[key].forEach((s) =>
+      createElement("p")
+        .style({
+          paddingLeft: "2rem",
+        })
+        .addTextNode(s)
+        .setParent(aboutMeContainer),
+    );
+  }
+
   const quoteContainer = createElement("div")
     .style({
-      justifySelf: "center",
-      padding: "1rem",
-      backgroundColor: "#0F0C1D",
+      alignSelf: "center",
+      padding: "4rem",
+      width: "65%",
     })
     .setParent(aboutMeContainer);
   createElement("blockquote")
