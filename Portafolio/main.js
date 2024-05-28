@@ -35,6 +35,13 @@ let windowState = createEmptyCommandBlock();
  * @returns {HTMLState} An collection of HTMLElements that represents the most current state of elements to change
  */
 function createEmptyCommandBlock(parent = document.querySelector("body")) {
+  const animatableCursorStyles = {
+    animation: "1.5s linear 0s infinite alternate both running CursorBlink",
+    backgroundColor: "#e86f25",
+    width: ".8rem",
+    height: "1.5rem",
+  };
+
   const commandBlockElem = createElement("div")
     .style({
       display: "flex",
@@ -44,13 +51,20 @@ function createEmptyCommandBlock(parent = document.querySelector("body")) {
   const commandInputContainer = createElement("div")
     .style({
       display: "flex",
-      columnGap: "1rem",
     })
     .setParent(commandBlockElem);
-  createElement("p").addTextNode("$").setParent(commandInputContainer);
+  createElement("p")
+    .style({
+      color: "#e86f25",
+      fontWeight: "bold",
+      paddingRight: "1rem",
+    })
+    .addTextNode("$")
+    .setParent(commandInputContainer);
 
-  const lineElement = createElement("p")
-    .style({})
+  const lineElement = createElement("p").setParent(commandInputContainer);
+  createElement("span")
+    .style(animatableCursorStyles)
     .setParent(commandInputContainer);
   const resultElement = createElement("div").setParent(commandBlockElem);
 
@@ -85,21 +99,32 @@ renderDisplay({ command: "help", args: [] });
  * Should only change values of the state of the application and not window state.
  */
 document.addEventListener("keydown", (event) => {
+  // Escape to return to normal mode
   if (event.key === "Escape") {
     console.log("Escape was pressed!");
+
+    // Press enter to execute a command
   } else if (event.key === "Enter") {
     const parts = commandBuffer.split(" ");
     renderDisplay({ command: parts[0], args: parts.slice(1) });
     clearCommandBuffer();
+
+    // Press backspace to delete a character
   } else if (event.key === "Backspace" && commandBuffer.length > 0) {
     commandBuffer = commandBuffer.slice(0, commandBuffer.length - 1);
     renderDisplay({ buffer: commandBuffer });
+
+    // Press CTRL-C to delete current command
   } else if (event.key === "c" && event.ctrlKey) {
     clearCommandBuffer();
     renderDisplay({ buffer: commandBuffer });
+
+    // Press CTRL-L to clear screen
   } else if (event.ctrlKey && event.key === "l") {
     renderDisplay({ command: "clear", args: [] });
     renderDisplay({ buffer: commandBuffer });
+
+    // Press any other key to input to buffer
   } else if (DIGITS_AND_LETTERS.includes(event.key)) {
     commandBuffer += event.key;
     renderDisplay({ buffer: commandBuffer });
@@ -136,6 +161,13 @@ function renderDisplay(message) {
     /** @type InputMessage */
     const { buffer } = message;
     windowState.lineElement.textContent = buffer;
+
+    const scrollOptions = {
+      left: 0,
+      top: document.body.scrollHeight,
+      behavior: "smooth",
+    };
+    window.scrollBy(scrollOptions);
   }
 
   if (message.command !== undefined) {
@@ -146,5 +178,12 @@ function renderDisplay(message) {
       AVAILABLE_COMMANDS[command](windowState.resultElement, ...args);
     }
     windowState = createEmptyCommandBlock();
+
+    const scrollOptions = {
+      left: 0,
+      top: document.body.scrollHeight,
+      behavior: "smooth",
+    };
+    window.scrollBy(scrollOptions);
   }
 }
