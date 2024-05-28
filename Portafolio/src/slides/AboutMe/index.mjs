@@ -1,4 +1,4 @@
-import { createElement } from "src/lib";
+import { createElement } from "src/lib.mjs";
 import viaje1 from "src/imgs/viajeNY1.jpg";
 import viaje2 from "src/imgs/viajeNY2.jpg";
 import esquipulas from "src/imgs/esquipulas.jpg";

@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [
     Unfonts({
       google: {
-        families: ["Kanit", "Asap", "Cambay"],
+        families: ["Source Code Pro"],
       },
     }),
   ],
