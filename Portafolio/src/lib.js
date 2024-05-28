@@ -1,9 +1,10 @@
 /**
  * @typedef {Object} HTMLBuilder
- * @property {()=>Element} build - Constructs the HTML node element.
+ * @property {()=>HTMLElement} build - Constructs the HTML node element.
  * @property {(propertyName: string, propertyValue: string)=>HTMLBuilder} setProperty - Sets a property inside an HTML element
- * @property {(parent: Element)=>Element} setParent - Adds the element as a child of the supplied DOM element and constructs it.
+ * @property {(parent: HTMLElement)=>HTMLElement} setParent - Adds the element as a child of the supplied DOM element and constructs it.
  * @property {(text: string)=>HTMLBuilder} addTextNode - Adds a text node to the HTML element.
+ * @property {(style: CSSStyleDeclaration)=>HTMLBuilder} style - Add CSS styles to this element.
  */
 
 /**
@@ -27,7 +28,17 @@ export const createElement = (tag) => {
       nativeElem.appendChild(textNode);
       return wrapper;
     },
+    style: (styles) => {
+      Object.assign(nativeElem.style, styles);
+      return wrapper;
+    },
     build: () => nativeElem,
   };
   return wrapper;
 };
+
+/**
+ * Converts a number into a CSS pixel string.
+ * @param {number} quantity
+ */
+export const toPixelsString = (quantity) => `${quantity}px`;

@@ -12,8 +12,6 @@ export default defineConfig({
   resolve: {
     alias: {
       src: "/src",
-      slides: "/src/slides",
-      fonts: "/src/fonts",
     },
   },
 });
