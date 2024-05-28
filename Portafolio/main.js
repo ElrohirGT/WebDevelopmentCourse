@@ -6,7 +6,7 @@ import { renderHelpCommand } from "src/helpCommand.mjs";
 const DIGITS_AND_LETTERS = "abcdefghijklmnñopqrstuvwxyz"
   .split("")
   .flatMap((c) => [c, c.toLocaleUpperCase()])
-  .concat(..."1234567890".split(""));
+  .concat(..."1234567890 ".split(""));
 
 console.log(DIGITS_AND_LETTERS);
 
