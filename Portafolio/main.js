@@ -23,11 +23,9 @@ function clearCommandBuffer() {
  * @typedef {Object} HTMLState
  * @property {HTMLElement} lineElement
  * @property {HTMLElement} resultElement
+ * @property {HTMLElement} cursorElement
  */
 
-/**
- * @type {HTMLState}
- */
 let windowState = createEmptyCommandBlock();
 
 /**
@@ -36,7 +34,7 @@ let windowState = createEmptyCommandBlock();
  */
 function createEmptyCommandBlock(parent = document.querySelector("body")) {
   const animatableCursorStyles = {
-    animation: "1.5s linear 0s infinite alternate both running CursorBlink",
+    animation: "1.1s linear 0s infinite alternate both running CursorBlink",
     backgroundColor: "#e86f25",
     width: ".8rem",
     height: "1.5rem",
@@ -63,7 +61,7 @@ function createEmptyCommandBlock(parent = document.querySelector("body")) {
     .setParent(commandInputContainer);
 
   const lineElement = createElement("p").setParent(commandInputContainer);
-  createElement("span")
+  const cursorElement = createElement("span")
     .style(animatableCursorStyles)
     .setParent(commandInputContainer);
   const resultElement = createElement("div").setParent(commandBlockElem);
@@ -71,6 +69,7 @@ function createEmptyCommandBlock(parent = document.querySelector("body")) {
   return {
     lineElement,
     resultElement,
+    cursorElement,
   };
 }
 
@@ -177,6 +176,7 @@ function renderDisplay(message) {
     if (AVAILABLE_COMMANDS[command] !== undefined) {
       AVAILABLE_COMMANDS[command](windowState.resultElement, ...args);
     }
+    windowState.cursorElement.remove();
     windowState = createEmptyCommandBlock();
 
     const scrollOptions = {
