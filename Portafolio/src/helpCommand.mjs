@@ -131,7 +131,7 @@ export const renderHelpCommand = (resultElement) => {
   const attributes = {
     Description: "Flavio's Portfolio, a never ending student",
     Field: "Mobile and Backend development",
-    LastUpdated: new Date(2024, 4, 28).toLocaleDateString(),
+    LastUpdated: new Date(2024, 4, 29).toLocaleDateString(),
   };
 
   for (const key in attributes) {
