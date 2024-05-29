@@ -93,8 +93,6 @@ async function bootingAnimation(
   document.body.replaceChildren();
 }
 
-await bootingAnimation(300, 100, 25);
-
 /**
  * @param {number} initialDelayMs
  * @param {number} perCharDelayMs
@@ -118,7 +116,11 @@ async function helpAnimation(initialDelayMs, perCharDelayMs) {
   acceptsUserInput = true;
 }
 
-helpAnimation(300, 200);
+(async () => {
+  await bootingAnimation(300, 100, 25);
+  helpAnimation(300, 200);
+})();
+
 /**
  * @typedef {Object} HTMLState
  * @property {HTMLElement} lineElement
