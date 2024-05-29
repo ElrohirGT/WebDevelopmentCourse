@@ -18,7 +18,7 @@ export const renderProjectsCommand = (resultElement) => {
   const container = createElement("div")
     .style({
       display: "flex",
-      flexWrap: "wrap",
+      flexDirection: "column-reverse",
       gap: "1rem",
     })
     .setParent(resultElement);
@@ -125,30 +125,37 @@ export const renderProjectsCommand = (resultElement) => {
   for (let i = 0; i < projects.length; i++) {
     const project = projects[i];
     const isOdd = i % 2 === 0;
+    const slideContainer = createElement("div")
+      .style({
+        display: "flex",
+        width: "100%",
+        gap: "1rem",
+      })
+      .setParent(container);
 
     if (isOdd) {
-      delay += displayTechStack(container, project, {
+      delay += displayTechStack(slideContainer, project, {
         delay,
         duration: entryAnimationDuration,
         name: "SlideIn_Right",
       });
       delay += inBetweenDelay;
 
-      delay += displayProjectBanner(container, project, {
+      delay += displayProjectBanner(slideContainer, project, {
         delay,
         duration: entryAnimationDuration,
         name: "SlideIn_Right",
       });
     } else {
       delay += entryAnimationDuration + inBetweenDelay;
-      const bannerAnimDuration = displayProjectBanner(container, project, {
+      const bannerAnimDuration = displayProjectBanner(slideContainer, project, {
         delay,
         duration: entryAnimationDuration,
         name: "SlideIn_Left",
       });
 
       delay -= entryAnimationDuration + inBetweenDelay;
-      delay += displayTechStack(container, project, {
+      delay += displayTechStack(slideContainer, project, {
         delay,
         duration: entryAnimationDuration,
         name: "SlideIn_Left",
