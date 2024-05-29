@@ -176,6 +176,7 @@ document.addEventListener("keydown", (event) => {
 
     // Press CTRL-L to clear screen
   } else if (event.ctrlKey && event.key === "l") {
+    event.preventDefault();
     renderDisplay({ command: "clear", args: [] });
     renderDisplay({ buffer: commandBuffer });
 
