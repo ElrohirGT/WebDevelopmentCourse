@@ -185,7 +185,7 @@ export const renderHelpCommand = (resultElement) => {
     .style({
       alignSelf: "center",
       padding: "4rem",
-      width: "85%",
+      width: "90%",
     })
     .setParent(aboutMeContainer);
   createElement("blockquote")
