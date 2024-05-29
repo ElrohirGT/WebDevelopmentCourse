@@ -130,8 +130,32 @@ renderDisplay({ command: "help", args: [] });
  * Should only change values of the state of the application and not window state.
  */
 document.addEventListener("keydown", (event) => {
-  // Escape to return to normal mode
-  if (event.key === "Escape") {
+  // Autocomplete command if exists
+  if (event.key === "Tab") {
+    event.preventDefault();
+    const autocompleteRest = Object.keys(AVAILABLE_COMMANDS)
+      .filter((commandName) => commandName.startsWith(commandBuffer))
+      .map((commandName) => commandName.slice(commandBuffer.length))
+      .reduce((inCommon, commandEnd) => {
+        if (inCommon === undefined) {
+          return commandEnd;
+        }
+
+        let lastCommonCharIndex = inCommon.length - 1;
+        for (let i = 0; i < inCommon.length; i++) {
+          if (inCommon[i] !== commandEnd[i]) {
+            lastCommonCharIndex = i - 1;
+          }
+        }
+
+        return inCommon.slice(0, lastCommonCharIndex + 1);
+      }, undefined);
+
+    commandBuffer += autocompleteRest ?? "";
+    renderDisplay({ buffer: commandBuffer });
+
+    // Escape to return to normal mode
+  } else if (event.key === "Escape") {
     console.log("Escape was pressed!");
 
     // Press enter to execute a command
