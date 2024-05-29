@@ -2,6 +2,7 @@ import { createElement } from "src/lib.mjs";
 import "./index.css";
 import "unfonts.css";
 import { renderHelpCommand } from "src/helpCommand.mjs";
+import { renderAboutMeCommand } from "src/aboutMeCommand.mjs";
 
 const DIGITS_AND_LETTERS = "abcdefghijklmnñopqrstuvwxyz"
   .split("")
@@ -104,11 +105,7 @@ export const AVAILABLE_COMMANDS = {
     usageInfo: ["Usage: clear", "Clears the console."],
   },
   aboutMe: {
-    function: (resultElement) => {
-      createElement("p")
-        .addTextNode("Not implemented yet!")
-        .setParent(resultElement);
-    },
+    function: renderAboutMeCommand,
     usageInfo: [
       "Usage: aboutMe",
       "Displays some extra information about who I am.",

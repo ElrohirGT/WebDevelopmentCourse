@@ -1,5 +1,5 @@
 * {
-	font-family: "Source Code Pro"
+	font-family: "Source Code Pro", monospace
 }
 
 h1 {
@@ -57,5 +57,29 @@ li {
 
 	100% {
 		transform: scaleX(0);
+	}
+}
+
+@keyframes Typing {
+	from {
+		transform: scaleZ(0);
+	}
+
+	to {
+		transform: scaleZ(1);
+	}
+}
+
+@keyframes SlideIn_Up {
+	0% {
+		transform: translateY(200%);
+	}
+
+	50% {
+		transform: translateY(-5%);
+	}
+
+	100% {
+		transform: translateY(0%);
 	}
 }
