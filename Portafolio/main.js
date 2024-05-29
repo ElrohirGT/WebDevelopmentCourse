@@ -1,4 +1,4 @@
-import { createElement } from "src/lib.mjs";
+import { createElement, delay } from "src/lib.mjs";
 import "./index.css";
 import "unfonts.css";
 import { renderHelpCommand } from "src/helpCommand.mjs";
@@ -22,6 +22,103 @@ function clearCommandBuffer() {
   commandBuffer = "";
 }
 
+/**
+ * Booting up the OS animation
+ */
+async function bootingAnimation(
+  initialDelayMs,
+  inBetweenBlockDelay,
+  perCharDelayMs,
+) {
+  await delay(initialDelayMs);
+  const animationOptions = {
+    delay: 0,
+    duration: perCharDelayMs / 1000,
+  };
+
+  const renderNormalLine = (text) => {
+    createElement("p")
+      .addAnimatedTextNode(text, animationOptions)
+      .setParent(document.querySelector("body"));
+    return (
+      text.length * animationOptions.duration * 1000 +
+      animationOptions.delay * 1000
+    );
+  };
+
+  const renderLoadingLine = async (text, loadingMs, shouldFail = false) => {
+    const container = createElement("p").setParent(document.body);
+    createElement("span").addTextNode("[ ").setParent(container);
+    const statusElem = createElement("span")
+      .addAnimatedTextNode("Loading", animationOptions, { color: "yellow" })
+      .setParent(container);
+    createElement("span").addTextNode(" ] ").setParent(container);
+
+    createElement("span")
+      .addAnimatedTextNode(text, animationOptions)
+      .setParent(container);
+
+    await delay(
+      loadingMs +
+        animationOptions.duration * 1000 * text.length +
+        animationOptions.delay * 1000,
+    );
+
+    statusElem.style.color = shouldFail ? "red" : "lightgreen";
+    statusElem.textContent = shouldFail ? "ERROR" : "OK";
+  };
+
+  await delay(renderNormalLine("Starting version 2003.08.07.flaviOS"));
+  await delay(inBetweenBlockDelay);
+
+  await delay(renderNormalLine("/dev/sda2: Recovering journal"));
+  await delay(inBetweenBlockDelay);
+
+  await delay(
+    renderNormalLine(
+      "/dev/sda2: clean, 236168/3055616 files, 12203008/12207104 blocks",
+    ),
+  );
+  await delay(inBetweenBlockDelay);
+
+  await delay(await renderLoadingLine("Loading skills", 600));
+  await delay(inBetweenBlockDelay);
+
+  await delay(await renderLoadingLine("Loading projects", 500));
+  await delay(inBetweenBlockDelay);
+
+  await delay(await renderLoadingLine("Loading embarassing photos", 600, true));
+  await delay(inBetweenBlockDelay);
+
+  document.body.replaceChildren();
+}
+
+await bootingAnimation(300, 100, 25);
+
+/**
+ * @param {number} initialDelayMs
+ * @param {number} perCharDelayMs
+ */
+async function helpAnimation(initialDelayMs, perCharDelayMs) {
+  await delay(initialDelayMs);
+
+  renderDisplay({ buffer: "h" });
+  await delay(perCharDelayMs);
+
+  renderDisplay({ buffer: "he" });
+  await delay(perCharDelayMs);
+
+  renderDisplay({ buffer: "hel" });
+  await delay(perCharDelayMs);
+
+  renderDisplay({ buffer: "help" });
+  await delay(perCharDelayMs);
+
+  renderDisplay({ command: "help", args: [] });
+  acceptsUserInput = true;
+}
+
+helpAnimation(300, 200);
 /**
  * @typedef {Object} HTMLState
  * @property {HTMLElement} lineElement
@@ -132,13 +229,17 @@ export const AVAILABLE_COMMANDS = {
   },
 };
 
-renderDisplay({ command: "help", args: [] });
+let acceptsUserInput = false;
 
 /**
  * Keyboard event listener.
  * Should only change values of the state of the application and not window state.
  */
 document.addEventListener("keydown", (event) => {
+  if (!acceptsUserInput) {
+    return;
+  }
+
   // Autocomplete command if exists
   if (event.key === "Tab") {
     event.preventDefault();
