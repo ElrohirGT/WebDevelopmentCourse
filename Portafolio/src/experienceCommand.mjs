@@ -9,7 +9,6 @@ export const renderExperienceCommand = (resultElement) => {
       display: "grid",
       gridTemplateColumns: "50% 50%",
       gridTemplateRows: "auto",
-      gridTemplateAreas: '"title title"',
       gap: "1rem",
     })
     .setParent(resultElement);
@@ -26,24 +25,6 @@ export const renderExperienceCommand = (resultElement) => {
     alignItems: "center",
     gap: "1rem",
   };
-
-  const perCharAnimationDuration = 0.1;
-  let delay = 0.2;
-
-  const subSlide1 = createElement("section")
-    .style({
-      gridArea: "title",
-    })
-    .setParent(container);
-
-  const title = "Experience in Production";
-  createElement("h1")
-    .addAnimatedTextNode(title, {
-      delay,
-      duration: perCharAnimationDuration,
-    })
-    .setParent(subSlide1);
-  delay += (perCharAnimationDuration * title.length * 3) / 4;
 
   /** @type {{banner: string, title: string, description: string[], link: string}[]} */
   const slidesData = [
@@ -66,7 +47,8 @@ export const renderExperienceCommand = (resultElement) => {
     },
   ];
 
-  const entranceAnimDuration = 1;
+  let delay = 0;
+  const entranceAnimDuration = 0.5;
   slidesData.forEach((slideData, idx) => {
     const animationProperties =
       idx % 2 === 0
@@ -76,6 +58,7 @@ export const renderExperienceCommand = (resultElement) => {
             animationDelay: `${delay + entranceAnimDuration}s`,
             animationDuration: `${entranceAnimDuration}s`,
             animationFillMode: "forwards",
+            animationTimingFunction: "ease-out",
           }
         : {
             transform: "translateX(1000%)",
@@ -83,6 +66,7 @@ export const renderExperienceCommand = (resultElement) => {
             animationDelay: `${delay + entranceAnimDuration}s`,
             animationDuration: `${entranceAnimDuration}s`,
             animationFillMode: "forwards",
+            animationTimingFunction: "ease-out",
           };
     const subSlide = createElement("div")
       .style({ overflowX: "hidden" })

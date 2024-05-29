@@ -4,6 +4,7 @@ import "unfonts.css";
 import { renderHelpCommand } from "src/helpCommand.mjs";
 import { renderAboutMeCommand } from "src/aboutMeCommand.mjs";
 import { renderExperienceCommand } from "src/experienceCommand.mjs";
+import { renderProjectsCommand } from "src/projectsCommand.mjs";
 
 const DIGITS_AND_LETTERS = "abcdefghijklmnñopqrstuvwxyz"
   .split("")
@@ -119,6 +120,14 @@ export const AVAILABLE_COMMANDS = {
     usageInfo: [
       "Usage: experience",
       "Displays information regarding my experience in the industry.",
+    ],
+  },
+  /**@type {TerminalCommandLambda}*/
+  projects: {
+    function: renderProjectsCommand,
+    usageInfo: [
+      "Usage: projects",
+      "Displays informations regarding personal projects I've worked on.",
     ],
   },
 };
