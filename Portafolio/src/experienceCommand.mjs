@@ -43,7 +43,7 @@ export const renderExperienceCommand = (resultElement) => {
       duration: perCharAnimationDuration,
     })
     .setParent(subSlide1);
-  delay += perCharAnimationDuration * title.length;
+  delay += (perCharAnimationDuration * title.length * 3) / 4;
 
   /** @type {{banner: string, title: string, description: string[], link: string}[]} */
   const slidesData = [
