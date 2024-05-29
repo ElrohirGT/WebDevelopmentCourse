@@ -3,6 +3,7 @@ import "./index.css";
 import "unfonts.css";
 import { renderHelpCommand } from "src/helpCommand.mjs";
 import { renderAboutMeCommand } from "src/aboutMeCommand.mjs";
+import { renderExperienceCommand } from "src/experienceCommand.mjs";
 
 const DIGITS_AND_LETTERS = "abcdefghijklmnñopqrstuvwxyz"
   .split("")
@@ -104,11 +105,20 @@ export const AVAILABLE_COMMANDS = {
     },
     usageInfo: ["Usage: clear", "Clears the console."],
   },
+  /**@type {TerminalCommandLambda}*/
   aboutMe: {
     function: renderAboutMeCommand,
     usageInfo: [
       "Usage: aboutMe",
       "Displays some extra information about who I am.",
+    ],
+  },
+  /**@type {TerminalCommandLambda}*/
+  experience: {
+    function: renderExperienceCommand,
+    usageInfo: [
+      "Usage: experience",
+      "Displays information regarding my experience in the industry.",
     ],
   },
 };

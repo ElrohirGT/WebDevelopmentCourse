@@ -1,4 +1,4 @@
-import { createElement } from "src/lib";
+import { createElement } from "src/lib.mjs";
 import linkIcon from "@tabler/icons/outline/link.svg";
 import exeboardBanner from "src/imgs/exeboardHome.png";
 import exploraxBanner from "src/imgs/exploraxHome.png";

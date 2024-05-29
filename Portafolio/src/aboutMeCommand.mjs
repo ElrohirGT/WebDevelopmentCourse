@@ -110,7 +110,7 @@ export const renderAboutMeCommand = (resultElement) => {
       "I'm a CS student from UVG Guatemala, I like sports, nerding around and programming!",
       {
         delay: animDelay,
-        duration: perCharAnimationDuration,
+        duration: perCharAnimationDuration / 2,
       },
     )
     .setParent(secondColumn);

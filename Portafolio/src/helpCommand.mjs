@@ -6,7 +6,11 @@ import { createElement, toPixelsString } from "src/lib.mjs";
  */
 export const renderHelpCommand = (resultElement) => {
   const container = createElement("div")
-    .setProperty("class", "twoColumnsContainer")
+    .style({
+      display: "grid",
+      gridTemplateColumns: "35% 45%",
+      gridTemplateRows: "1fr",
+    })
     .setParent(resultElement);
 
   /** @type CSSStyleDeclaration */
@@ -181,7 +185,7 @@ export const renderHelpCommand = (resultElement) => {
     .style({
       alignSelf: "center",
       padding: "4rem",
-      width: "65%",
+      width: "85%",
     })
     .setParent(aboutMeContainer);
   createElement("blockquote")
@@ -189,5 +193,10 @@ export const renderHelpCommand = (resultElement) => {
       "The illiterate of the twenty-first century will not be those who cannot read and write, but those who cannot learn, unlearn, and relearn.",
     )
     .setParent(quoteContainer);
-  createElement("p").addTextNode("~ Alvin Toffler").setParent(quoteContainer);
+  createElement("p")
+    .style({
+      paddingTop: "1rem",
+    })
+    .addTextNode("~ Alvin Toffler")
+    .setParent(quoteContainer);
 };
