@@ -88,7 +88,7 @@ async function bootingAnimation(
   await delay(inBetweenBlockDelay);
 
   await delay(await renderLoadingLine("Loading embarassing photos", 600, true));
-  await delay(inBetweenBlockDelay);
+  await delay(600);
 
   document.body.replaceChildren();
 }
