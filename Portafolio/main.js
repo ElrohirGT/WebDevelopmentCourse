@@ -5,7 +5,7 @@ import { renderHelpCommand } from "src/helpCommand.mjs";
 import { renderAboutMeCommand } from "src/aboutMeCommand.mjs";
 import { renderExperienceCommand } from "src/experienceCommand.mjs";
 import { renderProjectsCommand } from "src/projectsCommand.mjs";
-import wallpaper from "src/imgs/wallpaper.jpg";
+import wallpaper from "src/imgs/1_wallpaper.jpg";
 
 const DIGITS_AND_LETTERS = "abcdefghijklmnñopqrstuvwxyz"
   .split("")
