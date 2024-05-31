@@ -5,6 +5,7 @@ import { renderHelpCommand } from "src/helpCommand.mjs";
 import { renderAboutMeCommand } from "src/aboutMeCommand.mjs";
 import { renderExperienceCommand } from "src/experienceCommand.mjs";
 import { renderProjectsCommand } from "src/projectsCommand.mjs";
+import wallpaper from "src/imgs/wallpaper.jpg";
 
 const DIGITS_AND_LETTERS = "abcdefghijklmnñopqrstuvwxyz"
   .split("")
@@ -12,6 +13,27 @@ const DIGITS_AND_LETTERS = "abcdefghijklmnñopqrstuvwxyz"
   .concat(..."1234567890 ".split(""));
 
 console.log(DIGITS_AND_LETTERS);
+
+const preloadImages = async () => {
+  const siteImages = await import.meta.glob("./src/imgs/**/*.(jpg|png|webp)");
+  const promises = [];
+  for (const key in siteImages) {
+    promises.push(siteImages[key]());
+  }
+
+  const preLoadImage = (href) => {
+    createElement("link")
+      .setProperty("rel", "preload")
+      .setProperty("as", "image")
+      .setProperty("href", href)
+      .setParent(document.body);
+  };
+  preLoadImage(wallpaper); // Start loading the background first!
+  const modules = await Promise.all(promises);
+  modules.map((m) => m.default).forEach(preLoadImage);
+};
+
+preloadImages();
 
 /** @type string[] */
 let commandHistory = [];
@@ -151,6 +173,22 @@ export const AVAILABLE_COMMANDS = {
 
 (async () => {
   await bootingAnimation(300, 100, 25);
+  createElement("img")
+    .setProperty("src", wallpaper)
+    .style({
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      display: "inline-block",
+      width: "fit-content",
+      maxWidth: "70%",
+      maxHeight: "70%",
+      opacity: "0.1",
+      transform: "translate(-50%, -50%)",
+      objectFit: "cover",
+      zIndex: "-1",
+    })
+    .setParent(document.body);
 
   /**
    * @typedef {Object} HTMLState
