@@ -136,7 +136,7 @@ export const AVAILABLE_COMMANDS = {
     function: renderExperienceCommand,
     usageInfo: [
       "Usage: experience",
-      "Displays information regarding my experience in the industry.",
+      "Displays information regarding my technical experience.",
     ],
   },
   /**@type {TerminalCommandLambda}*/
@@ -151,6 +151,7 @@ export const AVAILABLE_COMMANDS = {
 
 (async () => {
   await bootingAnimation(300, 100, 25);
+
   /**
    * @typedef {Object} HTMLState
    * @property {HTMLElement} lineElement
@@ -159,6 +160,20 @@ export const AVAILABLE_COMMANDS = {
    */
 
   let windowState = createEmptyCommandBlock();
+
+  /**
+   * @typedef {Object} InputMessage
+   * @property {string} buffer
+   */
+  /**
+   * @typedef {Object} ExecuteCommandMessage
+   * @property {string} command
+   * @property {string[]} args
+   */
+
+  /**
+   * @typedef {InputMessage|ExecuteCommandMessage} Message
+   */
 
   /**
    * Renders the terminal interface according to the state supplied.
@@ -343,23 +358,4 @@ export const AVAILABLE_COMMANDS = {
       renderDisplay({ buffer: commandBuffer });
     }
   });
-
-  /**
-   * @typedef {Object} InputMessage
-   * @property {string} buffer
-   */
-  /**
-   * @typedef {Object} ExecuteCommandMessage
-   * @property {string} command
-   * @property {string[]} args
-   */
-
-  /**
-   * @typedef {InputMessage|ExecuteCommandMessage} Message
-   */
-
-  /**
-   * @typedef {Object} State
-   * @property {string} commandBuffer
-   */
 })();

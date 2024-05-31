@@ -151,6 +151,32 @@ export const renderHelpCommand = (resultElement) => {
       .setParent(descriptionContainer);
   }
 
+  const contactMeContainer = createElement("p").setParent(aboutMeContainer);
+  createElement("span")
+    .style({
+      fontWeight: "bold",
+      color: "#e86f25",
+      display: "inline-block",
+      minWidth: "fitContent",
+      width: "11rem",
+    })
+    .addTextNode("ContactMe: ")
+    .setParent(contactMeContainer);
+  createElement("a")
+    .addTextNode("GitHub")
+    .setProperty("href", "https://github.com/ElrohirGT")
+    .setProperty("target", "_blank")
+    .setParent(contactMeContainer);
+  createElement("span").addTextNode(" y ").setParent(contactMeContainer);
+  createElement("a")
+    .addTextNode("LinkedIn")
+    .setProperty(
+      "href",
+      "https://www.linkedin.com/in/flavio-andr%C3%A9-gal%C3%A1n-donis-668233230/",
+    )
+    .setProperty("target", "_blank")
+    .setParent(contactMeContainer);
+
   const subTitle = "Commands:";
   createElement("p")
     .style({ color: "#e86f25", fontWeight: "bold", paddingTop: "2rem" })
